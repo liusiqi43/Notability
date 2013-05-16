@@ -10,6 +10,8 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QToolBar>
+#include <QTableWidget>
+
 #include "Notes.h"
 #include "ArticleEditor.h"
 
@@ -27,7 +29,9 @@ public slots:
     
 private:
     QMenu *menuFichier, *menuEdition;
+    QWidget *articleEditorPage;
     NotesManager *nm;
+    QTabWidget *onglets;
 };
 
 #endif // NOTESEDITOR_H

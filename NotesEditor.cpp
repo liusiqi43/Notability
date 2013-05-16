@@ -9,7 +9,7 @@ void NotesEditor::UI_OPEN_FILE(){
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Documents (*.txt)");
     nm = &NotesManager::getInstance();
     Article &art = nm->getArticle(fichier);
-    ArticleEditor * articleEditor = new ArticleEditor(&art, 0);
+    ArticleEditor * articleEditor = new ArticleEditor(&art, articleEditorPage);
     articleEditor->show();
 }
 
@@ -34,6 +34,13 @@ NotesEditor::NotesEditor(QWidget *parent) :
     toolBar->addAction(actionOpenArticle);
     toolBar->addAction(actionOpenImage);
     toolBar->addAction(actionQuit);
+
+    onglets = new QTabWidget(this);
+    onglets->setGeometry(30, 20, 500, 700);
+
+    articleEditorPage = new QWidget;
+
+    onglets->addTab(articleEditorPage, "Editor");
 
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpenArticle, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
