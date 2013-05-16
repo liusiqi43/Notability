@@ -11,6 +11,7 @@
 #include <QFileDialog>
 #include <QToolBar>
 #include <QTableWidget>
+#include <QVBoxLayout>
 
 #include "Notes.h"
 #include "ArticleEditor.h"
@@ -28,10 +29,15 @@ public slots:
     void UI_INFORM_NOT_IMPLEMENTED();
     
 private:
+    QWidget *mainWidget;
+
+    QVBoxLayout *layout;
     QMenu *menuFichier, *menuEdition;
     QWidget *articleEditorPage;
     NotesManager *nm;
     QTabWidget *onglets;
+
+    ArticleEditor * articleEditor;
 };
 
 #endif // NOTESEDITOR_H
