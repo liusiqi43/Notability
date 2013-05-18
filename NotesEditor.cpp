@@ -17,12 +17,41 @@ void NotesEditor::UI_OPEN_FILE(){
         }
 
         nm = &NotesManager::getInstance();
-        Article &art = nm->getArticle(fichier);
-        articleEditor = new ArticleEditor(&art);
+        ressource = &nm->getArticle(fichier);
+        articleEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
 
         QVBoxLayout *parentLayout = new QVBoxLayout();
         articleEditorPage->setLayout(parentLayout);
         parentLayout->addWidget(articleEditor);
+    }
+}
+
+void NotesEditor::UI_TAB_CHANGE_HANDLER(int n){
+    switch(n){
+    case -1:{
+        return;
+    }
+    case 1:{
+        qDebug()<<"HTML";
+        qDebug()<<"Current title: " << this->articleEditor->getTitle()->text();
+        qDebug()<<"Current text: " << this->articleEditor->getText()->toPlainText();
+        if(htmlViewerPage->layout()){
+            delete hv;
+            delete htmlViewerPage->layout();
+        }
+
+        // add html viewer into tab
+        hv = new HtmlViewer(new Article(
+                                this->articleEditor->getTitle()->text(),
+                                this->articleEditor->getText()->toHtml()
+                                ), this);
+        QVBoxLayout *parentLayoutHV = new QVBoxLayout();
+        htmlViewerPage->setLayout(parentLayoutHV);
+        parentLayoutHV->addWidget(hv);
+        break;
+    }
+    default:
+        return;
     }
 }
 
@@ -49,24 +78,26 @@ NotesEditor::NotesEditor(QWidget *parent) :
     toolBar->addAction(actionOpenImage);
     toolBar->addAction(actionQuit);
 
-    onglets = new QTabWidget();
+    tab = new QTabWidget();
     articleEditorPage = new QWidget();
+    htmlViewerPage = new QWidget();
 
     // Creat a new article, with generated file path and empty title&text
     // TODO add article to a default document.
     nm = &NotesManager::getInstance();
-    Article &art = nm->getNewArticle();
+    ressource = &nm->getNewArticle();
 
     // add default article editor into layout
     QVBoxLayout *parentLayout = new QVBoxLayout();
     articleEditorPage->setLayout(parentLayout);
-    articleEditor = new ArticleEditor(&art);
+    articleEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
     parentLayout->addWidget(articleEditor);
 
-    onglets->addTab(articleEditorPage, "Editor");
+    tab->addTab(articleEditorPage, "Editor");
+    tab->addTab(htmlViewerPage, "HTML");
 
     layout = new QVBoxLayout();
-    layout->addWidget(onglets);
+    layout->addWidget(tab);
 
     mainWidget->setLayout(layout);
 
@@ -75,4 +106,7 @@ NotesEditor::NotesEditor(QWidget *parent) :
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpenArticle, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
     QObject::connect(actionOpenImage, SIGNAL(triggered()), this, SLOT(UI_INFORM_NOT_IMPLEMENTED()));
+
+    // Tab change handling
+    QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
 }

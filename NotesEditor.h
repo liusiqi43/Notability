@@ -15,6 +15,7 @@
 
 #include "Notes.h"
 #include "ArticleEditor.h"
+#include "htmlViewer.h"
 
 class NotesEditor : public QMainWindow
 {
@@ -27,17 +28,26 @@ signals:
 public slots:
     void UI_OPEN_FILE();
     void UI_INFORM_NOT_IMPLEMENTED();
+    void UI_TAB_CHANGE_HANDLER(int);
     
 private:
     QWidget *mainWidget;
-
     QVBoxLayout *layout;
+
     QMenu *menuFichier, *menuEdition;
+
+    QTabWidget *tab;
     QWidget *articleEditorPage;
+    QWidget *htmlViewerPage;
+
     NotesManager *nm;
-    QTabWidget *onglets;
 
     ArticleEditor * articleEditor;
+    HtmlViewer * hv;
+
+    Note * ressource;
+
+    int lastTabIndex;
 };
 
 #endif // NOTESEDITOR_H
