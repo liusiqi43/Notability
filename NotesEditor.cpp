@@ -1,4 +1,5 @@
 #include "NotesEditor.h"
+#include "NotesManager.h"
 #include "ArticleEditor.h"
 
 void NotesEditor::UI_INFORM_NOT_IMPLEMENTED(){
@@ -9,19 +10,20 @@ void NotesEditor::UI_OPEN_FILE(){
 
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Documents (*.txt)");
 
-    if(articleEditorPage->layout()){
-        delete articleEditor;
-        delete articleEditorPage->layout();
+    if(!fichier.isNull()){
+        if(articleEditorPage->layout()){
+            delete articleEditor;
+            delete articleEditorPage->layout();
+        }
+
+        nm = &NotesManager::getInstance();
+        Article &art = nm->getArticle(fichier);
+        articleEditor = new ArticleEditor(&art);
+
+        QVBoxLayout *parentLayout = new QVBoxLayout();
+        articleEditorPage->setLayout(parentLayout);
+        parentLayout->addWidget(articleEditor);
     }
-
-    nm = &NotesManager::getInstance();
-    Article &art = nm->getArticle(fichier);
-    articleEditor = new ArticleEditor(&art);
-
-    QVBoxLayout *parentLayout = new QVBoxLayout();
-    articleEditorPage->setLayout(parentLayout);
-    parentLayout->addWidget(articleEditor);
-
 }
 
 NotesEditor::NotesEditor(QWidget *parent) :
@@ -49,6 +51,18 @@ NotesEditor::NotesEditor(QWidget *parent) :
 
     onglets = new QTabWidget();
     articleEditorPage = new QWidget();
+
+    // Creat a new article, with generated file path and empty title&text
+    // TODO add article to a default document.
+    nm = &NotesManager::getInstance();
+    Article &art = nm->getNewArticle();
+
+    // add default article editor into layout
+    QVBoxLayout *parentLayout = new QVBoxLayout();
+    articleEditorPage->setLayout(parentLayout);
+    articleEditor = new ArticleEditor(&art);
+    parentLayout->addWidget(articleEditor);
+
     onglets->addTab(articleEditorPage, "Editor");
 
     layout = new QVBoxLayout();

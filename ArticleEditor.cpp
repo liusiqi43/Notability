@@ -1,10 +1,11 @@
 #include "ArticleEditor.h"
+#include "NotesManager.h"
 
 void ArticleEditor::BACKEND_ARTICLE_SAVE(){
     BACKEND_ARTICLE_SAVE_TITLE();
     BACKEND_ARTICLE_SAVE_TEXT();
     try{
-        nm->saveArticle(*ressource);
+        ressource->save();
         UI_INFORM_USER_OF_SAVE();
     }
     catch(NotesException e){
@@ -20,12 +21,12 @@ void ArticleEditor::CLOSE_AND_RELEASE_MANAGER(){
 
 void ArticleEditor::BACKEND_ARTICLE_SAVE_TITLE(){
     QString str = title->text();
-    this->ressource->setText(str);
+    this->ressource->setTitle(str);
 }
 
 void ArticleEditor::BACKEND_ARTICLE_SAVE_TEXT(){
     QString str = text->toPlainText();
-    this->ressource->setTitle(str);
+    this->ressource->setText(str);
 }
 
 void ArticleEditor::UI_ENABLE_SAVE_BUTTON(){
