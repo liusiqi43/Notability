@@ -25,7 +25,7 @@ void ArticleEditor::BACKEND_ARTICLE_SAVE_TITLE(){
 }
 
 void ArticleEditor::BACKEND_ARTICLE_SAVE_TEXT(){
-    QString str = text->toPlainText();
+    QString str = text->toHtml();
     this->ressource->setText(str);
 }
 
@@ -63,4 +63,34 @@ ArticleEditor::ArticleEditor(Article* art, QWidget *parent) :
     QObject::connect(text, SIGNAL(textChanged()), this, SLOT(UI_ENABLE_SAVE_BUTTON()));
 
     QObject::connect(btnSave, SIGNAL(clicked()), this, SLOT(BACKEND_ARTICLE_SAVE()));
+}
+
+Article *ArticleEditor::getRessource() const
+{
+    return ressource;
+}
+
+void ArticleEditor::setRessource(Article *value)
+{
+    ressource = value;
+}
+
+QTextEdit *ArticleEditor::getText() const
+{
+    return text;
+}
+
+void ArticleEditor::setText(QTextEdit *value)
+{
+    text = value;
+}
+
+QLineEdit *ArticleEditor::getTitle() const
+{
+    return title;
+}
+
+void ArticleEditor::setTitle(QLineEdit *value)
+{
+    title = value;
 }

@@ -68,8 +68,9 @@ void Article::save(){
 
 QString Article::toHTML(){
     return "<html><head><meta charset=\"UTF-8\"><title>"+
-            this->getTitle()+"</title></head><body><p>"+
-            this->getText()+"</p></body></html>";
+            this->getTitle()+"</title></head><body>"+
+            "<h1>"+this->getTitle()+"</h1>"+
+            this->getText()+"</body></html>";
 }
 
 QString Article::getCategory(){

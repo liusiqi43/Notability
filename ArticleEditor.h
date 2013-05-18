@@ -16,6 +16,15 @@ class ArticleEditor : public QWidget
 public:
     explicit ArticleEditor(Article *, QWidget *parent = 0);
 
+    Article *getRessource() const;
+    void setRessource(Article *value);
+
+    QLineEdit *getTitle() const;
+    void setTitle(QLineEdit *value);
+
+    QTextEdit *getText() const;
+    void setText(QTextEdit *value);
+
 signals:
 
 public slots:
@@ -26,6 +35,7 @@ private:
     void BACKEND_ARTICLE_SAVE_TITLE();
     void BACKEND_ARTICLE_SAVE_TEXT();
     void UI_INFORM_USER_OF_SAVE();
+
     QVBoxLayout *layout;
 
     QPushButton * btnQuit;
