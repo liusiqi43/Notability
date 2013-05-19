@@ -11,17 +11,17 @@ void NotesEditor::UI_OPEN_FILE(){
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Documents (*.txt)");
 
     if(!fichier.isNull()){
-        if(articleEditorPage->layout()){
+        if(EditorPage->layout()){
             delete articleEditor;
-            delete articleEditorPage->layout();
+            delete EditorPage->layout();
         }
 
         nm = &NotesManager::getInstance();
         ressource = &nm->getArticle(fichier);
-        articleEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
+        articleEditor = new ArticleEditor(ressource);
 
         QVBoxLayout *parentLayout = new QVBoxLayout();
-        articleEditorPage->setLayout(parentLayout);
+        EditorPage->setLayout(parentLayout);
         parentLayout->addWidget(articleEditor);
     }
 }
@@ -33,8 +33,8 @@ void NotesEditor::UI_TAB_CHANGE_HANDLER(int n){
     }
     case 1:{
         qDebug()<<"HTML";
-        qDebug()<<"Current title: " << this->articleEditor->getTitle()->text();
-        qDebug()<<"Current text: " << this->articleEditor->getText()->toPlainText();
+        qDebug()<<"Current title: " << this->articleEditor->getTitleWidget()->text();
+        qDebug()<<"Current text: " << this->articleEditor->getTextWidget()->toPlainText();
         if(htmlViewerPage->layout()){
             delete hv;
             delete htmlViewerPage->layout();
@@ -42,12 +42,12 @@ void NotesEditor::UI_TAB_CHANGE_HANDLER(int n){
 
         // add html viewer into tab
         hv = new HtmlViewer(new Article(
-                                this->articleEditor->getTitle()->text(),
-                                this->articleEditor->getText()->toHtml()
-                                ), this);
+                                this->articleEditor->getTitleWidget()->text(),
+                                this->articleEditor->getTextWidget()->toPlainText()
+                                ));
         QVBoxLayout *parentLayoutHV = new QVBoxLayout();
-        htmlViewerPage->setLayout(parentLayoutHV);
         parentLayoutHV->addWidget(hv);
+        htmlViewerPage->setLayout(parentLayoutHV);
         break;
     }
     default:
@@ -79,7 +79,7 @@ NotesEditor::NotesEditor(QWidget *parent) :
     toolBar->addAction(actionQuit);
 
     tab = new QTabWidget();
-    articleEditorPage = new QWidget();
+    EditorPage = new QWidget();
     htmlViewerPage = new QWidget();
 
     // Creat a new article, with generated file path and empty title&text
@@ -89,11 +89,11 @@ NotesEditor::NotesEditor(QWidget *parent) :
 
     // add default article editor into layout
     QVBoxLayout *parentLayout = new QVBoxLayout();
-    articleEditorPage->setLayout(parentLayout);
-    articleEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
+    EditorPage->setLayout(parentLayout);
+    articleEditor = new ArticleEditor(ressource);
     parentLayout->addWidget(articleEditor);
 
-    tab->addTab(articleEditorPage, "Editor");
+    tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");
 
     layout = new QVBoxLayout();

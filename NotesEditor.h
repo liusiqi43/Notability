@@ -37,7 +37,7 @@ private:
     QMenu *menuFichier, *menuEdition;
 
     QTabWidget *tab;
-    QWidget *articleEditorPage;
+    QWidget *EditorPage;
     QWidget *htmlViewerPage;
 
     NotesManager *nm;

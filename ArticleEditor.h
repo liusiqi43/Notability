@@ -9,15 +9,13 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "Notes.h"
+#include "Editor.h"
 
-class ArticleEditor : public QWidget
+class ArticleEditor : public Editor
 {
     Q_OBJECT
 public:
-    explicit ArticleEditor(Article *, QWidget *parent = 0);
-
-    Article *getRessource() const;
-    void setRessource(Article *value);
+    explicit ArticleEditor(Note *, QWidget *parent = 0);
 
     QLineEdit *getTitle() const;
     void setTitle(QLineEdit *value);
@@ -25,23 +23,19 @@ public:
     QTextEdit *getText() const;
     void setText(QTextEdit *value);
 
+    Article *getRessource() const;
+    void setRessource(Article *value);
+
+    QTextEdit *getTextWidget() const;
+    void setTextWidget(QTextEdit *value);
+
 signals:
 
 public slots:
-    void UI_ENABLE_SAVE_BUTTON();
-    void BACKEND_ARTICLE_SAVE();
-    void CLOSE_AND_RELEASE_MANAGER();
+    void BACKEND_SET_CONTENT();
+
 private:
-    void BACKEND_ARTICLE_SAVE_TITLE();
-    void BACKEND_ARTICLE_SAVE_TEXT();
-    void UI_INFORM_USER_OF_SAVE();
-
-    QVBoxLayout *layout;
-
-    QPushButton * btnQuit;
-    QPushButton * btnSave;
-    QLineEdit *title;
-    QTextEdit *text;
+    QTextEdit *textWidget;
 
     Article *ressource;
     NotesManager *nm;
