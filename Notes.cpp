@@ -33,23 +33,8 @@ Article::Article(const QString& ti, const QString& te, Document *doc):
     qDebug()<<this->getFilePath();
 }
 
-/**
- * @brief Article::Article
- * @param a
- */
-Article::Article(const Article& a):
-    Note(a.getTitle(), a.getFilePath(), a.getDocument()), text(a.getText()){}
-
 Article::Article(const QString &filePath, const QString &ti, const QString &te, Document *doc)
     :Note(ti, filePath, doc), text(te){}
-
-Article& Article::operator=(const Article& a){
-    QString old = this->getFilePath();
-    *this = a;
-    this->setFilePath(old);
-    this->setModified(true);
-    return *this;
-}
 
 QTextStream& operator<<(QTextStream& f, const Article& a){
     f<<a.getTitle()<<"\n";
@@ -79,4 +64,49 @@ QString Article::getCategory(){
 
 QString Article::getExtension(){
     return QString(".txt");
+}
+
+/***
+ * VideoNote
+ */
+QString VideoNote::getVideoPath() const
+{
+    return videoPath;
+}
+void VideoNote::setVideoPath(const QString &value)
+{
+    videoPath = value;
+}
+/***
+ * ImageNote
+ */
+QString ImageNote::getImgPath() const
+{
+    return imgPath;
+}
+void ImageNote::setImgPath(const QString &value)
+{
+    imgPath = value;
+}
+/***
+ * Binary
+ */
+QString Binary::getDescription() const
+{
+    return description;
+}
+void Binary::setDescription(const QString &value)
+{
+    description = value;
+}
+/***
+ * AudioNote
+ */
+QString AudioNote::getAudioPath() const
+{
+    return audioPath;
+}
+void AudioNote::setAudioPath(const QString &value)
+{
+    audioPath = value;
 }

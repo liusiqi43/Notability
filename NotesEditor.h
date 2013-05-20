@@ -42,7 +42,7 @@ private:
 
     NotesManager *nm;
 
-    ArticleEditor * articleEditor;
+    ArticleEditor * noteEditor;
     HtmlViewer * hv;
 
     Note * ressource;

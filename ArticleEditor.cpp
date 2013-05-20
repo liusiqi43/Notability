@@ -6,8 +6,8 @@ void ArticleEditor::BACKEND_SET_CONTENT(){
     this->ressource->setText(str);
 }
 
-ArticleEditor::ArticleEditor(Note *art, QWidget *parent) :
-    Editor(art, parent), ressource(dynamic_cast<Article *>(art))
+ArticleEditor::ArticleEditor(Article *art, QWidget *parent) :
+    Editor(art, parent), ressource(art)
 {
     textWidget = new QTextEdit(ressource->getText());
 
@@ -31,4 +31,14 @@ QTextEdit *ArticleEditor::getTextWidget() const
 void ArticleEditor::setTextWidget(QTextEdit *value)
 {
     textWidget = value;
+}
+
+Article *ArticleEditor::getRessource() const
+{
+    return ressource;
+}
+
+void ArticleEditor::setRessource(Article *value)
+{
+    ressource = value;
 }

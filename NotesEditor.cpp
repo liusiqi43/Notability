@@ -12,17 +12,17 @@ void NotesEditor::UI_OPEN_FILE(){
 
     if(!fichier.isNull()){
         if(EditorPage->layout()){
-            delete articleEditor;
+            delete noteEditor;
             delete EditorPage->layout();
         }
 
         nm = &NotesManager::getInstance();
         ressource = &nm->getArticle(fichier);
-        articleEditor = new ArticleEditor(ressource);
+        noteEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
 
         QVBoxLayout *parentLayout = new QVBoxLayout();
         EditorPage->setLayout(parentLayout);
-        parentLayout->addWidget(articleEditor);
+        parentLayout->addWidget(noteEditor);
     }
 }
 
@@ -33,8 +33,8 @@ void NotesEditor::UI_TAB_CHANGE_HANDLER(int n){
     }
     case 1:{
         qDebug()<<"HTML";
-        qDebug()<<"Current title: " << this->articleEditor->getTitleWidget()->text();
-        qDebug()<<"Current text: " << this->articleEditor->getTextWidget()->toPlainText();
+        qDebug()<<"Current title: " << this->noteEditor->getTitleWidget()->text();
+        qDebug()<<"Current text: " << this->noteEditor->getTextWidget()->toHtml();
         if(htmlViewerPage->layout()){
             delete hv;
             delete htmlViewerPage->layout();
@@ -42,8 +42,8 @@ void NotesEditor::UI_TAB_CHANGE_HANDLER(int n){
 
         // add html viewer into tab
         hv = new HtmlViewer(new Article(
-                                this->articleEditor->getTitleWidget()->text(),
-                                this->articleEditor->getTextWidget()->toPlainText()
+                                this->noteEditor->getTitleWidget()->text(),
+                                this->noteEditor->getTextWidget()->toHtml()
                                 ));
         QVBoxLayout *parentLayoutHV = new QVBoxLayout();
         parentLayoutHV->addWidget(hv);
@@ -90,8 +90,8 @@ NotesEditor::NotesEditor(QWidget *parent) :
     // add default article editor into layout
     QVBoxLayout *parentLayout = new QVBoxLayout();
     EditorPage->setLayout(parentLayout);
-    articleEditor = new ArticleEditor(ressource);
-    parentLayout->addWidget(articleEditor);
+    noteEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
+    parentLayout->addWidget(noteEditor);
 
     tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");

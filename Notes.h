@@ -67,8 +67,6 @@ public:
 class Article: public Note {
     friend class NotesManager;
     QString text;
-    Article(const Article&);
-    Article& operator=(const Article&);
 
     QString getCategory();
     QString getExtension();
@@ -83,6 +81,73 @@ public:
     void save();
 };
 
+/**
+ * @brief The Binary class. Base class for Image, Audio, VideoNote
+ */
+class Binary: public Note{
+    friend class NotesManager;
+    QString description;
+public:
+    Binary(const QString& ti, const QString& des, Document *doc = 0)
+        :Note(ti, doc), description(des)
+    {}
+    Binary(const QString& filePath, const QString& ti, const QString& des, Document *doc = 0)
+        :Note(ti, filePath, doc), description(des)
+    {}
+    QString getDescription() const;
+    void setDescription(const QString &value);
+};
+class ImageNote: public Binary{
+    friend class NotesManager;
+    QString imgPath;
+    QString getCategory();
+    QString getExtension();
+public:
+    ImageNote(const QString& ti, const QString& des, const QString& iPath, Document *doc = 0)
+        :Binary(ti, des, doc), imgPath(iPath)
+    {}
+    ImageNote(const QString& filePath, const QString& ti, const QString& des, const QString& iPath, Document *doc = 0)
+        :Binary(filePath, ti, des, doc), imgPath(iPath)
+    {}
+    QString getImgPath() const;
+    void setImgPath(const QString &value);
+    QString toHTML();
+    void save();
+};
+class VideoNote: public Binary{
+    friend class NotesManager;
+    QString videoPath;
+    QString getCategory();
+    QString getExtension();
+public:
+    VideoNote(const QString& ti, const QString& des, const QString& vPath, Document *doc = 0)
+        :Binary(ti, des, doc), videoPath(vPath)
+    {}
+    VideoNote(const QString& filePath, const QString& ti, const QString& des, const QString& vPath, Document *doc = 0)
+        :Binary(filePath, ti, des, doc), videoPath(vPath)
+    {}
+    QString getVideoPath() const;
+    void setVideoPath(const QString &value);
+    QString toHTML();
+    void save();
+};
+class AudioNote: public Binary{
+    friend class NotesManager;
+    QString audioPath;
+    QString getCategory();
+    QString getExtension();
+public:
+    AudioNote(const QString& ti, const QString& des, const QString& aPath, Document *doc = 0)
+        :Binary(ti, des, doc), audioPath(aPath)
+    {}
+    AudioNote(const QString& filePath, const QString& ti, const QString& des, const QString& aPath, Document *doc = 0)
+        :Binary(filePath, ti, des, doc), audioPath(aPath)
+    {}
+    QString getAudioPath() const;
+    void setAudioPath(const QString &value);
+    QString toHTML();
+    void save();
+};
 
 
 

@@ -15,7 +15,7 @@ class ArticleEditor : public Editor
 {
     Q_OBJECT
 public:
-    explicit ArticleEditor(Note *, QWidget *parent = 0);
+    explicit ArticleEditor(Article *, QWidget *parent = 0);
 
     QLineEdit *getTitle() const;
     void setTitle(QLineEdit *value);
@@ -23,11 +23,11 @@ public:
     QTextEdit *getText() const;
     void setText(QTextEdit *value);
 
-    Article *getRessource() const;
-    void setRessource(Article *value);
-
     QTextEdit *getTextWidget() const;
     void setTextWidget(QTextEdit *value);
+
+    Article *getRessource() const;
+    void setRessource(Article *value);
 
 signals:
 
@@ -40,5 +40,7 @@ private:
     Article *ressource;
     NotesManager *nm;
 };
+
+
 
 #endif // ARTICLEEDITOR_H
