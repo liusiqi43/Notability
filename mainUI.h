@@ -14,19 +14,21 @@
 #include <QVBoxLayout>
 
 #include "Notes.h"
-#include "ArticleEditor.h"
+#include "BaseEditor.h"
 #include "htmlViewer.h"
+#include "NotesManager.h"
 
-class NotesEditor : public QMainWindow
+class mainUI : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit NotesEditor(QWidget *parent = 0);
+    explicit mainUI(QWidget *parent = 0);
     
 signals:
     
 public slots:
     void UI_OPEN_FILE();
+    void UI_OPEN_IMAGENOTE();
     void UI_INFORM_NOT_IMPLEMENTED();
     void UI_TAB_CHANGE_HANDLER(int);
     
@@ -42,7 +44,7 @@ private:
 
     NotesManager *nm;
 
-    ArticleEditor * noteEditor;
+    Editor * noteEditor;
     HtmlViewer * hv;
 
     Note * ressource;

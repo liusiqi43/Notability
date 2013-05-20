@@ -1,12 +1,10 @@
-#include "NotesEditor.h"
-#include "NotesManager.h"
-#include "ArticleEditor.h"
+#include "mainUI.h"
 
-void NotesEditor::UI_INFORM_NOT_IMPLEMENTED(){
+void mainUI::UI_INFORM_NOT_IMPLEMENTED(){
     QMessageBox::information(this, "New fonctionality", "To be implemented...");
 }
 
-void NotesEditor::UI_OPEN_FILE(){
+void mainUI::UI_OPEN_FILE(){
 
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Documents (*.txt)");
 
@@ -18,7 +16,7 @@ void NotesEditor::UI_OPEN_FILE(){
 
         nm = &NotesManager::getInstance();
         ressource = &nm->getArticle(fichier);
-        noteEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
+        noteEditor = ressource->createEditor();
 
         QVBoxLayout *parentLayout = new QVBoxLayout();
         EditorPage->setLayout(parentLayout);
@@ -26,25 +24,41 @@ void NotesEditor::UI_OPEN_FILE(){
     }
 }
 
-void NotesEditor::UI_TAB_CHANGE_HANDLER(int n){
+void mainUI::UI_OPEN_IMAGENOTE(){
+
+    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Image Notes (*.img)");
+
+    if(!fichier.isNull()){
+        if(EditorPage->layout()){
+            delete noteEditor;
+            delete EditorPage->layout();
+        }
+
+        nm = &NotesManager::getInstance();
+        ressource = &nm->getImageNote(fichier);
+        noteEditor = ressource->createEditor();
+
+        QVBoxLayout *parentLayout = new QVBoxLayout();
+        EditorPage->setLayout(parentLayout);
+        parentLayout->addWidget(noteEditor);
+    }
+}
+
+void mainUI::UI_TAB_CHANGE_HANDLER(int n){
     switch(n){
     case -1:{
         return;
     }
     case 1:{
         qDebug()<<"HTML";
-        qDebug()<<"Current title: " << this->noteEditor->getTitleWidget()->text();
-        qDebug()<<"Current text: " << this->noteEditor->getTextWidget()->toHtml();
+        qDebug()<<this->noteEditor->toHtml();
         if(htmlViewerPage->layout()){
             delete hv;
             delete htmlViewerPage->layout();
         }
 
         // add html viewer into tab
-        hv = new HtmlViewer(new Article(
-                                this->noteEditor->getTitleWidget()->text(),
-                                this->noteEditor->getTextWidget()->toHtml()
-                                ));
+        hv = new HtmlViewer(this->noteEditor->toHtml());
         QVBoxLayout *parentLayoutHV = new QVBoxLayout();
         parentLayoutHV->addWidget(hv);
         htmlViewerPage->setLayout(parentLayoutHV);
@@ -55,7 +69,7 @@ void NotesEditor::UI_TAB_CHANGE_HANDLER(int n){
     }
 }
 
-NotesEditor::NotesEditor(QWidget *parent) :
+mainUI::mainUI(QWidget *parent) :
     QMainWindow(parent)
 {
     mainWidget = new QWidget;
@@ -63,6 +77,7 @@ NotesEditor::NotesEditor(QWidget *parent) :
     QAction *actionQuit = new QAction("&Quitter", this);
     QAction *actionOpenArticle = new QAction("&Article", this);
     QAction *actionOpenImage = new QAction("&Image", this);
+    QAction *actionOpenVideo = new QAction("&Video", this);
 
     QMenu *menuOuvrir = new QMenu("&Ouvrir");
 
@@ -74,8 +89,10 @@ NotesEditor::NotesEditor(QWidget *parent) :
     menuFichier->addAction(actionQuit);
     menuOuvrir->addAction(actionOpenArticle);
     menuOuvrir->addAction(actionOpenImage);
+    menuOuvrir->addAction(actionOpenVideo);
     toolBar->addAction(actionOpenArticle);
     toolBar->addAction(actionOpenImage);
+    toolBar->addAction(actionOpenVideo);
     toolBar->addAction(actionQuit);
 
     tab = new QTabWidget();
@@ -85,12 +102,14 @@ NotesEditor::NotesEditor(QWidget *parent) :
     // Creat a new article, with generated file path and empty title&text
     // TODO add article to a default document.
     nm = &NotesManager::getInstance();
-    ressource = &nm->getNewArticle();
+//    ressource = &nm->getNewArticle();
+    ressource = &nm->getNewImageNote();
 
     // add default article editor into layout
     QVBoxLayout *parentLayout = new QVBoxLayout();
     EditorPage->setLayout(parentLayout);
-    noteEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
+    noteEditor = ressource->createEditor();
+//    noteEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
     parentLayout->addWidget(noteEditor);
 
     tab->addTab(EditorPage, "Editor");
@@ -102,10 +121,11 @@ NotesEditor::NotesEditor(QWidget *parent) :
     mainWidget->setLayout(layout);
 
     this->setCentralWidget(mainWidget);
-
+    qDebug()<<"Hello";
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpenArticle, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
-    QObject::connect(actionOpenImage, SIGNAL(triggered()), this, SLOT(UI_INFORM_NOT_IMPLEMENTED()));
+    QObject::connect(actionOpenImage, SIGNAL(triggered()), this, SLOT(UI_OPEN_IMAGENOTE()));
+    QObject::connect(actionOpenVideo, SIGNAL(triggered()), this, SLOT(UI_INFORM_NOT_IMPLEMENTED()));
 
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));

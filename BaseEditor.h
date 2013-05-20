@@ -1,5 +1,5 @@
-#ifndef EDITOR_H
-#define EDITOR_H
+#ifndef BASEEDITOR_H
+#define BASEEDITOR_H
 
 #include <QWidget>
 #include <QLineEdit>
@@ -8,7 +8,7 @@
 #include <QDebug>
 #include <QMessageBox>
 
-#include "Notes.h"
+class Note;
 
 /**
  * @brief The Editor class: Editor::Editor, base class for Article editor, Binary Editor. Abstract class
@@ -16,11 +16,8 @@
 class Editor : public QWidget
 {
     Q_OBJECT
-
-    Note * ressource;
-
     QLineEdit * titleWidget;
-
+    Note * ressource;
     QPushButton * btnSave;
 
     void BACKEND_SAVE_TITLE();
@@ -28,20 +25,18 @@ class Editor : public QWidget
 
     virtual void BACKEND_SET_CONTENT() = 0;
 
-protected:
+public:
     QVBoxLayout *layout;
 
-public:
-    explicit Editor(Note *, QWidget *parent = 0);
-    
-    Note *getRessource() const;
-    void setRessource(Note *value);
+    explicit Editor(Note *n, QWidget *parent = 0);
 
     QLineEdit *getTitleWidget() const;
     void setTitleWidget(QLineEdit *value);
 
     QPushButton *getBtnSave() const;
     void setBtnSave(QPushButton *value);
+
+    virtual QString toHtml() const = 0;
 
 signals:
     
@@ -51,4 +46,4 @@ public slots:
     
 };
 
-#endif // EDITOR_H
+#endif // BASEEDITOR_H

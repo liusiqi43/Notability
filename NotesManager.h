@@ -24,10 +24,13 @@ public:
     static void libererInstance();
     Document& getDocument(const QString& filename);
     Article& getArticle(const QString& filename);
+    ImageNote& getImageNote(const QString& filename);
     Document& getNewDocument(const QString& filename);
     Article& getNewArticle();
+    ImageNote& getNewImageNote();
     void saveArticle(Article& a);
     void saveDocument(Document& d);
+    void saveImageNote(ImageNote& i);
 
     enum typeElement { article, document};
     class Iterator {

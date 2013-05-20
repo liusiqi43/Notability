@@ -11,7 +11,7 @@ class HtmlViewer : public QWidget
 {
     Q_OBJECT
 public:
-    explicit HtmlViewer(Note *n, QWidget *parent = 0);
+    explicit HtmlViewer(const QString &, QWidget *parent = 0);
     
 signals:
     
@@ -19,7 +19,7 @@ public slots:
 private:
     QVBoxLayout *layout;
     QWebView *wv;
-    Note *ressource;
+    const QString &ressource;
 };
 
 #endif // HTMLVIEWER_H

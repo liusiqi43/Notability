@@ -1,5 +1,12 @@
-#include "Editor.h"
+#include <QWidget>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QDebug>
+#include <QMessageBox>
 
+#include "Notes.h"
+#include "BaseEditor.h"
 
 Editor::Editor(Note *n, QWidget *parent) :
     QWidget(parent), ressource(n)
@@ -13,16 +20,6 @@ Editor::Editor(Note *n, QWidget *parent) :
 
     QObject::connect(titleWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON()));
     QObject::connect(btnSave, SIGNAL(clicked()),this, SLOT(BACKEND_SAVE()));
-}
-
-Note *Editor::getRessource() const
-{
-    return ressource;
-}
-
-void Editor::setRessource(Note *value)
-{
-    ressource = value;
 }
 
 void Editor::UI_ENABLE_SAVE_BUTTON()
@@ -55,18 +52,6 @@ void Editor::UI_INFORM_USER_OF_SAVE(){
     QMessageBox::information(this, "Article Saved", "Your modifications have been saved!");
     this->btnSave->setEnabled(false);
 }
-
-
-//QVBoxLayout *Editor::getLayout() const
-//{
-//    return layout;
-//}
-
-//void Editor::setLayout(QVBoxLayout *value)
-//{
-//    layout = value;
-//}
-
 
 QLineEdit *Editor::getTitleWidget() const
 {

@@ -47,6 +47,26 @@ Article& NotesManager::getArticle(const QString& fileName){
     return *a;
 }
 
+ImageNote &NotesManager::getImageNote(const QString &fileName)
+{
+    // s'il existe d�j�, on le  renvoie
+//    for(unsigned int i=0; i<nbArticles; i++){
+//        if (articles[i]->getFilePath()==fileName) return *articles[i];
+//    }
+    // sinon, il faut le loader
+    QFile fichier(fileName);
+    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+    QTextStream flux(&fichier);
+
+    QString title=flux.readLine();
+    QString iPath=flux.readLine();
+    QString description=flux.readAll();
+    fichier.close();
+    ImageNote* a=new ImageNote(title, description, iPath);
+//    addArticle(a);
+    return *a;
+}
+
 Document& NotesManager::getDocument(const QString& fileName){
     // on v�rifie d'abord que le document demand� n'a pas d�j� �t� charg�
     for(unsigned int i=0; i<nbDocuments; i++){
@@ -79,6 +99,15 @@ Article& NotesManager::getNewArticle(){
     Article* a=new Article("","");
     a->setModified(true);
     addArticle(a);
+    return *a;
+}
+
+ImageNote &NotesManager::getNewImageNote()
+{
+    ImageNote* a=new ImageNote("", "", "");
+    a->setModified(true);
+    // TODO replace addArticle with addNote
+//    addArticle(a);
     return *a;
 }
 
@@ -145,5 +174,26 @@ void NotesManager::saveDocument(Document& d){
         flux<<d;
         file.close();
         d.modified=false;
+    }
+}
+
+void NotesManager::saveImageNote(ImageNote &i)
+{
+    if (i.isModified()) {
+        // Prepare parent directories
+        QString fp = i.getFilePath();
+        fp.truncate(fp.lastIndexOf('/'));
+        QDir().mkpath(fp);
+
+        // Cr�ation d'un objet QFile
+        QFile file(i.getFilePath());
+
+        // On ouvre notre fichier en lecture seule et on v�rifie l'ouverture
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+            throw NotesException("Erreur sauvegarde d'un article : impossible d'ouvrir un fichier en �criture");
+        QTextStream flux(&file);
+        flux<<i;
+        file.close();
+        i.modified=false;
     }
 }

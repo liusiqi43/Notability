@@ -1,23 +1,25 @@
 #ifndef NOTES_H
 #define NOTES_H
 
-#include <QString>
-#include <QTextStream>
-#include "AppManager.h"
+#include "BaseEditor.h"
+#include "Editors.h"
 
+class Binary;
+class ImageNote;
+class VideoNote;
+class AudioNote;
 class Article;
 class Note;
 class Document;
-class NotesManager;
-
 
 QTextStream& operator<<(QTextStream& f, const Article& a);
 QTextStream& operator<<(QTextStream& f, const Document& d);
+QTextStream& operator<<(QTextStream& f, const ImageNote& i);
 
 class NotesException{
 public:
-    NotesException(const QString& message):info(message){}
-    QString getInfo() const { return info; }
+    NotesException(const QString& message);
+    QString getInfo() const;
 private:
     QString info;
 };
@@ -49,19 +51,19 @@ public:
     const QString generateFilePath();
 
     virtual ~Note(){}
-    const QString &getTitle() const {return title;}
-    const QString &getFilePath() const {return filePath;}
-    void setFilePath(const QString &p) {filePath = p; modified=true;}
+    const QString &getTitle() const;
+    const QString &getFilePath() const;
+    void setFilePath(const QString &p);
 
-    Document *getDocument() const {return document;}
+    Document *getDocument() const;
 
-    void setTitle(QString &t) {title = t; modified = true;}
+    void setTitle(QString &t);
 
-    void setModified(bool b) {modified = b;}
-    bool isModified() const {return modified;}
+    void setModified(bool b);
+    bool isModified() const;
 
     virtual void save() = 0;
-    virtual QString toHTML() = 0;
+    virtual Editor *createEditor() = 0;
 };
 
 class Article: public Note {
@@ -74,11 +76,11 @@ class Article: public Note {
 public:
     Article(const QString& ti, const QString& te, Document *doc = 0);
     Article(const QString& filePath, const QString& ti, const QString& te, Document *doc = 0);
-    const QString& getText() const { return text; }
+    const QString& getText() const;
     void setText(const QString& t);
 
-    QString toHTML();
     void save();
+    ArticleEditor *createEditor();
 };
 
 /**
@@ -88,65 +90,58 @@ class Binary: public Note{
     friend class NotesManager;
     QString description;
 public:
-    Binary(const QString& ti, const QString& des, Document *doc = 0)
-        :Note(ti, doc), description(des)
-    {}
-    Binary(const QString& filePath, const QString& ti, const QString& des, Document *doc = 0)
-        :Note(ti, filePath, doc), description(des)
-    {}
+    Binary(const QString& ti, const QString& des, Document *doc = 0);
+    Binary(const QString& filePath, const QString& ti, const QString& des, Document *doc = 0);
+
     QString getDescription() const;
     void setDescription(const QString &value);
 };
+
+
 class ImageNote: public Binary{
     friend class NotesManager;
     QString imgPath;
+
     QString getCategory();
     QString getExtension();
 public:
-    ImageNote(const QString& ti, const QString& des, const QString& iPath, Document *doc = 0)
-        :Binary(ti, des, doc), imgPath(iPath)
-    {}
-    ImageNote(const QString& filePath, const QString& ti, const QString& des, const QString& iPath, Document *doc = 0)
-        :Binary(filePath, ti, des, doc), imgPath(iPath)
-    {}
+    ImageNote(const QString& ti, const QString& des, const QString& iPath, Document *doc = 0);
+    ImageNote(const QString& filePath, const QString& ti, const QString& des, const QString& iPath, Document *doc = 0);
+
     QString getImgPath() const;
     void setImgPath(const QString &value);
-    QString toHTML();
     void save();
+    ImageNoteEditor *createEditor();
 };
+
+
 class VideoNote: public Binary{
     friend class NotesManager;
     QString videoPath;
     QString getCategory();
     QString getExtension();
 public:
-    VideoNote(const QString& ti, const QString& des, const QString& vPath, Document *doc = 0)
-        :Binary(ti, des, doc), videoPath(vPath)
-    {}
-    VideoNote(const QString& filePath, const QString& ti, const QString& des, const QString& vPath, Document *doc = 0)
-        :Binary(filePath, ti, des, doc), videoPath(vPath)
-    {}
+    VideoNote(const QString& ti, const QString& des, const QString& vPath, Document *doc = 0);
+    VideoNote(const QString& filePath, const QString& ti, const QString& des, const QString& vPath, Document *doc = 0);
+
     QString getVideoPath() const;
     void setVideoPath(const QString &value);
-    QString toHTML();
-    void save();
+//    void save();
 };
+
+
 class AudioNote: public Binary{
     friend class NotesManager;
     QString audioPath;
     QString getCategory();
     QString getExtension();
 public:
-    AudioNote(const QString& ti, const QString& des, const QString& aPath, Document *doc = 0)
-        :Binary(ti, des, doc), audioPath(aPath)
-    {}
-    AudioNote(const QString& filePath, const QString& ti, const QString& des, const QString& aPath, Document *doc = 0)
-        :Binary(filePath, ti, des, doc), audioPath(aPath)
-    {}
+    AudioNote(const QString& ti, const QString& des, const QString& aPath, Document *doc = 0);
+    AudioNote(const QString& filePath, const QString& ti, const QString& des, const QString& aPath, Document *doc = 0);
+
     QString getAudioPath() const;
     void setAudioPath(const QString &value);
-    QString toHTML();
-    void save();
+//    void save();
 };
 
 
