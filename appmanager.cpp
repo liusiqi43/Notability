@@ -2,7 +2,7 @@
 
 const QString AppManager::generateID(){
     QDateTime t = QDateTime::currentDateTime();
-    return t.toString("hhmmsszzzddMMyyyy");
+    return t.toString("yyyyMMddzzzssmmhh");
 }
 
 const QString AppManager::getWorkSpace(){

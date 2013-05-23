@@ -7,7 +7,8 @@ SOURCES += \
     htmlViewer.cpp \
     BaseEditor.cpp \
     Editors.cpp \
-    mainUI.cpp
+    mainUI.cpp \
+    noteFactory.cpp
 
 HEADERS += \
     Notes.h \
@@ -16,7 +17,8 @@ HEADERS += \
     htmlViewer.h \
     Editors.h \
     BaseEditor.h \
-    mainUI.h
+    mainUI.h \
+    noteFactory.h
 
 QT      += widgets \
            webkitwidgets

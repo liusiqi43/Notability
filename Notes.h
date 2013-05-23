@@ -26,6 +26,7 @@ private:
 
 class Note{
     friend class NotesManager;
+
     QString title;
     QString filePath;
     bool modified;
