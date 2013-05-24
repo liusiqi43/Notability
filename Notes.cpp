@@ -20,49 +20,76 @@ QString NotesException::getInfo() const { return info; }
  *  Note
  */
 
-const QString & Note::getTitle() const {return title;}
-const QString & Note::getFilePath() const {return filePath;}
-void Note::setFilePath(const QString &p) {filePath = p; modified=true;}
-
-Document * Note::getDocument() const {return document;}
-
-void Note::setTitle(QString &t) {title = t; modified = true;}
-
-void Note::setModified(bool b) {modified = b;}
-bool Note::isModified() const {return modified;}
-
-const QString Note::generateFilePath() {
-    return this->getCategory()+AppManager::getInstance().generateID()+this->getExtension();
+const QString & Note::getTitle() const {
+    return title;
 }
 
-Note::Note(QString ti, Document *doc):title(ti), document(doc){}
+const QString & Note::getFilePath() const {
+    return filePath;
+}
 
-Note::Note(QString ti, QString path, Document *doc):title(ti), filePath(path), document(doc){}
+void Note::setFilePath(const QString &p) {
+    filePath = p;
+    modified=true;
+}
+
+void Note::setTitle(QString &t) {
+    title = t;
+    modified = true;
+}
+
+void Note::setModified(bool b) {
+    modified = b;
+    modified = true;
+}
+
+bool Note::isModified() const {
+    return modified;
+}
+
+void Note::setDeleted(bool b) {
+    deleted = b;
+    modified = true;
+}
+
+bool Note::isDeleted() const {
+    return deleted;
+}
+
+/**
+ * @brief Note::Note used to create new Note, modified = true
+ * @param path
+ */
+Note::Note(const QString& path)
+    :title(""), deleted(false), modified(true){}
+
+/**
+ * @brief Note::Note used to create from existing Note, modified=false
+ * @param path
+ * @param ti
+ */
+Note::Note(const QString& path, const QString& ti)
+    :title(ti), deleted(false), modified(false), filePath(path){}
+
+const QString &Note::exportNote(ExportStrategy *es, unsigned int level)
+{
+    if(level){
+        return es->exportNote(this, level);
+    }
+    else{
+        return es->header()+es->exportNote(this)+es->footer();
+    }
+}
 
 /***
  *  Article
  */
 
-/**
- * @brief Article::Article, create new Article
- * @param ti title
- * @param te text
- * @param doc container document
- */
-Article::Article(const QString& ti, const QString& te, Document *doc):
-    Note(ti, doc),text(te) {
-    this->setFilePath(this->generateFilePath());
-    qDebug()<<this->getFilePath();
-}
+Article::Article(const QString& path):
+    Note(path),text("") {}
 
-Article::Article(const QString &filePath, const QString &ti, const QString &te, Document *doc)
-    :Note(ti, filePath, doc), text(te){}
-
-QTextStream& operator<<(QTextStream& f, const Article& a){
-    f<<a.getTitle()<<"\n";
-    f<<a.getText()<<"\n";
-    return f;
-}
+Article::Article(const QString& path, const QString& ti, const QString& te):
+    Note(path, ti),text(te) {}
 
 const QString& Article::getText() const { return text; }
 
@@ -71,122 +98,42 @@ void Article::setText(const QString& t) {
     text=t;
 }
 
-void Article::save(){
-    NotesManager::getInstance().saveArticle(*this);
-}
-
 ArticleEditor *Article::createEditor()
 {
     return new ArticleEditor(this);
 }
 
-QString Article::getCategory(){
-    return AppManager::getWorkSpace()+QString("/ART/ART");
-}
-
-QString Article::getExtension(){
-    return QString(".txt");
-}
-
-/***
- * VideoNote
- */
-VideoNote::VideoNote(const QString& ti, const QString& des, const QString& vPath, Document *doc)
-    :Binary(ti, des, doc), videoPath(vPath)
-{}
-VideoNote::VideoNote(const QString& filePath, const QString& ti, const QString& des, const QString& vPath, Document *doc)
-    :Binary(filePath, ti, des, doc), videoPath(vPath)
-{}
-
-QString VideoNote::getVideoPath() const
-{
-    return videoPath;
-}
-
-void VideoNote::setVideoPath(const QString &value)
-{
-    setModified(true);
-    videoPath = value;
-}
-
-QString VideoNote::getCategory()
-{
-    return AppManager::getWorkSpace()+QString("/VID/VID");
-}
-
-QString VideoNote::getExtension(){
-    return QString(".vid");
-}
-
-/***
- * ImageNote
- */
-ImageNote::ImageNote(const QString& ti, const QString& des, const QString& iPath, Document *doc)
-    :Binary(ti, des, doc), imgPath(iPath)
-{
-    this->setFilePath(this->generateFilePath());
-    qDebug()<<this->getFilePath();
-}
-ImageNote::ImageNote(const QString& filePath, const QString& ti, const QString& des, const QString& iPath, Document *doc)
-    :Binary(filePath, ti, des, doc), imgPath(iPath)
-{}
-
-QString ImageNote::getImgPath() const
-{
-    return imgPath;
-}
-void ImageNote::setImgPath(const QString &value)
-{
-    setModified(true);
-    imgPath = value;
-}
-
-void ImageNote::save()
-{
-    NotesManager::getInstance().saveImageNote(*this);
-}
-
-ImageNoteEditor *ImageNote::createEditor()
-{
-    return new ImageNoteEditor(this);
-}
-
-QString ImageNote::getCategory()
-{
-    return AppManager::getWorkSpace()+QString("/IMG/IMG");
-}
-
-QString ImageNote::getExtension(){
-    return QString(".img");
-}
-
-QTextStream& operator<<(QTextStream& f, const ImageNote& i){
-    f<<i.getTitle()<<"\n";
-    f<<i.getImgPath()<<"\n";
-    f<<i.getDescription()<<"\n";
-    return f;
-}
-
-
 /***
  * Binary
  */
 
-Binary::Binary(const QString& ti, const QString& des, Document *doc)
-    :Note(ti, doc), description(des)
+Binary::Binary(const QString& path)
+    :Note(path), description(""), mediaPath("")
 {}
-Binary::Binary(const QString& filePath, const QString& ti, const QString& des, Document *doc)
-    :Note(ti, filePath, doc), description(des)
+Binary::Binary(const QString& path, const QString& ti, const QString& des, const QString& media)
+    :Note(path, ti), description(des), mediaPath(media)
 {}
 
 QString Binary::getDescription() const
 {
     return description;
 }
+
 void Binary::setDescription(const QString &value)
 {
     this->setModified(true);
     description = value;
+}
+
+QString Binary::getMediaPath() const
+{
+    return mediaPath;
+}
+
+void Binary::setMediaPath(const QString &value)
+{
+    this->setModified(true);
+    mediaPath = value;
 }
 
 /***
@@ -199,22 +146,72 @@ AudioNote::AudioNote(const QString& filePath, const QString& ti, const QString& 
     :Binary(filePath, ti, des, doc), audioPath(aPath)
 {}
 
-QString AudioNote::getAudioPath() const
-{
-    return audioPath;
+AudioNoteEditor* AudioNote::createEditor(){
+    return new AudioNoteEditor(this);
 }
 
-void AudioNote::setAudioPath(const QString &value)
-{
-    setModified(true);
-    audioPath = value;
+/***
+ * VideoNote
+ */
+VideoNote::VideoNote(const QString& ti, const QString& des, const QString& vPath, Document *doc)
+    :Binary(ti, des, doc), videoPath(vPath)
+{}
+VideoNote::VideoNote(const QString& filePath, const QString& ti, const QString& des, const QString& vPath, Document *doc)
+    :Binary(filePath, ti, des, doc), videoPath(vPath)
+{}
+
+VideoNoteEditor* VideoNote::createEditor(){
+    return new VideoNoteEditor(this);
 }
 
-QString AudioNote::getCategory()
+
+/***
+ * ImageNote
+ */
+ImageNote::ImageNote(const QString& filepath)
+    :Binary(filepath)
+{}
+
+ImageNote::ImageNote(const QString& filePath, const QString& ti, const QString& des, const QString& iPath)
+    :Binary(filePath, ti, des, iPath)
+{}
+
+ImageNoteEditor *ImageNote::createEditor()
 {
-    return AppManager::getWorkSpace()+QString("/AUD/AUD");
+    return new ImageNoteEditor(this);
 }
 
-QString AudioNote::getExtension(){
-    return QString(".aud");
+/***
+ * Document
+ */
+
+Document::Document(const QString &path)
+    :Note(path)
+{}
+
+Document::Document(const QString &path, const QString &ti)
+    :Note(path, ti)
+{}
+
+QSet<Note *>::iterator Document::begin(){
+    return notes.begin();
 }
+
+QSet<Note *>::iterator Document::end(){
+    return notes.end();
+}
+
+void Document::addNote(const Note* note)
+{
+    this->notes << note;
+}
+
+void Document::removeNote(const Note* note)
+{
+    this->notes.remove(note);
+}
+
+DocumentEditor* Document::createEditor(){
+    return new DocumentEditor(this);
+}
+

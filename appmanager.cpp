@@ -1,10 +1,5 @@
 #include "AppManager.h"
 
-const QString AppManager::generateID(){
-    QDateTime t = QDateTime::currentDateTime();
-    return t.toString("yyyyMMddzzzssmmhh");
-}
-
 const QString AppManager::getWorkSpace(){
     return "./Ressources";
 }

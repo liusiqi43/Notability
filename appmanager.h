@@ -13,7 +13,6 @@ public:
     static AppManager& getInstance();
     static void libererInstance();
 
-    static const QString generateID();
     static const QString getWorkSpace();
 };
 
