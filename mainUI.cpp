@@ -1,12 +1,21 @@
 #include "mainUI.h"
+#include "NoteFactory.h"
+#include "NoteTypeSignalAction.h"
+#include <typeinfo>
 
 void mainUI::UI_INFORM_NOT_IMPLEMENTED(){
     QMessageBox::information(this, "New fonctionality", "To be implemented...");
 }
 
-void mainUI::UI_OPEN_FILE(){
 
-    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Documents (*.txt)");
+void mainUI::UI_NEW_NOTE_EDITOR(const int type){
+
+    NoteType nt;
+    try{
+        nt = dynamic_cast<NoteType>(type);
+    }catch(std::bad_cast& bc){
+        QMessageBox::critical(this, "Error", "something serious happenned in creating new editor..."+bc.what());
+    }
 
     if(!fichier.isNull()){
         if(EditorPage->layout()){
@@ -15,18 +24,23 @@ void mainUI::UI_OPEN_FILE(){
         }
 
         nm = &NotesManager::getInstance();
-        ressource = &nm->getArticle(fichier);
-        noteEditor = ressource->createEditor();
-
-        QVBoxLayout *parentLayout = new QVBoxLayout();
-        EditorPage->setLayout(parentLayout);
-        parentLayout->addWidget(noteEditor);
+        try{
+            ressource = &nm->getNewNote(nt);
+            noteEditor = ressource->createEditor();
+            QVBoxLayout *parentLayout = new QVBoxLayout();
+            EditorPage->setLayout(parentLayout);
+            parentLayout->addWidget(noteEditor);
+        }
+        catch(NotesException e){
+            QMessageBox::critical(this, "Error", e.getInfo());
+        }
     }
 }
 
-void mainUI::UI_OPEN_IMAGENOTE(){
 
-    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Image Notes (*.img)");
+void mainUI::UI_OPEN_FILE(){
+
+    QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Notes (*.txt *.img *.vid *.aud *.doc)");
 
     if(!fichier.isNull()){
         if(EditorPage->layout()){
@@ -35,12 +49,16 @@ void mainUI::UI_OPEN_IMAGENOTE(){
         }
 
         nm = &NotesManager::getInstance();
-        ressource = &nm->getImageNote(fichier);
-        noteEditor = ressource->createEditor();
-
-        QVBoxLayout *parentLayout = new QVBoxLayout();
-        EditorPage->setLayout(parentLayout);
-        parentLayout->addWidget(noteEditor);
+        try{
+            ressource = &nm->getNote(fichier);
+            noteEditor = ressource->createEditor();
+            QVBoxLayout *parentLayout = new QVBoxLayout();
+            EditorPage->setLayout(parentLayout);
+            parentLayout->addWidget(noteEditor);
+        }
+        catch(NotesException e){
+            QMessageBox::critical(this, "Error", e.getInfo());
+        }
     }
 }
 
@@ -51,14 +69,15 @@ void mainUI::UI_TAB_CHANGE_HANDLER(int n){
     }
     case 1:{
         qDebug()<<"HTML";
-        qDebug()<<this->noteEditor->toHtml();
+        this->noteEditor->BACKEND_SET();
+        QString html = ressource->exportNote(NotesManager::strategies[html]);
         if(htmlViewerPage->layout()){
             delete hv;
             delete htmlViewerPage->layout();
         }
 
         // add html viewer into tab
-        hv = new HtmlViewer(this->noteEditor->toHtml());
+        hv = new HtmlViewer(html);
         QVBoxLayout *parentLayoutHV = new QVBoxLayout();
         parentLayoutHV->addWidget(hv);
         htmlViewerPage->setLayout(parentLayoutHV);
@@ -74,25 +93,30 @@ mainUI::mainUI(QWidget *parent) :
 {
     mainWidget = new QWidget;
     QToolBar *toolBar = addToolBar("General");
-    QAction *actionQuit = new QAction("&Quitter", this);
-    QAction *actionOpenArticle = new QAction("&Article", this);
-    QAction *actionOpenImage = new QAction("&Image", this);
-    QAction *actionOpenVideo = new QAction("&Video", this);
+    QAction *actionQuit = new QAction("&Quit", this);
+    QAction *actionOpen = new QAction("&Open...", this);
 
-    QMenu *menuOuvrir = new QMenu("&Ouvrir");
+    NoteTypeSignalAction *actionNewArticle = new NoteTypeSignalAction(article, "&Article", this);
+    NoteTypeSignalAction *actionNewAudioNote = new NoteTypeSignalAction(audioNote, "&AudioNote", this);
+    NoteTypeSignalAction *actionNewVideoNote = new NoteTypeSignalAction(videoNote, "&VideoNote", this);
+    NoteTypeSignalAction *actionNewDocument = new NoteTypeSignalAction(document, "&Document", this);
+    NoteTypeSignalAction *actionNewImageNote = new NoteTypeSignalAction(imageNote, "&ImageNote", this);
 
-    menuFichier = menuBar()->addMenu("&Fichier");
-    menuEdition = menuBar()->addMenu("&Edition");
+    QMenu *menuNew = new QMenu("&New...");
+    menuNew->addAction(actionNewArticle);
+    menuNew->addAction(actionNewImageNote);
+    menuNew->addAction(actionNewVideoNote);
+    menuNew->addAction(actionNewAudioNote);
+    menuNew->addAction(actionNewDocument);
 
-    menuFichier->addMenu(menuOuvrir);
+    menuFichier = menuBar()->addMenu("&File");
+    menuEdition = menuBar()->addMenu("&Edit");
+
+    menuFichier->addMenu(menuNew);
+    menuFichier->addAction(actionOpen);
 
     menuFichier->addAction(actionQuit);
-    menuOuvrir->addAction(actionOpenArticle);
-    menuOuvrir->addAction(actionOpenImage);
-    menuOuvrir->addAction(actionOpenVideo);
-    toolBar->addAction(actionOpenArticle);
-    toolBar->addAction(actionOpenImage);
-    toolBar->addAction(actionOpenVideo);
+    toolBar->addAction(actionOpen);
     toolBar->addAction(actionQuit);
 
     tab = new QTabWidget();
@@ -123,9 +147,12 @@ mainUI::mainUI(QWidget *parent) :
     this->setCentralWidget(mainWidget);
     qDebug()<<"Hello";
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
-    QObject::connect(actionOpenArticle, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
-    QObject::connect(actionOpenImage, SIGNAL(triggered()), this, SLOT(UI_OPEN_IMAGENOTE()));
-    QObject::connect(actionOpenVideo, SIGNAL(triggered()), this, SLOT(UI_INFORM_NOT_IMPLEMENTED()));
+    QObject::connect(actionOpen, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
+    QObject::connect(actionNewArticle, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
+    QObject::connect(actionNewDocument, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
+    QObject::connect(actionNewImageNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
+    QObject::connect(actionNewAudioNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
+    QObject::connect(actionNewVideoNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
 
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));

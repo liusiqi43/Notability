@@ -20,10 +20,10 @@ class Editor : public QWidget
     Note * ressource;
     QPushButton * btnSave;
 
-    void BACKEND_SAVE_TITLE();
-    void UI_INFORM_USER_OF_SAVE();
-
+    void BACKEND_SET_TITLE();
     virtual void BACKEND_SET_CONTENT() = 0;
+
+    void UI_INFORM_USER_OF_SAVE();
 
 public:
     QVBoxLayout *layout;
@@ -38,11 +38,15 @@ public:
 
     virtual QString toHtml() const = 0;
 
+    virtual Note *getRessource() const;
+    virtual void setRessource(Note *value);
+
 signals:
     
 public slots:
     void UI_ENABLE_SAVE_BUTTON();
     void BACKEND_SAVE();
+    void BACKEND_SET();
     
 };
 

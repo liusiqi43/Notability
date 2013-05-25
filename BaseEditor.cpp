@@ -27,17 +27,21 @@ void Editor::UI_ENABLE_SAVE_BUTTON()
     this->btnSave->setEnabled(true);
 }
 
-void Editor::BACKEND_SAVE_TITLE()
+void Editor::BACKEND_SET_TITLE()
 {
     QString str = titleWidget->text();
     this->ressource->setTitle(str);
 }
 
+void Editor::BACKEND_SET()
+{
+    BACKEND_SET_TITLE();
+    BACKEND_SET_CONTENT();
+}
 
 void Editor::BACKEND_SAVE()
 {
-    BACKEND_SAVE_TITLE();
-    BACKEND_SET_CONTENT();
+    BACKEND_SET();
     try{
         ressource->save();
         UI_INFORM_USER_OF_SAVE();
@@ -71,4 +75,14 @@ QPushButton *Editor::getBtnSave() const
 void Editor::setBtnSave(QPushButton *value)
 {
     btnSave = value;
+}
+
+Note *Editor::getRessource() const
+{
+    return ressource;
+}
+
+void Editor::setRessource(Note *value)
+{
+    ressource = value;
 }
