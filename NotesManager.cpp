@@ -1,6 +1,8 @@
 #include "NotesManager.h"
-#include "Notes.h"
+#include "Note.h"
 #include "NoteFactory.h"
+#include "ExportStrategy.h"
+#include "NotesException.h"
 #include <QString>
 #include <QMap>
 #include <QFile>
@@ -27,8 +29,8 @@ NoteType DetectType(const QString& fileName){
         return unknownType;
 }
 
-QMap<NoteType, NoteFactory*> factories = NoteFactory::getFactories();
-//std::map<NoteType, NoteFactory*> strategies = ExportStrategy::getStrategies();
+QMap<NoteType, NoteFactory*> NotesManager::factories = NoteFactory::getFactories();
+QMap<ExportType, ExportStrategy*> NotesManager::strategies = ExportStrategy::getStrategies();
 
 void NotesManager::addNote(Note* a){
     // QSet will deduplicate automatically, as we have an ID attribute in Note.
@@ -49,6 +51,20 @@ Note& NotesManager::getNote(const QString& fileName){
 
     NoteFactory* f = NotesManager::factories[type];
     Note* n = f->buildNote(fileName);
+    addNote(n);
+    return *n;
+}
+
+Note &NotesManager::getNoteClone(const QString &fileName)
+{
+    NoteType type = DetectType(fileName);
+
+    if(type == unknownType)
+        throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
+
+    NoteFactory* f = NotesManager::factories[type];
+    Note* n = f->buildNote(fileName);
+    n->setFilePath(f->generateNewFilePath());
     addNote(n);
     return *n;
 }
@@ -109,7 +125,7 @@ void NotesManager::saveNote(Note& a){
         QTextStream flux(&file);
         flux<<q;
         file.close();
-        a.modified=false;
+        a.setModified(false);
     }
     else{
         throw NotesException("You are not supposed to save! No modification made!");

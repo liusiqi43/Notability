@@ -12,11 +12,12 @@
 #include <QToolBar>
 #include <QTableWidget>
 #include <QVBoxLayout>
+#include <QDebug>
 
-#include "Notes.h"
-#include "BaseEditor.h"
-#include "htmlViewer.h"
-#include "NotesManager.h"
+class Editor;
+class HtmlViewer;
+class Note;
+class NotesManager;
 
 class mainUI : public QMainWindow
 {
@@ -28,8 +29,8 @@ signals:
     
 public slots:
     void UI_OPEN_FILE();
-    void UI_OPEN_IMAGENOTE();
     void UI_INFORM_NOT_IMPLEMENTED();
+    void UI_NEW_NOTE_EDITOR(const int type);
     void UI_TAB_CHANGE_HANDLER(int);
     
 private:
@@ -41,6 +42,7 @@ private:
     QTabWidget *tab;
     QWidget *EditorPage;
     QWidget *htmlViewerPage;
+    QWidget *texViewerPage;
 
     NotesManager *nm;
 

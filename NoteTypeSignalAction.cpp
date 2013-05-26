@@ -5,7 +5,7 @@
 NoteTypeSignalAction::NoteTypeSignalAction(NoteType type, const QString& label, QObject *parent) :
     QAction(label, parent), nType(type)
 {
-    signalMapper = new QSignalMapper(this);
+    QSignalMapper* signalMapper = new QSignalMapper(this);
 
     connect(this, SIGNAL(triggered()), signalMapper, SLOT(map()));
     signalMapper->setMapping(this, (int)nType);

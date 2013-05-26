@@ -5,8 +5,6 @@
 #include <QWebView>
 #include <QVBoxLayout>
 
-#include "Notes.h"
-
 class HtmlViewer : public QWidget
 {
     Q_OBJECT

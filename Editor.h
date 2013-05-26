@@ -1,12 +1,14 @@
-#ifndef BASEEDITOR_H
-#define BASEEDITOR_H
+#ifndef EDITOR_H
+#define EDITOR_H
 
 #include <QWidget>
+#include <QLabel>
+#include <QTextEdit>
+#include <QMessageBox>
+#include <QDebug>
+#include <QPixmap>
 #include <QLineEdit>
 #include <QVBoxLayout>
-#include <QPushButton>
-#include <QDebug>
-#include <QMessageBox>
 
 class Note;
 
@@ -36,18 +38,16 @@ public:
     QPushButton *getBtnSave() const;
     void setBtnSave(QPushButton *value);
 
-    virtual QString toHtml() const = 0;
-
     virtual Note *getRessource() const;
     virtual void setRessource(Note *value);
 
 signals:
-    
+
 public slots:
     void UI_ENABLE_SAVE_BUTTON();
     void BACKEND_SAVE();
     void BACKEND_SET();
-    
+
 };
 
-#endif // BASEEDITOR_H
+#endif // EDITOR_H

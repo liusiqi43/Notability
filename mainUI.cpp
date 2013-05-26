@@ -1,7 +1,14 @@
 #include "mainUI.h"
 #include "NoteFactory.h"
 #include "NoteTypeSignalAction.h"
+#include "NotesManager.h"
+#include "Editor.h"
+#include "NotesException.h"
+#include "Note.h"
+#include "ExportStrategy.h"
+#include "htmlViewer.h"
 #include <typeinfo>
+#include <QMap>
 
 void mainUI::UI_INFORM_NOT_IMPLEMENTED(){
     QMessageBox::information(this, "New fonctionality", "To be implemented...");
@@ -12,28 +19,26 @@ void mainUI::UI_NEW_NOTE_EDITOR(const int type){
 
     NoteType nt;
     try{
-        nt = dynamic_cast<NoteType>(type);
+        nt = static_cast<NoteType>(type);
     }catch(std::bad_cast& bc){
-        QMessageBox::critical(this, "Error", "something serious happenned in creating new editor..."+bc.what());
+        QMessageBox::critical(this, "Error", "something serious happenned during creation of new editor..."+QString(bc.what()));
     }
 
-    if(!fichier.isNull()){
-        if(EditorPage->layout()){
-            delete noteEditor;
-            delete EditorPage->layout();
-        }
+    if(EditorPage->layout()){
+        delete noteEditor;
+        delete EditorPage->layout();
+    }
 
-        nm = &NotesManager::getInstance();
-        try{
-            ressource = &nm->getNewNote(nt);
-            noteEditor = ressource->createEditor();
-            QVBoxLayout *parentLayout = new QVBoxLayout();
-            EditorPage->setLayout(parentLayout);
-            parentLayout->addWidget(noteEditor);
-        }
-        catch(NotesException e){
-            QMessageBox::critical(this, "Error", e.getInfo());
-        }
+    nm = &NotesManager::getInstance();
+    try{
+        ressource = &nm->getNewNote(nt);
+        noteEditor = ressource->createEditor();
+        QVBoxLayout *parentLayout = new QVBoxLayout();
+        EditorPage->setLayout(parentLayout);
+        parentLayout->addWidget(noteEditor);
+    }
+    catch(NotesException e){
+        QMessageBox::critical(this, "Error", e.getInfo());
     }
 }
 
@@ -70,17 +75,33 @@ void mainUI::UI_TAB_CHANGE_HANDLER(int n){
     case 1:{
         qDebug()<<"HTML";
         this->noteEditor->BACKEND_SET();
-        QString html = ressource->exportNote(NotesManager::strategies[html]);
+        QString HTML = ressource->exportNote(NotesManager::strategies[html]);
         if(htmlViewerPage->layout()){
             delete hv;
             delete htmlViewerPage->layout();
         }
 
         // add html viewer into tab
-        hv = new HtmlViewer(html);
+        hv = new HtmlViewer(HTML);
         QVBoxLayout *parentLayoutHV = new QVBoxLayout();
         parentLayoutHV->addWidget(hv);
         htmlViewerPage->setLayout(parentLayoutHV);
+        break;
+    }
+    case 2:{
+        qDebug()<<"TeX";
+        //        this->noteEditor->BACKEND_SET();
+        //        QString html = ressource->exportNote(NotesManager::strategies[html]);
+        //        if(htmlViewerPage->layout()){
+        //            delete hv;
+        //            delete htmlViewerPage->layout();
+        //        }
+
+        //        // add html viewer into tab
+        //        hv = new HtmlViewer(html);
+        //        QVBoxLayout *parentLayoutHV = new QVBoxLayout();
+        //        parentLayoutHV->addWidget(hv);
+        //        htmlViewerPage->setLayout(parentLayoutHV);
         break;
     }
     default:
@@ -89,7 +110,7 @@ void mainUI::UI_TAB_CHANGE_HANDLER(int n){
 }
 
 mainUI::mainUI(QWidget *parent) :
-    QMainWindow(parent)
+        QMainWindow(parent)
 {
     mainWidget = new QWidget;
     QToolBar *toolBar = addToolBar("General");
@@ -101,7 +122,6 @@ mainUI::mainUI(QWidget *parent) :
     NoteTypeSignalAction *actionNewVideoNote = new NoteTypeSignalAction(videoNote, "&VideoNote", this);
     NoteTypeSignalAction *actionNewDocument = new NoteTypeSignalAction(document, "&Document", this);
     NoteTypeSignalAction *actionNewImageNote = new NoteTypeSignalAction(imageNote, "&ImageNote", this);
-
     QMenu *menuNew = new QMenu("&New...");
     menuNew->addAction(actionNewArticle);
     menuNew->addAction(actionNewImageNote);
@@ -122,22 +142,23 @@ mainUI::mainUI(QWidget *parent) :
     tab = new QTabWidget();
     EditorPage = new QWidget();
     htmlViewerPage = new QWidget();
+    texViewerPage = new QWidget();
 
     // Creat a new article, with generated file path and empty title&text
     // TODO add article to a default document.
     nm = &NotesManager::getInstance();
-//    ressource = &nm->getNewArticle();
-    ressource = &nm->getNewImageNote();
+    //    ressource = &nm->getNewArticle();
+    ressource = &nm->getNewNote(article);
 
     // add default article editor into layout
     QVBoxLayout *parentLayout = new QVBoxLayout();
     EditorPage->setLayout(parentLayout);
     noteEditor = ressource->createEditor();
-//    noteEditor = new ArticleEditor(dynamic_cast<Article *>(ressource));
     parentLayout->addWidget(noteEditor);
 
     tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");
+    tab->addTab(texViewerPage, "TeX");
 
     layout = new QVBoxLayout();
     layout->addWidget(tab);

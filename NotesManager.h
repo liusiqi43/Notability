@@ -2,8 +2,12 @@
 #define NOTESMANAGER_H
 
 #include <QSet>
-#include "Notes.h"
+#include <QMap>
 #include "NoteFactory.h"
+#include "ExportStrategy.h"
+
+class Note;
+class ImageNote;
 
 typedef QSet<Note *>::iterator nSetIt;
 
@@ -13,8 +17,6 @@ private:
 
     void addNote(Note* a);
 
-    static std::map<NoteType, NoteFactory*> factories;
-//    static std::map<NoteType, ExportStrategy*> strategies;
 
     NotesManager();
     ~NotesManager();
@@ -25,14 +27,14 @@ private:
 
 
 public:
+    static QMap<ExportType, ExportStrategy*> strategies;
+    static QMap<NoteType, NoteFactory*> factories;
     static NotesManager& getInstance();
     static void libererInstance();
     Note& getNote(const QString& filename);
-    ImageNote& getImageNote(const QString& filename);
+    Note& getNoteClone(const QString& filename);
     Note& getNewNote(NoteType type);
-    ImageNote& getNewImageNote();
     void saveNote(Note& a);
-    void saveImageNote(ImageNote& i);
 
     nSetIt begin(){return Notes.begin();}
     nSetIt end(){return Notes.end();}

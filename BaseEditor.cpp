@@ -5,8 +5,11 @@
 #include <QDebug>
 #include <QMessageBox>
 
-#include "Notes.h"
-#include "BaseEditor.h"
+#include "Note.h"
+#include "Editor.h"
+#include "NotesException.h"
+#include "NotesManager.h"
+#include "htmlViewer.h"
 
 Editor::Editor(Note *n, QWidget *parent) :
     QWidget(parent), ressource(n)
@@ -43,7 +46,9 @@ void Editor::BACKEND_SAVE()
 {
     BACKEND_SET();
     try{
-        ressource->save();
+        NotesManager *nm = &NotesManager::getInstance();
+//        ressource->save();
+        nm->saveNote(*ressource);
         UI_INFORM_USER_OF_SAVE();
     }
     catch(NotesException e){
