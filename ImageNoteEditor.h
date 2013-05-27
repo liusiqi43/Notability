@@ -15,7 +15,7 @@ public:
 //    ImageNote *getRessource() const;
 //    void setRessource(ImageNote *value);
 
-    QString toHtml() const;
+//    QString toHtml() const;
 
 signals:
 

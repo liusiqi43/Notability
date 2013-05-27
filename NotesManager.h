@@ -27,8 +27,8 @@ private:
 
 
 public:
-    static QMap<ExportType, ExportStrategy*> strategies;
-    static QMap<NoteType, NoteFactory*> factories;
+    QMap<ExportType, ExportStrategy*>* strategies;
+    QMap<NoteType, NoteFactory*>* factories;
     static NotesManager& getInstance();
     static void libererInstance();
     Note& getNote(const QString& filename);

@@ -11,10 +11,10 @@ enum NoteType {article=1, document, imageNote, videoNote, audioNote, unknownType
 
 class NoteFactory
 {
-    static QMap<NoteType, NoteFactory*> factories;
+//    static QMap<NoteType, NoteFactory*> factories;
 public:
     QString generateID();
-    static QMap<NoteType, NoteFactory*> getFactories();
+    static QMap<NoteType, NoteFactory*>* getFactories();
 
     NoteFactory();
 

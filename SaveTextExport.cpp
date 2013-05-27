@@ -37,6 +37,7 @@ QString SaveTextExport::exportNote(const Document *doc, unsigned int level) cons
     {
         str+=(*it)->getFilePath()+"\n";
     }
+    return str;
 }
 
 QString SaveTextExport::exportNote(const AudioNote *note, unsigned int level) const

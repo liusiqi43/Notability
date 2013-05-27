@@ -10,31 +10,31 @@
 
 QString TexExport::header() const
 {
-    return "\\documentclass[a4paper,11pt]{report} \\usepackage{graphicx}\\usepackage{multimedia} %utilisé pour inclure des images%gestion de la police\\usepackage[french]{babel}\\usepackage[latin1]{inputenc}\\usepackage[T1]{fontenc}\\begin{document}";
+    return "\n\\documentclass[a4paper,11pt]{report}\n\\usepackage{graphicx}\n\\usepackage{multimedia}\n\\usepackage[french]{babel}\n\\usepackage[latin1]{inputenc}\n\\usepackage[T1]{fontenc}\n\\begin{document}";
 }
 
 QString TexExport::footer() const
 {
-    return "\\end{document}";
+    return "\n\\end{document}";
 }
 
 QString TexExport::exportNote(const Article *note, unsigned int level) const
 {
     switch(level){
     case 0:
-        return " \\chapter{"+note->getTitle()+"}\\\\"+note->getText();
+        return " \n\\chapter{"+note->getTitle()+"}\n"+note->getText();
     case 1:
-        return " \\section{"+note->getTitle()+"}\\\\"+note->getText();
+        return " \n\\section{"+note->getTitle()+"}\n"+note->getText();
     case 2:
-        return " \\subsection{"+note->getTitle()+"}\\\\"+note->getText();
+        return " \n\\subsection{"+note->getTitle()+"}\n"+note->getText();
     case 3:
-        return " \\subsubsection{"+note->getTitle()+"}\\\\"+note->getText();
+        return " \n\\subsubsection{"+note->getTitle()+"}\n"+note->getText();
     case 4:
-        return " \\paragraph{"+note->getTitle()+"}\\\\"+note->getText();
+        return " \n\\paragraph{"+note->getTitle()+"}\n"+note->getText();
     case 5:
-        return " \\subparagraph{"+note->getTitle()+"}\\\\"+note->getText();
+        return " \n\\subparagraph{"+note->getTitle()+"}\n"+note->getText();
     default:
-        return " \\subparagraph{"+note->getTitle()+"}\\\\"+note->getText();
+        return " \n\\subparagraph{"+note->getTitle()+"}\n"+note->getText();
     }
 }
 
@@ -42,26 +42,26 @@ QString TexExport::exportNote(const ImageNote *note, unsigned int level) const
 {
     switch(level){
     case 0:
-        return " \\chapter{"+note->getTitle()+"}\\\\%Ajout d’image\\begin{center}\\includegraphics{"+note->getMediaPath()+"}\\caption{"+note->getDescription()+\
-                +"} \\end{center}";
+        return " \n\\chapter{"+note->getTitle()+"}\n\\begin{center}\n\\includegraphics{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
     case 1:
-        return " \\section{"+note->getTitle()+"}\\\\%Ajout d’image\\begin{center}\\includegraphics{"+note->getMediaPath()+"}\\caption{"+note->getDescription()+\
-                +"} \\end{center}";
+        return " \n\\section{"+note->getTitle()+"}\n\\begin{center}\n\\includegraphics{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
     case 2:
-        return " \\subsection{"+note->getTitle()+"}\\\\%Ajout d’image\\begin{center}\\includegraphics{"+note->getMediaPath()+"}\\caption{"+note->getDescription()+\
-                +"} \\end{center}";
+        return " \n\\subsection{"+note->getTitle()+"}\n\\begin{center}\n\\includegraphics{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
     case 3:
-        return " \\subsubsection{"+note->getTitle()+"}\\\\%Ajout d’image\\begin{center}\\includegraphics{"+note->getMediaPath()+"}\\caption{"+note->getDescription()+\
-                +"} \\end{center}";
+        return " \n\\subsubsection{"+note->getTitle()+"}\n\\begin{center}\n\\includegraphics{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
     case 4:
-        return " \\paragraph{"+note->getTitle()+"}\\\\%Ajout d’image\\begin{center}\\includegraphics{"+note->getMediaPath()+"}\\caption{"+note->getDescription()+\
-                +"} \\end{center}";
+        return " \n\\paragraph{"+note->getTitle()+"}\n\\begin{center}\n\\includegraphics{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
     case 5:
-        return " \\subparagraph{"+note->getTitle()+"}\\\\%Ajout d’image\\begin{center}\\includegraphics{"+note->getMediaPath()+"}\\caption{"+note->getDescription()+\
-                +"} \\end{center}";
+        return " \n\\subparagraph{"+note->getTitle()+"}\n\\begin{center}\n\\includegraphics{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
     default:
-        return " \\subparagraph{"+note->getTitle()+"}\\\\%Ajout d’image\\begin{center}\\includegraphics{"+note->getMediaPath()+"}\\caption{"+note->getDescription()+\
-                +"} \\end{center}";
+        return " \n\\subparagraph{"+note->getTitle()+"}\n\\begin{center}\n\\includegraphics{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
     }
 }
 
@@ -71,19 +71,25 @@ QString TexExport::exportNote(const Document *doc, unsigned int level) const
 
     switch(level){
     case 0:
-        str+=" \\chapter{"+doc->getTitle()+"}";
+        str+=" \n\\chapter{"+doc->getTitle()+"}";
+        break;
     case 1:
-        str+=" \\section{"+doc->getTitle()+"}";
+        str+=" \n\\section{"+doc->getTitle()+"}";
+        break;
     case 2:
-        str+=" \\subsection{"+doc->getTitle()+"}";
+        str+=" \n\\subsection{"+doc->getTitle()+"}";
+        break;
     case 3:
-        str+=" \\subsubsection{"+doc->getTitle()+"}";
+        str+=" \n\\subsubsection{"+doc->getTitle()+"}";
+        break;
     case 4:
-        str+=" \\paragraph{"+doc->getTitle()+"}";
+        str+=" \n\\paragraph{"+doc->getTitle()+"}";
+        break;
     case 5:
-        str+=" \\subparagraph{"+doc->getTitle()+"}";
+        str+=" \n\\subparagraph{"+doc->getTitle()+"}";
+        break;
     default:
-        str+=" \\subparagraph{"+doc->getTitle()+"}";
+        str+=" \n\\subparagraph{"+doc->getTitle()+"}";
     }
 
     level++;
@@ -96,10 +102,10 @@ QString TexExport::exportNote(const Document *doc, unsigned int level) const
 
 QString TexExport::exportNote(const VideoNote *note, unsigned int level) const
 {
-    return "@TODO";
+    return "\n@TODO";
 }
 
 QString TexExport::exportNote(const AudioNote *note, unsigned int level) const
 {
-    return "@TODO";
+    return "\n@TODO";
 }

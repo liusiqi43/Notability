@@ -6,8 +6,15 @@ class AudioNote;
 
 class AudioNoteEditor : public BinaryEditor
 {
+    Q_OBJECT
 public:
-    AudioNoteEditor(AudioNote *a, QWidget *parent);
+    explicit AudioNoteEditor(AudioNote *a, QWidget *parent = 0);
+
+signals:
+public slots:
+    void BACKEND_SET_CONTENT();
+
+private:
 };
 
 #endif // AUDIONOTEEDITOR_H

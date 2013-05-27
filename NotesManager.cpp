@@ -29,9 +29,6 @@ NoteType DetectType(const QString& fileName){
         return unknownType;
 }
 
-QMap<NoteType, NoteFactory*> NotesManager::factories = NoteFactory::getFactories();
-QMap<ExportType, ExportStrategy*> NotesManager::strategies = ExportStrategy::getStrategies();
-
 void NotesManager::addNote(Note* a){
     // QSet will deduplicate automatically, as we have an ID attribute in Note.
     // If Note does not have an ID attribute, we can only use QSet<Note> as it will compares its address and hash.
@@ -49,7 +46,7 @@ Note& NotesManager::getNote(const QString& fileName){
     if(type == unknownType)
         throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
 
-    NoteFactory* f = NotesManager::factories[type];
+    NoteFactory* f = NotesManager::factories->value(type);
     Note* n = f->buildNote(fileName);
     addNote(n);
     return *n;
@@ -62,7 +59,7 @@ Note &NotesManager::getNoteClone(const QString &fileName)
     if(type == unknownType)
         throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
 
-    NoteFactory* f = NotesManager::factories[type];
+    NoteFactory* f = NotesManager::factories->value(type);
     Note* n = f->buildNote(fileName);
     n->setFilePath(f->generateNewFilePath());
     addNote(n);
@@ -73,7 +70,7 @@ Note& NotesManager::getNewNote(NoteType type){
     if(type == unknownType)
         throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
 
-    NoteFactory* f = NotesManager::factories[type];
+    NoteFactory* f = NotesManager::factories->value(type);
     Note* n = f->buildNewNote();
     addNote(n);
     return *n;
@@ -94,7 +91,10 @@ void NotesManager::libererInstance(){
 }
 
 
-NotesManager::NotesManager(){}
+NotesManager::NotesManager(){
+    factories = NoteFactory::getFactories();
+    strategies = ExportStrategy::getStrategies();
+}
 
 
 NotesManager::~NotesManager(){
@@ -119,7 +119,7 @@ void NotesManager::saveNote(Note& a){
             throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
 
         // TODO add enum ExportType {html=1, text, saveText, tex};
-        ExportStrategy* es = NotesManager::strategies[saveText];
+        ExportStrategy* es = NotesManager::strategies->value(saveText);
         QString q = a.exportNote(es, 0);
 
         QTextStream flux(&file);

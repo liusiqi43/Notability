@@ -51,6 +51,7 @@ QString TextExport::exportNote(const Document *doc, unsigned int level) const
     {
         str+=(*it)->exportNote(this, level);
     }
+    return str;
 }
 
 QString TextExport::exportNote(const VideoNote *note, unsigned int level) const

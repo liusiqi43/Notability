@@ -38,8 +38,8 @@ public:
     QPushButton *getBtnSave() const;
     void setBtnSave(QPushButton *value);
 
-    virtual Note *getRessource() const;
-    virtual void setRessource(Note *value);
+    Note *getRessource() const;
+    void setRessource(Note *value);
 
 signals:
 

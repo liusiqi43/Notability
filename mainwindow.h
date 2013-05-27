@@ -1,5 +1,5 @@
-#ifndef NOTESEDITOR_H
-#define NOTESEDITOR_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QMenu>
@@ -16,25 +16,34 @@
 
 class Editor;
 class HtmlViewer;
+class TexViewer;
 class Note;
+class Document;
 class NotesManager;
 
-class mainUI : public QMainWindow
+namespace Ui {
+class MainWindow;
+}
+
+class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    
 public:
-    explicit mainUI(QWidget *parent = 0);
+    explicit MainWindow(QWidget *parent = 0);
+    ~MainWindow();
     
 signals:
-    
+
 public slots:
     void UI_OPEN_FILE();
     void UI_INFORM_NOT_IMPLEMENTED();
     void UI_NEW_NOTE_EDITOR(const int type);
     void UI_TAB_CHANGE_HANDLER(int);
-    
+
 private:
-    QWidget *mainWidget;
+    Ui::MainWindow *ui;
+    QWidget *editorWidget;
     QVBoxLayout *layout;
 
     QMenu *menuFichier, *menuEdition;
@@ -48,10 +57,12 @@ private:
 
     Editor * noteEditor;
     HtmlViewer * hv;
+    TexViewer * tv;
 
     Note * ressource;
+    Document * notebook;
 
     int lastTabIndex;
 };
 
-#endif // NOTESEDITOR_H
+#endif // MAINWINDOW_H

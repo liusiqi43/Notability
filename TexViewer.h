@@ -1,18 +1,17 @@
-#ifndef HTMLVIEWER_H
-#define HTMLVIEWER_H
+#ifndef TEXVIEWER_H
+#define TEXVIEWER_H
 
 #include <QWidget>
 #include <QTextEdit>
 #include <QVBoxLayout>
 
-class HtmlViewer : public QWidget
+class TexViewer : public QWidget
 {
     Q_OBJECT
 public:
-    explicit HtmlViewer(const QString &, QWidget *parent = 0);
-    
+    explicit TexViewer(const QString &, QWidget *parent = 0);
 signals:
-    
+
 public slots:
 private:
     QVBoxLayout *layout;
@@ -20,4 +19,4 @@ private:
     const QString &ressource;
 };
 
-#endif // HTMLVIEWER_H
+#endif // TEXVIEWER_H

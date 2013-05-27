@@ -18,14 +18,14 @@
 //    ressource = value;
 //}
 
-QString ImageNoteEditor::toHtml() const
-{
-    return "<html><head><meta charset=\"UTF-8\"><title>"+
-            getTitleWidget()->text()+"</title></head><body>"+
-            "<h1>"+getTitleWidget()->text()+"</h1>"
-            +"<img style=\"width: 100%\" src=\"file://"+ currentImgPath +"\" alt=\"\"><p>"
-            +getDescriptionWidget()->text()+"</p></body></html>";
-}
+//QString ImageNoteEditor::toHtml() const
+//{
+//    return "<html><head><meta charset=\"UTF-8\"><title>"+
+//            getTitleWidget()->text()+"</title></head><body>"+
+//            "<h1>"+getTitleWidget()->text()+"</h1>"
+//            +"<img style=\"width: 100%\" src=\"file://"+ currentImgPath +"\" alt=\"\"><p>"
+//            +getDescriptionWidget()->text()+"</p></body></html>";
+//}
 
 void ImageNoteEditor::BACKEND_SET_CONTENT()
 {
@@ -44,7 +44,7 @@ void ImageNoteEditor::LOAD_IMAGE(){
 ImageNoteEditor::ImageNoteEditor(ImageNote *img, QWidget *parent)
     :BinaryEditor(img, parent), ressource(img), currentImgPath(img->getMediaPath())
 {
-    btnAddImage = new QPushButton("Add");
+    btnAddImage = new QPushButton("Choose a Picture");
 
     image = QPixmap(ressource->getMediaPath());
     imageWidget = new QLabel();

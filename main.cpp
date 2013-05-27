@@ -1,11 +1,11 @@
 #include <QApplication>
 #include <QDebug>
-#include "mainUI.h"
+#include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    mainUI editor;
+    MainWindow editor;
     editor.show();
     return a.exec();
 }

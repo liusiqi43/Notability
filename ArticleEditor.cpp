@@ -4,7 +4,7 @@
 #include <QPushButton>
 
 void ArticleEditor::BACKEND_SET_CONTENT(){
-    QString str = textWidget->toHtml();
+    QString str = textWidget->toPlainText();
     this->ressource->setText(str);
 }
 

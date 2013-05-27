@@ -11,18 +11,18 @@
 /***
  * NoteFactory
  */
-QMap<NoteType, NoteFactory*> NoteFactory::factories;
 
 NoteFactory::NoteFactory()
 {}
 
-QMap<NoteType, NoteFactory*> NoteFactory::getFactories()
+QMap<NoteType, NoteFactory *> *NoteFactory::getFactories()
 {
-    factories[article] = new ArticleFactory();
-    factories[document] = new DocumentFactory();
-    factories[imageNote] = new ImageNoteFactory();
-    factories[videoNote] = new VideoNoteFactory();
-    factories[audioNote] = new AudioNoteFactory();
+    QMap<NoteType, NoteFactory *> *factories = new QMap<NoteType, NoteFactory*>();
+    factories->insert(article,new ArticleFactory());
+    factories->insert(document,new DocumentFactory());
+    factories->insert(imageNote,new ImageNoteFactory());
+    factories->insert(videoNote,new VideoNoteFactory());
+    factories->insert(audioNote,new AudioNoteFactory());
     return factories;
 }
 

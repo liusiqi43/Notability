@@ -23,11 +23,11 @@ QString HtmlExport::exportNote(const ImageNote *note, unsigned int level) const
     QString str;
     // Shoud implement a limit on margin...TODO
     int margin = level * 10;
-    int titleSize = 6 ? level > 6 : level;
+    int titleSize = 5 ? level > 5 : level;
 
-    str+= "<div style=\"margin-left:"+QString(margin)+"+px;>";
-    str+="<h"+QString(titleSize)+">"+note->getTitle()+ \
-            "</h"+QString(titleSize)+"><img style=\"width: 100%\" src=file://\""+note->getMediaPath()+"\" alt=\"\"><p>"\
+    str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
+    str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
+            "</h"+QString::number(titleSize+1)+"><p><img style=\"width: 100% margin:\" src=\""+note->getMediaPath()+"\"></p><p>"\
             +note->getDescription()+"</p></div>";
     return str;
 }
@@ -37,11 +37,11 @@ QString HtmlExport::exportNote(const Article *note, unsigned int level) const
     QString str;
     // Shoud implement a limit on margin...TODO
     int margin = level * 10;
-    int titleSize = 6 ? level > 6 : level;
+    int titleSize = 5 ? level > 5 : level;
 
-    str+= "<div style=\"margin-left:"+QString(margin)+"+px;>";
-    str+="<h"+QString(titleSize)+">"+note->getTitle()+ \
-            "</h"+QString(titleSize)+"><p>"+note->getText()+"</p></div>";
+    str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
+    str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
+            "</h"+QString::number(titleSize+1)+"><p>"+note->getText()+"</p></div>";
     return str;
 }
 
@@ -50,11 +50,11 @@ QString HtmlExport::exportNote(const AudioNote *note, unsigned int level) const
     QString str;
     // Shoud implement a limit on margin...TODO
     int margin = level * 10;
-    int titleSize = 6 ? level > 6 : level;
+    int titleSize = 5 ? level > 5 : level;
 
-    str+= "<div style=\"margin-left:"+QString(margin)+"+px;>";
-    str+="<h"+QString(titleSize)+">"+note->getTitle()+ \
-            "</h"+QString(titleSize)+"><p>"+"@TODO"+note->getDescription()+"</p></div>";
+    str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
+    str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
+            "</h"+QString::number(titleSize+1)+"><p>"+"@TODO"+note->getDescription()+"</p></div>";
     return str;
 }
 
@@ -63,11 +63,11 @@ QString HtmlExport::exportNote(const VideoNote *note, unsigned int level) const
     QString str;
     // Shoud implement a limit on margin...TODO
     int margin = level * 10;
-    int titleSize = 6 ? level > 6 : level;
+    int titleSize = 5 ? level > 5 : level;
 
-    str+= "<div style=\"margin-left:"+QString(margin)+"+px;>";
-    str+="<h"+QString(titleSize)+">"+note->getTitle()+ \
-            "</h"+QString(titleSize)+"><p>"+"@TODO"+note->getDescription()+"</p></div>";
+    str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
+    str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
+            "</h"+QString::number(titleSize+1)+"><p>"+"@TODO"+note->getDescription()+"</p></div>";
     return str;
 }
 

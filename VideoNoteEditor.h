@@ -6,8 +6,15 @@ class VideoNote;
 
 class VideoNoteEditor : public BinaryEditor
 {
+    Q_OBJECT
 public:
-    VideoNoteEditor(VideoNote *v, QWidget* parent);
+    explicit VideoNoteEditor(VideoNote *v, QWidget* parent = 0);
+
+signals:
+public slots:
+    void BACKEND_SET_CONTENT();
+private:
+
 };
 
 #endif // VIDEONOTEEDITOR_H

@@ -5,7 +5,6 @@ SOURCES += \
     NotesManager.cpp \
     htmlViewer.cpp \
     BaseEditor.cpp \
-    mainUI.cpp \
     NoteFactory.cpp \
     ExportStrategy.cpp \
     NoteTypeSignalAction.cpp \
@@ -30,13 +29,14 @@ SOURCES += \
     SaveTextExport.cpp \
     AudioNoteEditor.cpp \
     VideoNoteEditor.cpp \
-    DocumentEditor.cpp
+    DocumentEditor.cpp \
+    TexViewer.cpp \
+    mainwindow.cpp
 
 HEADERS += \
     NotesManager.h \
     AppManager.h \
     htmlViewer.h \
-    mainUI.h \
     NoteFactory.h \
     ExportStrategy.h \
     NoteTypeSignalAction.h \
@@ -63,7 +63,12 @@ HEADERS += \
     Document.h \
     AudioNoteEditor.h \
     VideoNoteEditor.h \
-    DocumentEditor.h
+    DocumentEditor.h \
+    TexViewer.h \
+    mainwindow.h
 
 QT      += widgets \
            webkitwidgets
+
+FORMS += \
+    mainwindow.ui
