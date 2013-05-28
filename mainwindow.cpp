@@ -66,7 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // add default article editor into layout
 //    QVBoxLayout *parentLayout = new QVBoxLayout();
 //    EditorPage->setLayout(parentLayout);
-//    noteEditor = ressource->createEditor();
+//    Editor* noteEditor = ressource->createEditor();
 //    parentLayout->addWidget(noteEditor);
 
     tab->addTab(EditorPage, "Editor");
@@ -129,8 +129,9 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
     nm = &NotesManager::getInstance();
     try{
         ressource = &nm->getNewNote(nt);
-        noteEditor = ressource->createEditor();
+        Editor* noteEditor = ressource->createEditor();
         parentLayout->addWidget(noteEditor);
+        noteEditors->append(noteEditor);
         if(notebook)
             notebook->addNote(ressource);
     }
@@ -163,8 +164,9 @@ void MainWindow::UI_OPEN_FILE(){
         nm = &NotesManager::getInstance();
         try{
             ressource = &nm->getNote(fichier);
-            noteEditor = ressource->createEditor();
+            Editor* noteEditor = ressource->createEditor();
             parentLayout->addWidget(noteEditor);
+            noteEditors->append(noteEditor);
             if(notebook)
                 notebook->addNote(ressource);
         }
@@ -181,7 +183,9 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
     }
     case 1:{
         qDebug()<<"HTML";
-        this->noteEditor->BACKEND_SET();
+        for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
+            (*it)->BACKEND_SET();
+
         Note * toConvert = notebook ? notebook : ressource;
         QString HTML = toConvert->exportNote(NotesManager::getInstance().strategies->value(html));
         qDebug()<<HTML;
@@ -199,7 +203,8 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
     }
     case 2:{
         qDebug()<<"TeX";
-        this->noteEditor->BACKEND_SET();
+        for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
+            (*it)->BACKEND_SET();
         Note * toConvert = notebook ? notebook : ressource;
         QString TEX = toConvert->exportNote(NotesManager::getInstance().strategies->value(tex));
         if(texViewerPage->layout()){
@@ -216,7 +221,8 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
     }
     case 3:{
         qDebug()<<"Text";
-        this->noteEditor->BACKEND_SET();
+        for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
+            (*it)->BACKEND_SET();
         Note * toConvert = notebook ? notebook : ressource;
         QString TEX = toConvert->exportNote(NotesManager::getInstance().strategies->value(text));
         if(textViewerPage->layout()){

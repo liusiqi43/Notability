@@ -57,7 +57,7 @@ private:
 
     NotesManager *nm;
 
-    QList<Editor> * noteEditors;
+    QList<Editor *> * noteEditors;
     HtmlViewer * hv;
     TexViewer * tv;
     TextViewer * textv;
