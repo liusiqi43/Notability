@@ -55,7 +55,7 @@ void Note::setDocument(bool value)
  * @param path
  */
 Note::Note(const QString& path)
-    :title(""), filePath(path), modified(true), deleted(false), document(false), displayed(false){}
+    :title(""), filePath(path), modified(true), deleted(false), document(false){}
 
 /**
  * @brief Note::Note used to create from existing Note, modified=false
@@ -63,20 +63,9 @@ Note::Note(const QString& path)
  * @param ti
  */
 Note::Note(const QString& path, const QString& ti)
-    :title(ti), filePath(path), modified(false), deleted(false), document(false), displayed(false){}
+    :title(ti), filePath(path), modified(false), deleted(false), document(false){}
 
 bool Note::operator ==(const Note &other)
 {
     return this->getFilePath()==other.getFilePath();
-}
-
-
-bool Note::isDisplayed() const
-{
-    return displayed;
-}
-
-void Note::setDisplayed(bool value)
-{
-    displayed = value;
 }

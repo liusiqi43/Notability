@@ -39,6 +39,8 @@ public:
 
     nListIt begin(){return rootDocument->begin();}
     nListIt end(){return rootDocument->end();}
+    Document *getRootDocument() const;
+    void setRootDocument(Document *value);
 };
 
 #endif // NOTESMANAGER_H

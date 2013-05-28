@@ -91,3 +91,8 @@ void Editor::setRessource(Note *value)
 {
     ressource = value;
 }
+
+bool Editor::operator ==(const Editor &rhs)
+{
+    return this->getRessource()->getFilePath() == rhs.getRessource()->getFilePath();
+}

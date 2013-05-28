@@ -1,3 +1,4 @@
+
 #include "NotesManager.h"
 #include "Note.h"
 #include "NoteFactory.h"
@@ -42,10 +43,10 @@ Note& NotesManager::getNote(const QString& fileName){
     }
     // sinon, il faut le loader
     NoteType type = DetectType(fileName);
-
+    
     if(type == unknownType)
         throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
-
+    
     NoteFactory* f = NotesManager::factories->value(type);
     Note* n = f->buildNote(fileName);
     addNote(n);
@@ -55,10 +56,10 @@ Note& NotesManager::getNote(const QString& fileName){
 Note &NotesManager::getNoteClone(const QString &fileName)
 {
     NoteType type = DetectType(fileName);
-
+    
     if(type == unknownType)
         throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
-
+    
     NoteFactory* f = NotesManager::factories->value(type);
     Note* n = f->buildNote(fileName);
     n->setFilePath(f->generateNewFilePath());
@@ -69,7 +70,7 @@ Note &NotesManager::getNoteClone(const QString &fileName)
 Note& NotesManager::getNewNote(NoteType type){
     if(type == unknownType)
         throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
-
+    
     NoteFactory* f = NotesManager::factories->value(type);
     Note* n = f->buildNewNote();
     addNote(n);
@@ -112,18 +113,18 @@ void NotesManager::saveNote(Note& a){
         QString fp = a.getFilePath();
         fp.truncate(fp.lastIndexOf('/'));
         QDir().mkpath(fp);
-
+        
         // Creation d'un objet QFile
         QFile file(a.getFilePath());
-
+        
         // On ouvre notre fichier en lecture seule et on v�rifie l'ouverture
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
             throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
-
+        
         // TODO add enum ExportType {html=1, text, saveText, tex};
         ExportStrategy* es = NotesManager::strategies->value(saveText);
         QString q = a.exportNote(es, 0);
-
+        
         QTextStream flux(&file);
         flux<<q;
         file.close();
@@ -132,4 +133,15 @@ void NotesManager::saveNote(Note& a){
     else{
         throw NotesException("You are not supposed to save! No modification made!");
     }
+}
+
+
+Document *NotesManager::getRootDocument() const
+{
+    return rootDocument;
+}
+
+void NotesManager::setRootDocument(Document *value)
+{
+    rootDocument = value;
 }

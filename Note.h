@@ -15,7 +15,6 @@ class Note{
     bool modified;
     bool deleted;
     bool document;
-    bool displayed;
 
 public:
     Note(const QString &path);
@@ -45,9 +44,6 @@ public:
 
     bool isDocument() const;
     void setDocument(bool value);
-
-    bool isDisplayed() const;
-    void setDisplayed(bool value);
 };
 
 

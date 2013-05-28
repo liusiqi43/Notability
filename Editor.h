@@ -41,6 +41,8 @@ public:
     Note *getRessource() const;
     void setRessource(Note *value);
 
+    bool operator==(const Editor& rhs);
+
 signals:
 
 public slots:

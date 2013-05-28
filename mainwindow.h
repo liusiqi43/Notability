@@ -58,12 +58,13 @@ private:
     NotesManager *nm;
 
     QList<Editor *> * noteEditors;
+    QSet<QString> openedFiles;
+
     HtmlViewer * hv;
     TexViewer * tv;
     TextViewer * textv;
 
     Note * ressource;
-    Document * notebook;
 
     int lastTabIndex;
 };

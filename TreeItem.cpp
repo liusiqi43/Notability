@@ -1,48 +1,111 @@
-//#include "TreeItem.h"
-//#include "Note.h"
-//#include <QList>
+#include "TreeItem.h"
+#include "Note.h"
+#include "NotesManager.h"
+#include <QList>
 
-//TreeItem::TreeItem(const Note *data, TreeItem *parent)
-//{
-//    parentItem = parent;
-//    itemData = data;
-//}
+TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
+{
+    parentItem = parent;
+    itemData = data;
+}
 
-//TreeItem::~TreeItem()
-//{
-//    qDeleteAll(childItems);
-//}
+TreeItem::~TreeItem()
+{
+    qDeleteAll(childItems);
+}
 
-//TreeItem *TreeItem::child(int row)
-// {
-//     return childItems.value(row);
-// }
+TreeItem *TreeItem::child(int row)
+ {
+     return childItems.value(row);
+ }
 
-//int TreeItem::childCount() const
-// {
-//     return childItems.count();
-// }
-//int TreeItem::row() const
-// {
-//     if (parentItem)
-//         return parentItem->childItems.indexOf(const_cast<TreeItem*>(this));
+int TreeItem::childCount() const
+ {
+     return childItems.count();
+ }
 
-//     return 0;
-// }
+int TreeItem::childNumber() const
+{
+    if (parentItem)
+        return parentItem->childItems.indexOf(const_cast<TreeItem*>(this));
 
-//int TreeItem::columnCount() const
-// {
-//     return itemData.count();
-// }
+    return 0;
+}
 
-//QString TreeItem::data(int column) const
-// {
-//     return itemData->getTitle();
-// }
+int TreeItem::columnCount() const
+ {
+     return itemData.count();
+ }
 
+QVariant TreeItem::data(int column) const
+ {
+     return itemData.value(column);
+ }
 
-//TreeItem *TreeItem::parent()
-// {
-//     return parentItem;
-// }
+bool TreeItem::setData(int column, const QVariant &n)
+ {
+     if (column < 0 || column >= itemData.size())
+         return false;
+
+     itemData[column] = n;
+     return true;
+ }
+
+bool TreeItem::insertChildren(int position, int count, int columns)
+{
+    if (position < 0 || position > childItems.size())
+        return false;
+
+    for (int row = 0; row < count; ++row) {
+        QVector<QVariant> data(columns);
+        TreeItem *item = new TreeItem(data, this);
+        childItems.insert(position, item);
+    }
+
+    return true;
+}
+
+bool TreeItem::removeChildren(int position, int count)
+{
+    if (position < 0 || position + count > childItems.size())
+        return false;
+
+    for (int row = 0; row < count; ++row)
+        delete childItems.takeAt(position);
+
+    return true;
+}
+
+bool TreeItem::removeColumns(int position, int columns)
+ {
+     if (position < 0 || position + columns > itemData.size())
+         return false;
+
+     for (int column = 0; column < columns; ++column)
+         itemData.remove(position);
+
+     foreach (TreeItem *child, childItems)
+         child->removeColumns(position, columns);
+
+     return true;
+ }
+
+bool TreeItem::insertColumns(int position, int columns)
+{
+    if (position < 0 || position > itemData.size())
+        return false;
+
+    for (int column = 0; column < columns; ++column)
+        itemData.insert(position, NotesManager::getInstance().getNewNote(document).getTitle());
+
+    foreach (TreeItem *child, childItems)
+        child->insertColumns(position, columns);
+
+    return true;
+}
+
+TreeItem *TreeItem::parent()
+ {
+     return parentItem;
+ }
 

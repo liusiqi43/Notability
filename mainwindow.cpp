@@ -23,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     editorWidget = new QWidget;
+    noteEditors = new QList<Editor*>;
     ui->editorScroll->setWidget(editorWidget);
 
     QToolBar *toolBar = addToolBar("General");
@@ -59,30 +60,19 @@ MainWindow::MainWindow(QWidget *parent) :
     textViewerPage = new QWidget();
 
     // Creat a new article, with generated file path and empty title&text
-    // TODO add article to a default document.
     nm = &NotesManager::getInstance();
-//    ressource = &nm->getNewNote(article);
-
-    // add default article editor into layout
-//    QVBoxLayout *parentLayout = new QVBoxLayout();
-//    EditorPage->setLayout(parentLayout);
-//    Editor* noteEditor = ressource->createEditor();
-//    parentLayout->addWidget(noteEditor);
 
     tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");
     tab->addTab(texViewerPage, "TeX");
     tab->addTab(textViewerPage, "Text");
 
-//    QScrollArea *scroll = new QScrollArea(mainWidget);
-//    scroll->setWidget(tab);
-
     layout = new QVBoxLayout();
     layout->addWidget(tab);
 
     editorWidget->setLayout(layout);
 
-//    ui->noteBookTree->setModel(new TreeModel());
+    ui->noteBookTree->setModel(new TreeModel());
 
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpen, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
@@ -117,23 +107,32 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
 
     if(EditorPage->layout()){
         parentLayout = EditorPage->layout();
-        if(notebook == 0){
-            notebook = static_cast<Document*>(&nm->getNewNote(document));
-            notebook->addNote(ressource);
+        if(ressource != 0 && !ressource->isDocument()){
+            Note *temp = ressource;
+            // there is already one ressource, create a doc to envelope it.
+            ressource = &nm->getNewNote(document);
+            // ressource here is the first note for the first editor.
+            ressource->addNote(temp);
         }
     }
     else{
+        // First time, no layout yet.
         parentLayout = new QVBoxLayout();
         EditorPage->setLayout(parentLayout);
     }
-    nm = &NotesManager::getInstance();
     try{
-        ressource = &nm->getNewNote(nt);
-        Editor* noteEditor = ressource->createEditor();
+        Note *temp = &nm->getNewNote(nt);
+
+        if(ressource == 0)
+            ressource = temp;
+        else
+            ressource->addNote(temp);
+
+        Editor* noteEditor = temp->createEditor();
         parentLayout->addWidget(noteEditor);
         noteEditors->append(noteEditor);
-        if(notebook)
-            notebook->addNote(ressource);
+
+        openedFiles << temp->getFilePath();
     }
     catch(NotesException e){
         QMessageBox::critical(this, "Error", e.getInfo());
@@ -144,16 +143,20 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
 void MainWindow::UI_OPEN_FILE(){
 
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Notes (*.art *.img *.vid *.aud *.doc)");
-    QLayout *parentLayout;
 
+    QLayout *parentLayout;
     if(!fichier.isNull()){
+        // Test if already opened
+        if(openedFiles.contains(fichier))
+            return;
         if(EditorPage->layout()){
             parentLayout = EditorPage->layout();
-            if(notebook == 0){
+            if(ressource != 0 && !ressource->isDocument()){
+                Note *temp = ressource;
                 // there is already one ressource, create a doc to envelope it.
-                notebook = static_cast<Document*>(&nm->getNewNote(document));
+                ressource = &nm->getNewNote(document);
                 // ressource here is the first note for the first editor.
-                notebook->addNote(ressource);
+                ressource->addNote(temp);
             }
         }
         else{
@@ -161,14 +164,19 @@ void MainWindow::UI_OPEN_FILE(){
             parentLayout = new QVBoxLayout();
             EditorPage->setLayout(parentLayout);
         }
-        nm = &NotesManager::getInstance();
         try{
-            ressource = &nm->getNote(fichier);
-            Editor* noteEditor = ressource->createEditor();
+            Note *temp = &nm->getNote(fichier);
+
+            if(ressource == 0)
+                ressource = temp;
+            else
+                ressource->addNote(temp);
+
+            Editor* noteEditor = temp->createEditor();
             parentLayout->addWidget(noteEditor);
             noteEditors->append(noteEditor);
-            if(notebook)
-                notebook->addNote(ressource);
+
+            openedFiles << fichier;
         }
         catch(NotesException e){
             QMessageBox::critical(this, "Error", e.getInfo());
@@ -177,67 +185,71 @@ void MainWindow::UI_OPEN_FILE(){
 }
 
 void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
-    switch(n){
-    case -1:{
-        return;
-    }
-    case 1:{
-        qDebug()<<"HTML";
-        for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
-            (*it)->BACKEND_SET();
+    ui->noteBookTree->setModel(new TreeModel());
+    if(ressource){
+        switch(n){
+        case -1:{
+            return;
+        }
+        case 1:{
+            qDebug()<<"HTML";
+            for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
+                (*it)->BACKEND_SET();
 
-        Note * toConvert = notebook ? notebook : ressource;
-        QString HTML = toConvert->exportNote(NotesManager::getInstance().strategies->value(html));
-        qDebug()<<HTML;
-        if(htmlViewerPage->layout()){
-            delete hv;
-            delete htmlViewerPage->layout();
+            // TODO one resource suffice
+            QString HTML = ressource->exportNote(NotesManager::getInstance().strategies->value(html));
+            qDebug()<<HTML;
+            if(htmlViewerPage->layout()){
+                delete hv;
+                delete htmlViewerPage->layout();
+            }
+
+            // add html viewer into tab
+            hv = new HtmlViewer(HTML);
+            QVBoxLayout *parentLayoutHV = new QVBoxLayout();
+            parentLayoutHV->addWidget(hv);
+            htmlViewerPage->setLayout(parentLayoutHV);
+            break;
+        }
+        case 2:{
+            qDebug()<<"TeX";
+            for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
+                (*it)->BACKEND_SET();
+            // TODO one resource suffice
+            QString TEX = ressource->exportNote(NotesManager::getInstance().strategies->value(tex));
+            if(texViewerPage->layout()){
+                delete tv;
+                delete texViewerPage->layout();
+            }
+
+            // add tex viewer into tab
+            tv = new TexViewer(TEX);
+            QVBoxLayout *parentLayoutTV = new QVBoxLayout();
+            parentLayoutTV->addWidget(tv);
+            texViewerPage->setLayout(parentLayoutTV);
+            break;
+        }
+        case 3:{
+            qDebug()<<"Text";
+            for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
+                (*it)->BACKEND_SET();
+            // TODO one resource suffice
+            QString TEX = ressource->exportNote(NotesManager::getInstance().strategies->value(text));
+            if(textViewerPage->layout()){
+                delete textv;
+                delete textViewerPage->layout();
+            }
+
+            // add tex viewer into tab
+            textv = new TextViewer(TEX);
+            QVBoxLayout *parentLayoutTextV = new QVBoxLayout();
+            parentLayoutTextV->addWidget(textv);
+            textViewerPage->setLayout(parentLayoutTextV);
+            break;
+        }
+        default:
+            return;
         }
 
-        // add html viewer into tab
-        hv = new HtmlViewer(HTML);
-        QVBoxLayout *parentLayoutHV = new QVBoxLayout();
-        parentLayoutHV->addWidget(hv);
-        htmlViewerPage->setLayout(parentLayoutHV);
-        break;
-    }
-    case 2:{
-        qDebug()<<"TeX";
-        for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
-            (*it)->BACKEND_SET();
-        Note * toConvert = notebook ? notebook : ressource;
-        QString TEX = toConvert->exportNote(NotesManager::getInstance().strategies->value(tex));
-        if(texViewerPage->layout()){
-            delete tv;
-            delete texViewerPage->layout();
-        }
-
-        // add tex viewer into tab
-        tv = new TexViewer(TEX);
-        QVBoxLayout *parentLayoutTV = new QVBoxLayout();
-        parentLayoutTV->addWidget(tv);
-        texViewerPage->setLayout(parentLayoutTV);
-        break;
-    }
-    case 3:{
-        qDebug()<<"Text";
-        for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
-            (*it)->BACKEND_SET();
-        Note * toConvert = notebook ? notebook : ressource;
-        QString TEX = toConvert->exportNote(NotesManager::getInstance().strategies->value(text));
-        if(textViewerPage->layout()){
-            delete textv;
-            delete textViewerPage->layout();
-        }
-
-        // add tex viewer into tab
-        textv = new TextViewer(TEX);
-        QVBoxLayout *parentLayoutTextV = new QVBoxLayout();
-        parentLayoutTextV->addWidget(textv);
-        textViewerPage->setLayout(parentLayoutTextV);
-        break;
-    }
-    default:
-        return;
     }
 }

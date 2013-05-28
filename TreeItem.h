@@ -1,29 +1,32 @@
 #ifndef TREEITEM_H
 #define TREEITEM_H
-#include <QString>
 #include <QVariant>
+#include <QVector>
 
 class Note;
 
 class TreeItem
  {
-// public:
-//     TreeItem(const QList<QVariant>& data, TreeItem *parent = 0);
-//     ~TreeItem();
+ public:
+     TreeItem(const QVector<QVariant> &data, TreeItem *parent = 0);
+     ~TreeItem();
 
-//     void appendChild(TreeItem *child);
+     TreeItem *child(int number);
+     int childCount() const;
+     int columnCount() const;
+     QVariant data(int column) const;
+     bool insertChildren(int position, int count, int columns);
+     bool insertColumns(int position, int columns);
+     TreeItem *parent();
+     bool removeChildren(int position, int count);
+     bool removeColumns(int position, int columns);
+     int childNumber() const;
+     bool setData(int column, const QVariant &value);
 
-//     TreeItem *child(int row);
-//     int childCount() const;
-//     int columnCount() const;
-//     QString data(int column) const;
-//     int row() const;
-//     TreeItem *parent();
-
-// private:
-//     QList<TreeItem*> childItems;
-//     QList<QVariant> itemData;
-//     TreeItem *parentItem;
+ private:
+     QList<TreeItem*> childItems;
+     QVector<QVariant> itemData;
+     TreeItem *parentItem;
  };
 
 #endif // TREEITEM_H
