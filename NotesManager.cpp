@@ -32,11 +32,11 @@ NoteType DetectType(const QString& fileName){
 void NotesManager::addNote(Note* a){
     // QSet will deduplicate automatically, as we have an ID attribute in Note.
     // If Note does not have an ID attribute, we can only use QSet<Note> as it will compares its address and hash.
-    Notes << a;
+    rootDocument->addNote(a);
 }
 
 Note& NotesManager::getNote(const QString& fileName){
-    for(nSetIt it = begin(); it != end(); it++){
+    for(nListIt it = begin(); it != end(); it++){
         if((**it).getFilePath()==fileName)
             return (**it);
     }
@@ -94,11 +94,13 @@ void NotesManager::libererInstance(){
 NotesManager::NotesManager(){
     factories = NoteFactory::getFactories();
     strategies = ExportStrategy::getStrategies();
+    // TODO, populates this by file stored on disk.
+    rootDocument = static_cast<Document *>(factories->value(document)->buildNewNote());
 }
 
 
 NotesManager::~NotesManager(){
-    for(nSetIt it = begin(); it!= end(); it++) {
+    for(nListIt it = begin(); it!= end(); it++) {
         saveNote((**it));
         delete *it;
     }

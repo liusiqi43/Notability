@@ -1,22 +1,23 @@
 #ifndef NOTESMANAGER_H
 #define NOTESMANAGER_H
 
-#include <QSet>
+#include <QList>
 #include <QMap>
+#include "Document.h"
 #include "NoteFactory.h"
 #include "ExportStrategy.h"
 
 class Note;
 class ImageNote;
 
-typedef QSet<Note *>::iterator nSetIt;
+// On préfère QList car il garde l'ordre. Et c'est bizarre si on n'affiche pas les notes dans l'ordre d'ajout
+typedef QList<Note *>::const_iterator nListIt;
 
 class NotesManager {
 private:
-    QSet<Note*> Notes;
+    Document *rootDocument;
 
     void addNote(Note* a);
-
 
     NotesManager();
     ~NotesManager();
@@ -36,8 +37,8 @@ public:
     Note& getNewNote(NoteType type);
     void saveNote(Note& a);
 
-    nSetIt begin(){return Notes.begin();}
-    nSetIt end(){return Notes.end();}
+    nListIt begin(){return rootDocument->begin();}
+    nListIt end(){return rootDocument->end();}
 };
 
 #endif // NOTESMANAGER_H

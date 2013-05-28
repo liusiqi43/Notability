@@ -33,7 +33,7 @@ QString SaveTextExport::exportNote(const Document *doc, unsigned int level) cons
     QString str;
     str+=doc->getTitle()+"\n";
 
-    for(QSet<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
+    for(QList<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
     {
         str+=(*it)->getFilePath()+"\n";
     }

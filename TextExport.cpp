@@ -47,7 +47,7 @@ QString TextExport::exportNote(const Document *doc, unsigned int level) const
     str+=margin+"Title: "+doc->getTitle()+"\n";
 
     level++;
-    for(QSet<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
+    for(QList<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
     {
         str+=(*it)->exportNote(this, level);
     }

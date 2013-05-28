@@ -31,7 +31,10 @@ SOURCES += \
     VideoNoteEditor.cpp \
     DocumentEditor.cpp \
     TexViewer.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    TextViewer.cpp \
+    TreeItem.cpp \
+    TreeModel.cpp
 
 HEADERS += \
     NotesManager.h \
@@ -65,7 +68,10 @@ HEADERS += \
     VideoNoteEditor.h \
     DocumentEditor.h \
     TexViewer.h \
-    mainwindow.h
+    mainwindow.h \
+    TextViewer.h \
+    TreeItem.h \
+    TreeModel.h
 
 QT      += widgets \
            webkitwidgets

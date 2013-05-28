@@ -1,24 +1,28 @@
 #include "Document.h"
 #include "ExportStrategy.h"
-#include <QSet>
+#include <QList>
 
 /***
  * Document
  */
 
 Document::Document(const QString &path)
-    :Note(path)
-{}
+    :Note(path, "New Document")
+{
+    setDocument(true);
+}
 
 Document::Document(const QString &path, const QString &ti)
     :Note(path, ti)
-{}
+{
+    setDocument(true);
+}
 
-QSet<Note *>::const_iterator Document::begin() const{
+QList<Note *>::const_iterator Document::begin() const{
     return notes.begin();
 }
 
-QSet<Note *>::const_iterator Document::end() const{
+QList<Note *>::const_iterator Document::end() const{
     return notes.end();
 }
 
@@ -27,9 +31,14 @@ void Document::addNote(Note* note)
     this->notes << note;
 }
 
+void Document::operator <<(Note *note)
+{
+    this->addNote(note);
+}
+
 void Document::removeNote(Note *note)
 {
-    this->notes.remove(note);
+    this->notes.removeOne(note);
 }
 
 //DocumentEditor* Document::createEditor(){

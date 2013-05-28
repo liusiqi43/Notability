@@ -4,8 +4,12 @@
 #include <QPushButton>
 
 void ArticleEditor::BACKEND_SET_CONTENT(){
-    QString str = textWidget->toPlainText();
-    this->ressource->setText(str);
+    QString str = textWidget->toHtml();
+    int bodyBeginsFrom = str.indexOf("<p");
+    int bodyEndsAt = str.indexOf("</body></html>");
+    QStringRef body(&str, bodyBeginsFrom, bodyEndsAt-bodyBeginsFrom);
+    qDebug()<<body.toString();
+    this->ressource->setText(body.toString());
 }
 
 ArticleEditor::ArticleEditor(Article *art, QWidget *parent) :

@@ -17,6 +17,7 @@
 class Editor;
 class HtmlViewer;
 class TexViewer;
+class TextViewer;
 class Note;
 class Document;
 class NotesManager;
@@ -52,12 +53,14 @@ private:
     QWidget *EditorPage;
     QWidget *htmlViewerPage;
     QWidget *texViewerPage;
+    QWidget *textViewerPage;
 
     NotesManager *nm;
 
     Editor * noteEditor;
     HtmlViewer * hv;
     TexViewer * tv;
+    TextViewer * textv;
 
     Note * ressource;
     Document * notebook;

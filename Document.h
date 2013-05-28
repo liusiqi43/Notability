@@ -5,19 +5,20 @@
 #include "DocumentEditor.h"
 
 class Document: public Note{
-    QSet<Note *> notes;
+    QList<Note *> notes;
 
 public:
     Document(const QString& path);
     Document(const QString& path, const QString& ti);
 
-    QSet<Note *>::const_iterator begin() const;
-    QSet<Note *>::const_iterator end() const;
+    QList<Note *>::const_iterator begin() const;
+    QList<Note *>::const_iterator end() const;
 
     void addNote(Note *note);
+    void operator<<(Note *note);
     void removeNote(Note *note);
 
-    const QSet<Note *> &getNotes() const;
+    const QList<Note *> &getNotes() const;
     void setNotes(const QSet<Note> &value);
 
     DocumentEditor *createEditor(){return new DocumentEditor(0);}

@@ -9,6 +9,8 @@
 #include "htmlViewer.h"
 #include "TexViewer.h"
 #include "Document.h"
+#include "TextViewer.h"
+#include "TreeModel.h"
 #include <typeinfo>
 #include <QMap>
 #include <QScrollArea>
@@ -27,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QAction *actionQuit = new QAction("&Quit", this);
     QAction *actionOpen = new QAction("&Open...", this);
 
+    // subclassed QAction, this emets also the NoteType. So that we don't need different handling slot
     NoteTypeSignalAction *actionNewArticle = new NoteTypeSignalAction(article, "&Article", this);
     NoteTypeSignalAction *actionNewAudioNote = new NoteTypeSignalAction(audioNote, "&AudioNote", this);
     NoteTypeSignalAction *actionNewVideoNote = new NoteTypeSignalAction(videoNote, "&VideoNote", this);
@@ -53,21 +56,23 @@ MainWindow::MainWindow(QWidget *parent) :
     EditorPage = new QWidget();
     htmlViewerPage = new QWidget();
     texViewerPage = new QWidget();
+    textViewerPage = new QWidget();
 
     // Creat a new article, with generated file path and empty title&text
     // TODO add article to a default document.
     nm = &NotesManager::getInstance();
-    ressource = &nm->getNewNote(article);
+//    ressource = &nm->getNewNote(article);
 
     // add default article editor into layout
-    QVBoxLayout *parentLayout = new QVBoxLayout();
-    EditorPage->setLayout(parentLayout);
-    noteEditor = ressource->createEditor();
-    parentLayout->addWidget(noteEditor);
+//    QVBoxLayout *parentLayout = new QVBoxLayout();
+//    EditorPage->setLayout(parentLayout);
+//    noteEditor = ressource->createEditor();
+//    parentLayout->addWidget(noteEditor);
 
     tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");
     tab->addTab(texViewerPage, "TeX");
+    tab->addTab(textViewerPage, "Text");
 
 //    QScrollArea *scroll = new QScrollArea(mainWidget);
 //    scroll->setWidget(tab);
@@ -77,7 +82,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     editorWidget->setLayout(layout);
 
-//    this->setCentralWidget(mainWidget);
+//    ui->noteBookTree->setModel(new TreeModel());
+
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpen, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
     QObject::connect(actionNewArticle, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
@@ -112,7 +118,7 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
     if(EditorPage->layout()){
         parentLayout = EditorPage->layout();
         if(notebook == 0){
-            notebook = dynamic_cast<Document *>(&nm->getNewNote(document));
+            notebook = static_cast<Document*>(&nm->getNewNote(document));
             notebook->addNote(ressource);
         }
     }
@@ -143,11 +149,14 @@ void MainWindow::UI_OPEN_FILE(){
         if(EditorPage->layout()){
             parentLayout = EditorPage->layout();
             if(notebook == 0){
-                notebook = dynamic_cast<Document *>(&nm->getNewNote(document));
+                // there is already one ressource, create a doc to envelope it.
+                notebook = static_cast<Document*>(&nm->getNewNote(document));
+                // ressource here is the first note for the first editor.
                 notebook->addNote(ressource);
             }
         }
         else{
+            // First time, no layout yet.
             parentLayout = new QVBoxLayout();
             EditorPage->setLayout(parentLayout);
         }
@@ -203,6 +212,23 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
         QVBoxLayout *parentLayoutTV = new QVBoxLayout();
         parentLayoutTV->addWidget(tv);
         texViewerPage->setLayout(parentLayoutTV);
+        break;
+    }
+    case 3:{
+        qDebug()<<"Text";
+        this->noteEditor->BACKEND_SET();
+        Note * toConvert = notebook ? notebook : ressource;
+        QString TEX = toConvert->exportNote(NotesManager::getInstance().strategies->value(text));
+        if(textViewerPage->layout()){
+            delete textv;
+            delete textViewerPage->layout();
+        }
+
+        // add tex viewer into tab
+        textv = new TextViewer(TEX);
+        QVBoxLayout *parentLayoutTextV = new QVBoxLayout();
+        parentLayoutTextV->addWidget(textv);
+        textViewerPage->setLayout(parentLayoutTextV);
         break;
     }
     default:
