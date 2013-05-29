@@ -109,6 +109,8 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
         parentLayout = EditorPage->layout();
         if(ressource != 0 && !ressource->isDocument()){
             Note *temp = ressource;
+            // Remove it because it will be added to a subDocument of rootDocument
+            nm->removeNote(ressource);
             // there is already one ressource, create a doc to envelope it.
             ressource = &nm->getNewNote(document);
             // ressource here is the first note for the first editor.
@@ -125,8 +127,11 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
 
         if(ressource == 0)
             ressource = temp;
-        else
+        else{
+            // Remove it because it will be added to a subDocument of rootDocument
+            nm->removeNote(temp);
             ressource->addNote(temp);
+        }
 
         Editor* noteEditor = temp->createEditor();
         parentLayout->addWidget(noteEditor);
@@ -153,6 +158,8 @@ void MainWindow::UI_OPEN_FILE(){
             parentLayout = EditorPage->layout();
             if(ressource != 0 && !ressource->isDocument()){
                 Note *temp = ressource;
+                // Remove it because it will be added to a subDocument of rootDocument
+                nm->removeNote(ressource);
                 // there is already one ressource, create a doc to envelope it.
                 ressource = &nm->getNewNote(document);
                 // ressource here is the first note for the first editor.
@@ -169,8 +176,11 @@ void MainWindow::UI_OPEN_FILE(){
 
             if(ressource == 0)
                 ressource = temp;
-            else
+            else{
+                // Remove it because it will be added to a subDocument of rootDocument
+                nm->removeNote(temp);
                 ressource->addNote(temp);
+            }
 
             Editor* noteEditor = temp->createEditor();
             parentLayout->addWidget(noteEditor);
@@ -198,7 +208,7 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
 
             // TODO one resource suffice
             QString HTML = ressource->exportNote(NotesManager::getInstance().strategies->value(html));
-            qDebug()<<HTML;
+//            qDebug()<<HTML;
             if(htmlViewerPage->layout()){
                 delete hv;
                 delete htmlViewerPage->layout();

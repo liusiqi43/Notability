@@ -2,6 +2,7 @@
 #define TREEITEM_H
 #include <QVariant>
 #include <QVector>
+#include <QString>
 
 class Note;
 
@@ -21,11 +22,17 @@ class TreeItem
      bool removeChildren(int position, int count);
      bool removeColumns(int position, int columns);
      int childNumber() const;
-     bool setData(int column, const QVariant &value);
+     bool setData(int column, const QVariant &value, Note * underlyingNote);
+     void updateUnderlyingNoteTitle(const QVariant&);
 
- private:
+     Note *getItemId() const;
+     void setItemId(Note *value);
+
+private:
      QList<TreeItem*> childItems;
      QVector<QVariant> itemData;
+     Note * itemId;
+     bool IDlock;
      TreeItem *parentItem;
  };
 

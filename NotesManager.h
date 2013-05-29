@@ -28,6 +28,7 @@ private:
 
 
 public:
+    void removeNote(Note* a);
     QMap<ExportType, ExportStrategy*>* strategies;
     QMap<NoteType, NoteFactory*>* factories;
     static NotesManager& getInstance();

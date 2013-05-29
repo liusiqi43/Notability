@@ -4,6 +4,7 @@
 #include "NotesManager.h"
 #include "Document.h"
 #include <QList>
+#include <assert.h>
 
 
 TreeModel::TreeModel(QObject *parent)
@@ -12,7 +13,7 @@ TreeModel::TreeModel(QObject *parent)
     nm = &NotesManager::getInstance();
     QVector<QVariant> rootData;
 
-    rootData << "Root";
+    rootData << "";
 
     rootItem = new TreeItem(rootData);
     setupModelData(rootItem);
@@ -45,8 +46,10 @@ Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return 0;
-
-    return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    if(getItem(index)->getItemId()->isDocument())
+        return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+    else
+        return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
 TreeItem *TreeModel::getItem(const QModelIndex &index) const
@@ -158,8 +161,10 @@ bool TreeModel::setData(const QModelIndex &index, const QVariant &value,
         return false;
 
     TreeItem *item = getItem(index);
-    bool result = item->setData(index.column(), value);
+    bool result = item->setData(index.column(), value, 0);
 
+    item->updateUnderlyingNoteTitle(value);
+    //    qDebug()<<index << ":"<<value;
     if (result)
         emit dataChanged(index, index);
 
@@ -172,7 +177,7 @@ bool TreeModel::setHeaderData(int section, Qt::Orientation orientation,
     if (role != Qt::EditRole || orientation != Qt::Horizontal)
         return false;
 
-    bool result = rootItem->setData(section, value);
+    bool result = rootItem->setData(section, value, 0);
 
     if (result)
         emit headerDataChanged(orientation, section, section);
@@ -180,57 +185,52 @@ bool TreeModel::setHeaderData(int section, Qt::Orientation orientation,
     return result;
 }
 
-void TreeModel::deployDocument(Document* current, QList<TreeItem*>* parents, int& pos, QList<int>* indent){
-    pos += 2;
-    QVector<QVariant> data;
-    data << current->getTitle();
+void TreeModel::deployDocument(Document* current, QList<TreeItem*>& parents, QList<int>& indent){
 
-    parents->append(new TreeItem(data, parents->last()));
-    indent->append(pos);
+    TreeItem *parent = parents.last();
+    if(current!=nm->getRootDocument()){
+        // current as a child of its parent
+        indent.append(indent.last()+1);
+        parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
+        parent->child(parent->childCount() - 1)->setData(0, current->getTitle(), current);
+    }
+    // current becomes a new parent
+    TreeItem *tmp = parent->child(parent->childCount() - 1);
+    if(tmp)
+        parents << parent->child(parent->childCount() - 1);
+    else{
+        parents << rootItem;
+    }
+
 
     for (nListIt it = current->begin(); it!=current->end(); ++it){
+        // If it is a doc, we deploy this doc.
         if((*it)->isDocument()){
-           deployDocument(dynamic_cast<Document*>(*it), parents, pos, indent);
-           parents->pop_back();
-           indent->pop_back();
+            deployDocument(dynamic_cast<Document*>(*it), parents, indent);
         }
-        else if(!(*it)->isDocument()){
-           // Not a document, on l'affiche comme une file
-           QVector<QVariant> data;
-           data << (*it)->getTitle();
+        else{
 
-           TreeItem *parent = parents->last();
-           parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
-           for (int column = 0; column < data.size(); ++column)
-               parent->child(parent->childCount() - 1)->setData(column, data[column]);
+            // We add it as a child.
+            QVector<QVariant> data;
+            data << (*it)->getTitle();
+            TreeItem *parent = parents.last();
+            parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
+            for (int column = 0; column < data.size(); ++column)
+                parent->child(parent->childCount() - 1)->setData(column, data[column], *it);
+
         }
     }
+    parents.pop_back();
+    indent.pop_back();
 }
 
 
 void TreeModel::setupModelData(TreeItem* parent)
- {
-     QList<TreeItem*> parents;
-     QList<int> indentations;
-     parents << parent;
-     indentations << 0;
+{
+    QList<TreeItem*> parents;
+    QList<int> indentations;
+    parents << parent;
+    indentations << 0;
 
-     for (nListIt it = nm->begin(); it!=nm->end(); ++it){
-        int position = 0;
-        if((*it)->isDocument()){
-            deployDocument(dynamic_cast<Document*>(*it), &parents, position, &indentations);
-            parents.pop_back();
-            indentations.pop_back();
-        }
-        else {
-            QVector<QVariant> data;
-            data << (*it)->getTitle();
-
-            // Append a new item to the current parent's list of children.
-            TreeItem *parent = parents.last();
-            parent->insertChildren(parent->childCount(), 1, rootItem->columnCount());
-            for (int column = 0; column < data.size(); ++column)
-                parent->child(parent->childCount() - 1)->setData(column, data[column]);
-        }
-     }
- }
+    deployDocument(nm->getRootDocument(), parents, indentations);
+}

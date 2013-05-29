@@ -4,6 +4,7 @@
 #include <QList>
 
 TreeItem::TreeItem(const QVector<QVariant> &data, TreeItem *parent)
+    :IDlock(false)
 {
     parentItem = parent;
     itemData = data;
@@ -21,7 +22,7 @@ TreeItem *TreeItem::child(int row)
 
 int TreeItem::childCount() const
  {
-     return childItems.count();
+    return childItems.count();
  }
 
 int TreeItem::childNumber() const
@@ -42,14 +43,22 @@ QVariant TreeItem::data(int column) const
      return itemData.value(column);
  }
 
-bool TreeItem::setData(int column, const QVariant &n)
+bool TreeItem::setData(int column, const QVariant &n, Note* ID)
  {
      if (column < 0 || column >= itemData.size())
          return false;
-
      itemData[column] = n;
+     if(!IDlock && ID){
+         itemId = ID;
+         IDlock = true;
+     }
      return true;
- }
+}
+
+void TreeItem::updateUnderlyingNoteTitle(const QVariant & newTitle)
+{
+    this->itemId->setTitle(newTitle.toString());
+}
 
 bool TreeItem::insertChildren(int position, int count, int columns)
 {
@@ -108,4 +117,15 @@ TreeItem *TreeItem::parent()
  {
      return parentItem;
  }
+
+
+Note *TreeItem::getItemId() const
+{
+    return itemId;
+}
+
+void TreeItem::setItemId(Note *value)
+{
+    itemId = value;
+}
 

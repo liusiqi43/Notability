@@ -52,7 +52,7 @@ void Editor::BACKEND_SAVE()
         UI_INFORM_USER_OF_SAVE();
     }
     catch(NotesException e){
-        qDebug() << e.getInfo();
+//        qDebug() << e.getInfo();
         QMessageBox::critical(this, "Error", "Your modifications have not been saved! Error: "+e.getInfo());
     }
 }

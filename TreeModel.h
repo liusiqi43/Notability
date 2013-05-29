@@ -42,7 +42,7 @@ public:
     bool removeRows(int position, int rows,
                     const QModelIndex &parent = QModelIndex());
 private:
-    void deployDocument(Document* current, QList<TreeItem*>* parents, int& pos, QList<int>* indent);
+    void deployDocument(Document* current, QList<TreeItem*>& parents, QList<int>& indent);
     void setupModelData(TreeItem *parent);
     TreeItem *getItem(const QModelIndex &index) const;
 

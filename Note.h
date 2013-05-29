@@ -28,7 +28,7 @@ public:
     bool operator==(const Note& other);
 
     const QString &getTitle() const;
-    void setTitle(QString &t);
+    void setTitle(const QString &t);
 
     const QString &getFilePath() const;
     void setFilePath(const QString &p);

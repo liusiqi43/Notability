@@ -8,7 +8,7 @@ void ArticleEditor::BACKEND_SET_CONTENT(){
     int bodyBeginsFrom = str.indexOf("<p");
     int bodyEndsAt = str.indexOf("</body></html>");
     QStringRef body(&str, bodyBeginsFrom, bodyEndsAt-bodyBeginsFrom);
-    qDebug()<<body.toString();
+//    qDebug()<<body.toString();
     this->ressource->setText(body.toString());
 }
 

@@ -36,6 +36,11 @@ void NotesManager::addNote(Note* a){
     rootDocument->addNote(a);
 }
 
+void NotesManager::removeNote(Note *a)
+{
+    rootDocument->removeNote(a);
+}
+
 Note& NotesManager::getNote(const QString& fileName){
     for(nListIt it = begin(); it != end(); it++){
         if((**it).getFilePath()==fileName)

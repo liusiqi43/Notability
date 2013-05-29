@@ -17,7 +17,7 @@ void Note::setFilePath(const QString &p) {
     modified=true;
 }
 
-void Note::setTitle(QString &t) {
+void Note::setTitle(const QString &t) {
     title = t;
     modified = true;
 }

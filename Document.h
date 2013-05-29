@@ -15,6 +15,7 @@ public:
     QList<Note *>::const_iterator end() const;
 
     void addNote(Note *note);
+    int count() const;
     void operator<<(Note *note);
     void removeNote(Note *note);
 

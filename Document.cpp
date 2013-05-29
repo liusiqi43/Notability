@@ -31,6 +31,11 @@ void Document::addNote(Note* note)
     this->notes << note;
 }
 
+int Document::count() const
+{
+    return notes.count();
+}
+
 void Document::operator <<(Note *note)
 {
     this->addNote(note);
