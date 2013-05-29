@@ -164,7 +164,7 @@ bool TreeModel::setData(const QModelIndex &index, const QVariant &value,
     bool result = item->setData(index.column(), value, 0);
 
     item->updateUnderlyingNoteTitle(value);
-    //    qDebug()<<index << ":"<<value;
+
     if (result)
         emit dataChanged(index, index);
 
