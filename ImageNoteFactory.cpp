@@ -10,16 +10,18 @@
 ImageNote* ImageNoteFactory::buildNote(const QString &path)
 {
     QFile fichier(path);
-    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+    if(!fichier.open(QIODevice::ReadOnly | QIODevice::Text))
+        return 0;
     QTextStream flux(&fichier);
 
+    QString fpath = flux.readLine();
     QString title=flux.readLine();
     QString des =flux.readLine();
     QString ipath = flux.readLine();
 
-    fichier.close();
+    fichier.close(); qDebug()<<fpath;
 
-    ImageNote* a=new ImageNote(path,title,des,ipath);
+    ImageNote* a=new ImageNote(fpath,title,des,ipath);
     return a;
 }
 

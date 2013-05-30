@@ -2,6 +2,7 @@
 #include "DocumentFactory.h"
 #include <QFile>
 #include <QTextStream>
+#include <exception>
 #include "NotesManager.h"
 
 /***
@@ -11,11 +12,14 @@
 Document* DocumentFactory::buildNote(const QString &path)
 {
     QFile fichier(path);
-    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+    if(!fichier.open(QIODevice::ReadOnly | QIODevice::Text)){
+        return 0;
+    }
     QTextStream flux(&fichier);
 
+    QString fpath = flux.readLine();
     QString title=flux.readLine();
-    Document *d = new Document(path, title);
+    Document *d = new Document(fpath, title);
 
     NotesManager *nm = &NotesManager::getInstance();
 
@@ -27,7 +31,7 @@ Document* DocumentFactory::buildNote(const QString &path)
             d->addNote(&nm->getNote(notePath));
     }
 
-    fichier.close();
+    fichier.close(); qDebug()<<fpath;
     return d;
 }
 

@@ -2,7 +2,8 @@
 #define ARTICLEEDITOR_H
 
 #include "Editor.h"
-//#include "Article.h"
+#include <QPlainTextEdit>
+
 class Article;
 class ArticleEditor : public Editor
 {
@@ -10,11 +11,8 @@ class ArticleEditor : public Editor
 public:
     explicit ArticleEditor(Article *, QWidget *parent = 0);
 
-    QTextEdit *getTextWidget() const;
-    void setTextWidget(QTextEdit *value);
-
-//    Article *getRessource() const;
-//    void setRessource(Article *value);
+    QPlainTextEdit *getTextWidget() const;
+    void setTextWidget(QPlainTextEdit *value);
 
 signals:
 
@@ -22,7 +20,7 @@ public slots:
     void BACKEND_SET_CONTENT();
 
 private:
-    QTextEdit *textWidget;
+    QPlainTextEdit *textWidget;
     Article *ressource;
 };
 

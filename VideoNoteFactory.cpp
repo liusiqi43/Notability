@@ -9,16 +9,18 @@
 VideoNote* VideoNoteFactory::buildNote(const QString &path)
 {
     QFile fichier(path);
-    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+    if(!fichier.open(QIODevice::ReadOnly | QIODevice::Text))
+        return 0;
     QTextStream flux(&fichier);
 
+    QString fpath = flux.readLine();
     QString title=flux.readLine();
     QString des =flux.readLine();
     QString vpath = flux.readLine();
 
-    fichier.close();
+    fichier.close(); qDebug()<<fpath;
 
-    VideoNote* a=new VideoNote(path,title,des,vpath);
+    VideoNote* a=new VideoNote(fpath,title,des,vpath);
     return a;
 }
 

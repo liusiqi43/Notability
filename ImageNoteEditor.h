@@ -12,11 +12,6 @@ class ImageNoteEditor : public BinaryEditor
 public:
     explicit ImageNoteEditor(ImageNote *img, QWidget *parent = 0);
 
-//    ImageNote *getRessource() const;
-//    void setRessource(ImageNote *value);
-
-//    QString toHtml() const;
-
 signals:
 
 public slots:

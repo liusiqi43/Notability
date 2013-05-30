@@ -18,6 +18,7 @@ public:
     int count() const;
     void operator<<(Note *note);
     void removeNote(Note *note);
+    Note* find(const QString& filepath);
 
     const QList<Note *> &getNotes() const;
     void setNotes(const QSet<Note> &value);

@@ -6,6 +6,7 @@
 #include "DocumentFactory.h"
 
 #include <QMap>
+#include <QApplication>
 #include <QDateTime>
 
 /***
@@ -28,7 +29,16 @@ QMap<NoteType, NoteFactory *> *NoteFactory::getFactories()
 
 QString NoteFactory::generateNewFilePath()
 {
-    return this->getFolder()+generateID()+this->getExtension();
+    QString path = this->getFullFolder()+generateID()+this->getExtension();
+    qDebug()<<path;
+    return path;
+}
+
+QString NoteFactory::getFullFolder()
+{
+    QString dir = qApp->applicationDirPath()+"/"+this->getFolder();
+    qDebug()<<dir;
+    return dir;
 }
 
 QString NoteFactory::generateID(){

@@ -15,13 +15,16 @@
 #include <QMap>
 #include <QScrollArea>
 #include "ui_mainwindow.h"
+#include <QSettings>
+#include <QCoreApplication>
+#include <assert.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    ressource = 0;
     editorWidget = new QWidget;
     noteEditors = new QList<Editor*>;
     ui->editorScroll->setWidget(editorWidget);
@@ -50,7 +53,13 @@ MainWindow::MainWindow(QWidget *parent) :
     menuFichier->addAction(actionOpen);
 
     menuFichier->addAction(actionQuit);
+
     toolBar->addAction(actionOpen);
+    toolBar->addAction(actionNewArticle);
+    toolBar->addAction(actionNewImageNote);
+    toolBar->addAction(actionNewVideoNote);
+    toolBar->addAction(actionNewAudioNote);
+    toolBar->addAction(actionNewDocument);
     toolBar->addAction(actionQuit);
 
     tab = new QTabWidget();
@@ -81,6 +90,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(actionNewImageNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewAudioNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewVideoNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
+
+    QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
@@ -146,7 +157,6 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
 
 
 void MainWindow::UI_OPEN_FILE(){
-
     QString fichier = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Notes (*.art *.img *.vid *.aud *.doc)");
 
     QLayout *parentLayout;
@@ -154,6 +164,7 @@ void MainWindow::UI_OPEN_FILE(){
         // Test if already opened
         if(openedFiles.contains(fichier))
             return;
+
         if(EditorPage->layout()){
             parentLayout = EditorPage->layout();
             if(ressource != 0 && !ressource->isDocument()){
@@ -261,5 +272,20 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
             return;
         }
 
+    }
+}
+
+void MainWindow::BACKEND_CLOSING()
+{
+    if(nm->getRootDocument()->isModified()){
+        try{
+            nm->saveNote(*nm->getRootDocument());
+            QSettings settings;
+            settings.setValue("rootDocument", nm->getRootDocument()->getFilePath());
+            qDebug() << nm->getRootDocument()->getFilePath();
+        }
+        catch (NotesException e){
+            QMessageBox::warning(this, "Saving error", e.getInfo());
+        }
     }
 }

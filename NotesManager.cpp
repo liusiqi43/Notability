@@ -5,6 +5,7 @@
 #include "ExportStrategy.h"
 #include "NotesException.h"
 #include <QString>
+#include <QSettings>
 #include <QMap>
 #include <QFile>
 #include <QDir>
@@ -42,10 +43,12 @@ void NotesManager::removeNote(Note *a)
 }
 
 Note& NotesManager::getNote(const QString& fileName){
-    for(nListIt it = begin(); it != end(); it++){
-        if((**it).getFilePath()==fileName)
-            return (**it);
+    Note* res = rootDocument->find(fileName);
+    if(res){
+        qDebug()<<"gotcha";
+        return *res;
     }
+
     // sinon, il faut le loader
     NoteType type = DetectType(fileName);
     
@@ -88,7 +91,24 @@ Note& NotesManager::getNewNote(NoteType type){
  */
 NotesManager* NotesManager::instance=0; // pointeur sur l'unique instance
 NotesManager& NotesManager::getInstance(){
-    if (!instance) instance=new NotesManager;
+    if (!instance)
+    {
+        instance=new NotesManager;
+
+        // TODO, populates this by file stored on disk.
+        QSettings settings;
+        QVariant rootPath = settings.value("rootDocument");
+        if(!rootPath.isNull()){
+            Document* old = instance->getRootDocument();
+            instance->setRootDocument(static_cast<Document *>(instance->factories->value(document)->buildNote(rootPath.toString())));
+            if(!instance->getRootDocument()){
+                qDebug()<<"Init loading failed: "<<rootPath;
+                instance->setRootDocument(old);
+            } else {
+                delete old;
+            }
+        }
+    }
     return *instance;
 }
 void NotesManager::libererInstance(){
@@ -100,8 +120,8 @@ void NotesManager::libererInstance(){
 NotesManager::NotesManager(){
     factories = NoteFactory::getFactories();
     strategies = ExportStrategy::getStrategies();
-    // TODO, populates this by file stored on disk.
     rootDocument = static_cast<Document *>(factories->value(document)->buildNewNote());
+    rootDocument->setTitle("/");
 }
 
 
@@ -112,32 +132,63 @@ NotesManager::~NotesManager(){
     }
 }
 
+void NotesManager::saveDocument(Document& d){
+
+    for(nListIt it = d.begin(); it!= d.end(); ++it){
+        saveNote(**it);
+    }
+
+    // Saving in reverse order. So that all path saved are valid
+
+    // Prepare parent directories
+    QString fp = d.getFilePath();
+    fp.truncate(fp.lastIndexOf('/'));
+    QDir().mkpath(fp);
+
+    // Creation d'un objet QFile
+    QFile file(d.getFilePath());
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+        throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
+
+    ExportStrategy* es = NotesManager::strategies->value(saveText);
+    QString q = d.exportNote(es, 0);
+
+    QTextStream flux(&file);
+    flux<<q;
+    file.close();
+    d.setModified(false);
+}
+
 void NotesManager::saveNote(Note& a){
     if (a.isModified()) {
-        // Prepare parent directories
-        QString fp = a.getFilePath();
-        fp.truncate(fp.lastIndexOf('/'));
-        QDir().mkpath(fp);
-        
-        // Creation d'un objet QFile
-        QFile file(a.getFilePath());
-        
-        // On ouvre notre fichier en lecture seule et on v�rifie l'ouverture
-        if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-            throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
-        
-        // TODO add enum ExportType {html=1, text, saveText, tex};
-        ExportStrategy* es = NotesManager::strategies->value(saveText);
-        QString q = a.exportNote(es, 0);
-        
-        QTextStream flux(&file);
-        flux<<q;
-        file.close();
-        a.setModified(false);
+        if(!a.isDocument()){
+            // Prepare parent directories
+            QString fp = a.getFilePath();
+            fp.truncate(fp.lastIndexOf('/'));
+            QDir().mkpath(fp);
+
+            // Creation d'un objet QFile
+            QFile file(a.getFilePath());
+
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
+                throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
+
+            ExportStrategy* es = NotesManager::strategies->value(saveText);
+            QString q = a.exportNote(es, 0);
+
+            QTextStream flux(&file);
+            flux<<q;
+            file.close();
+            a.setModified(false);
+        }
+        else{
+            saveDocument(static_cast<Document&>(a));
+        }
     }
-    else{
-        throw NotesException("You are not supposed to save! No modification made!");
-    }
+//    else{
+//        throw NotesException("You are not supposed to save! No modification made!");
+//    }
 }
 
 

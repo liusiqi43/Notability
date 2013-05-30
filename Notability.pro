@@ -1,6 +1,5 @@
 SOURCES += \
     main.cpp \
-    AppManager.cpp \
     Document.cpp \
     NotesManager.cpp \
     htmlViewer.cpp \
@@ -34,11 +33,14 @@ SOURCES += \
     mainwindow.cpp \
     TextViewer.cpp \
     TreeItem.cpp \
+    Tag.cpp \
+    TagManager.cpp \
     TreeModel.cpp
 
 HEADERS += \
     NotesManager.h \
-    AppManager.h \
+    Tag.h \
+    TagManager.h \
     htmlViewer.h \
     NoteFactory.h \
     ExportStrategy.h \
@@ -78,3 +80,6 @@ QT      += widgets \
 
 FORMS += \
     mainwindow.ui
+
+RESOURCES += \
+    ressources.qrc

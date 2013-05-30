@@ -6,6 +6,7 @@
 #include "AudioNote.h"
 #include "Document.h"
 #include "ExportStrategy.h"
+#include <QString>
 
 //Html Export
 QString HtmlExport::header() const
@@ -38,13 +39,15 @@ QString HtmlExport::exportNote(const ImageNote *note, unsigned int level) const
 QString HtmlExport::exportNote(const Article *note, unsigned int level) const
 {
     QString str;
+    QString text = note->getText();
+    text.replace(QString("\n"), QString("<br>"));
     // Shoud implement a limit on margin...TODO
     int margin = level * 10;
     int titleSize = (level > 5) ? 5 : level;
 
     str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
     str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
-            "</h"+QString::number(titleSize+1)+"><p>"+note->getText()+"</p></div>";
+            "</h"+QString::number(titleSize+1)+"><p>"+text+"</p></div>";
     return str;
 }
 

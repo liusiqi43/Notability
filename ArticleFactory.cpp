@@ -11,14 +11,16 @@
 Article* ArticleFactory::buildNote(const QString &path)
 {
     QFile fichier(path);
-    fichier.open(QIODevice::ReadOnly | QIODevice::Text);
+    if(!fichier.open(QIODevice::ReadOnly | QIODevice::Text))
+        return 0;
     QTextStream flux(&fichier);
 
+    QString fpath = flux.readLine();
     QString title=flux.readLine();
     QString text=flux.readLine();
     fichier.close();
-
-    Article *a=new Article(path,title,text);
+    qDebug()<<fpath;
+    Article *a=new Article(fpath,title,text);
     return a;
 }
 

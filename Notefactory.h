@@ -22,6 +22,7 @@ public:
     virtual Note* buildNote(const QString& path) = 0;
     virtual Note* buildNewNote() = 0;
 //    virtual Note* buildNoteCopy(const Note& note) = 0;
+    QString getFullFolder();
     virtual QString getFolder() = 0;
     virtual QString getExtension() = 0;
 

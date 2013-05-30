@@ -41,6 +41,7 @@ public slots:
     void UI_INFORM_NOT_IMPLEMENTED();
     void UI_NEW_NOTE_EDITOR(const int type);
     void UI_TAB_CHANGE_HANDLER(int);
+    void BACKEND_CLOSING();
 
 private:
     Ui::MainWindow *ui;
@@ -64,7 +65,7 @@ private:
     TexViewer * tv;
     TextViewer * textv;
 
-    Note * ressource;
+    Note* ressource;
 
     int lastTabIndex;
 };

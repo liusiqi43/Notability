@@ -20,17 +20,18 @@ QString SaveTextExport::footer() const
 
 QString SaveTextExport::exportNote(const Article *note, unsigned int level) const
 {
-    return note->getTitle()+"\n"+note->getText()+"\n";
+    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getText()+"\n";
 }
 
 QString SaveTextExport::exportNote(const ImageNote *note, unsigned int level) const
 {
-    return note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath()+"\n";
+    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath();
 }
 
 QString SaveTextExport::exportNote(const Document *doc, unsigned int level) const
 {
     QString str;
+    str+=doc->getFilePath()+"\n";
     str+=doc->getTitle()+"\n";
 
     for(QList<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
@@ -42,11 +43,11 @@ QString SaveTextExport::exportNote(const Document *doc, unsigned int level) cons
 
 QString SaveTextExport::exportNote(const AudioNote *note, unsigned int level) const
 {
-    return note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath()+"\n";
+    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath()+"\n";
 }
 
 QString SaveTextExport::exportNote(const VideoNote *note, unsigned int level) const
 {
-    return note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath()+"\n";
+    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath()+"\n";
 }
 

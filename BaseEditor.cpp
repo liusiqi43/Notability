@@ -15,11 +15,38 @@ Editor::Editor(Note *n, QWidget *parent) :
     QWidget(parent), ressource(n)
 {
     btnSave = new QPushButton("Save");
-    titleWidget = new QLineEdit(ressource->getTitle());
-    layout = new QVBoxLayout();
-    layout->addWidget(titleWidget);
+    btnClose= new QPushButton("Close");
+    btnMove = new QPushButton("Move");
+    btnTag = new QPushButton("Tag");
 
-    this->setLayout(layout);
+    titleWidget = new QLineEdit(ressource->getTitle());
+    contentWidget = new QWidget();
+    buttonsWidget = new QWidget();
+
+    editorBaseLayout = new QVBoxLayout();
+    contentLayout = new QVBoxLayout();
+    buttonsLayout = new QHBoxLayout();
+
+    QFrame* line = new QFrame();
+    line->setFrameShape(QFrame::HLine);
+    line->setFrameShadow(QFrame::Sunken);
+
+    editorBaseLayout->addWidget(new QLabel("Title:"));
+    editorBaseLayout->addWidget(titleWidget);
+    editorBaseLayout->addWidget(contentWidget);
+    editorBaseLayout->addWidget(buttonsWidget);
+    editorBaseLayout->addWidget(line);
+
+    this->setLayout(editorBaseLayout);
+    contentWidget->setLayout(contentLayout);
+    buttonsWidget->setLayout(buttonsLayout);
+
+    buttonsLayout->addWidget(btnSave);
+    buttonsLayout->addWidget(btnClose);
+    buttonsLayout->addWidget(btnMove);
+    buttonsLayout->addWidget(btnTag);
+    btnSave->setEnabled(false);
+
 
     QObject::connect(titleWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON()));
     QObject::connect(btnSave, SIGNAL(clicked()),this, SLOT(BACKEND_SAVE()));
@@ -70,16 +97,6 @@ QLineEdit *Editor::getTitleWidget() const
 void Editor::setTitleWidget(QLineEdit *value)
 {
     titleWidget = value;
-}
-
-QPushButton *Editor::getBtnSave() const
-{
-    return btnSave;
-}
-
-void Editor::setBtnSave(QPushButton *value)
-{
-    btnSave = value;
 }
 
 Note *Editor::getRessource() const

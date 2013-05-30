@@ -9,6 +9,7 @@
 #include <QPixmap>
 #include <QLineEdit>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 
 class Note;
 
@@ -19,16 +20,22 @@ class Editor : public QWidget
 {
     Q_OBJECT
     QLineEdit * titleWidget;
+    QWidget * contentWidget;
+    QWidget * buttonsWidget;
     Note * ressource;
     QPushButton * btnSave;
+    QPushButton * btnClose;
+    QPushButton * btnMove;
+    QPushButton * btnTag;
+    QVBoxLayout * editorBaseLayout;
 
     void BACKEND_SET_TITLE();
     virtual void BACKEND_SET_CONTENT() = 0;
-
     void UI_INFORM_USER_OF_SAVE();
 
 public:
-    QVBoxLayout *layout;
+    QVBoxLayout *contentLayout;
+    QHBoxLayout *buttonsLayout;
 
     explicit Editor(Note *n, QWidget *parent = 0);
 
@@ -42,6 +49,15 @@ public:
     void setRessource(Note *value);
 
     bool operator==(const Editor& rhs);
+
+    QPushButton *getBtnClose() const;
+    void setBtnClose(QPushButton *value);
+
+    QPushButton *getBtnMove() const;
+    void setBtnMove(QPushButton *value);
+
+    QPushButton *getBtnTag() const;
+    void setBtnTag(QPushButton *value);
 
 signals:
 

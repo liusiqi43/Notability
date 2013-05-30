@@ -8,25 +8,6 @@
  * ImageNoteEditor
  */
 
-//ImageNote *ImageNoteEditor::getRessource() const
-//{
-//    return ressource;
-//}
-
-//void ImageNoteEditor::setRessource(ImageNote *value)
-//{
-//    ressource = value;
-//}
-
-//QString ImageNoteEditor::toHtml() const
-//{
-//    return "<html><head><meta charset=\"UTF-8\"><title>"+
-//            getTitleWidget()->text()+"</title></head><body>"+
-//            "<h1>"+getTitleWidget()->text()+"</h1>"
-//            +"<img style=\"width: 100%\" src=\"file://"+ currentImgPath +"\" alt=\"\"><p>"
-//            +getDescriptionWidget()->text()+"</p></body></html>";
-//}
-
 void ImageNoteEditor::BACKEND_SET_CONTENT()
 {
     ressource->setDescription(getDescriptionWidget()->text());
@@ -36,27 +17,36 @@ void ImageNoteEditor::BACKEND_SET_CONTENT()
 void ImageNoteEditor::LOAD_IMAGE(){
     currentImgPath = QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Images (*.png *.jpeg *.xpm *.jpg)");
     image = QPixmap(currentImgPath);
+    int w = imageWidget->width();
+    int h = imageWidget->height();
+
     if(!image.isNull()){
-        imageWidget->setPixmap(image);
+        imageWidget->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
     }
 }
 
 ImageNoteEditor::ImageNoteEditor(ImageNote *img, QWidget *parent)
     :BinaryEditor(img, parent), ressource(img), currentImgPath(img->getMediaPath())
 {
-    btnAddImage = new QPushButton("Choose a Picture");
+    btnAddImage = new QPushButton("Picture");
 
     image = QPixmap(ressource->getMediaPath());
     imageWidget = new QLabel();
-    imageWidget->setScaledContents(true);
+    imageWidget->setAlignment(Qt::AlignHCenter);
+
+    int w = imageWidget->width();
+    int h = imageWidget->height();
+
     if(!image.isNull()){
-        imageWidget->setPixmap(image);
+        imageWidget->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
     }
-    layout->addWidget(imageWidget);
-    layout->addWidget(getDescriptionWidget());
-    layout->addWidget(btnAddImage);
-    layout->addWidget(getBtnSave());
-    this->setLayout(layout);
+    else {
+        imageWidget->setPixmap(QPixmap(":/images/image_not_found").scaled(w, h, Qt::KeepAspectRatio));
+    }
+    contentLayout->addWidget(imageWidget);
+    contentLayout->addWidget(new QLabel("Description:"));
+    contentLayout->addWidget(getDescriptionWidget());
+    buttonsLayout->addWidget(btnAddImage);
 
     QObject::connect(btnAddImage, SIGNAL(clicked()), this, SLOT(LOAD_IMAGE()));
 }

@@ -26,6 +26,7 @@ private:
     NotesManager& operator=(const NotesManager&); // m�me chose
     static NotesManager* instance; // pointeur sur l'unique instance
 
+    void saveDocument(Document& d);
 
 public:
     void removeNote(Note* a);
