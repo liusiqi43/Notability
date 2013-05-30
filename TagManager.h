@@ -7,14 +7,7 @@
 
 class Note;
 
-struct TagNotes {
-    Tag* tag;
-    Note* note;
-};
-
-typedef struct TagNotes* TagNote;
-
-typedef QSet<Tag *>::iterator nSetIt;
+typedef QSet<Tag* >::iterator nSetIt;
 
 class TagManager // singleton
 {
@@ -26,8 +19,7 @@ class TagManager // singleton
     static TagManager* instance;
 
     QSet<Tag*> Tags;
-    TagNote* associations;
-    unsigned int nbAssoc;
+
 
 public:
     static TagManager& getInstance(); //
@@ -36,7 +28,7 @@ public:
     void createTag(const QString &n); //
     void removeTag(Tag* t); //
     QSet<Tag *> getTagforNote(Note* note);
-    Note** getNoteforTag(Tag *tag); //
+    QSet<Note*> getNoteforTag(Tag *tag); //
     void addTagToNote(Tag *tag, Note *note); //
     void removeTagToNote(Tag* tag, Note* note);
 

@@ -4,7 +4,7 @@
 //méthodes pour le singleton
 TagManager* TagManager::instance=0;
 
-TagManager::TagManager(): nbAssoc(0), associations(new TagNote)
+TagManager::TagManager()
 {
     Tags.clear();
 }
@@ -12,7 +12,6 @@ TagManager::TagManager(): nbAssoc(0), associations(new TagNote)
 TagManager::~TagManager()
 {
     Tags.clear();
-    for(unsigned int j=0; j<nbAssoc-1; j++) delete associations[j];
 }
 
 
@@ -41,58 +40,43 @@ QSet<Tag*> TagManager::getTags()
 
 void TagManager::createTag(const QString& n)
 {
-    Tag t(n);
-    Tags<<&t;
+    Tag *t = new Tag(n);
+    Tags << t;
 }
 
 void TagManager::addTagToNote(Tag* tag, Note* note)
 {
-    associations[nbAssoc]->note=note;
-    associations[nbAssoc]->tag=tag;
-    nbAssoc++;
+    tag->addNote(note);
 }
 
 void TagManager::removeTag(Tag* t)
 {
-    Tags.remove(t); // supprime le tag
+    Tags.remove(t);
 }
 
-Note** TagManager::getNoteforTag(Tag* tag)
+QSet<Note *> TagManager::getNoteforTag(Tag* tag)
 {
-    Note** res=NULL;
-    unsigned int nb=0;
-    for(unsigned int i=0; i<nbAssoc-1; i++)
-    {
-        if(associations[i]->tag==tag)
-        {
-            res[nb]=associations[i]->note;
-            nb++;
-        }
-    }
-    return res;
+    tag->getAssocs();
 }
 
 QSet<Tag*> TagManager::getTagforNote(Note *note)
 {
     QSet<Tag*> res;
-    for(unsigned int i=0; i<nbAssoc-1; i++)
-    {
-        if(associations[i]->note==note)
+    for(nSetIt it = begin(); it != end(); it++){
+        if((**it).getAssocs().contains(note))
         {
-            res<<associations[i]->tag;
+            res<<(*it);
         }
     }
+    return res;
 }
 
 void TagManager::removeTagToNote(Tag *tag, Note *note)
 {
-    for(unsigned int i=0; i<nbAssoc-1; i++) // supprime les associations
-    {
-        if(associations[i]->tag==tag)
+    for(nSetIt it = begin(); it != end(); it++){
+        if((*it)==tag && (**it).getAssocs().contains(note))
         {
-            delete associations[i];
-            for(unsigned int j=i; j<nbAssoc-1; j++) associations[j]=associations[j+1];
-            nbAssoc--;
+            (**it).getAssocs().remove(note);
         }
     }
 }
