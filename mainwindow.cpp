@@ -18,10 +18,28 @@
 #include <QSettings>
 #include <QCoreApplication>
 #include <assert.h>
+#include "TreeItem.h"
+
+MainWindow* MainWindow::instance = 0;
+
+MainWindow* MainWindow::getInstance(){
+    if(!instance){
+        instance = new MainWindow();
+    }
+    return instance;
+}
+
+void MainWindow::freeInstance()
+{
+    if(instance){
+        delete instance;
+        instance = 0;
+    }
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0)
+    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), sideBarModel(0)
 {
     ui->setupUi(this);
     editorWidget = new QWidget;
@@ -91,6 +109,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
+    QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
     updateSideBar();
@@ -121,7 +140,7 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
             Note* temp = &nm->getNewNote(nt);
             ressources << temp;
 
-            Editor* noteEditor = temp->createAndAttachEditor(this);
+            Editor* noteEditor = temp->createAndAttachEditor();
             parentLayout->addWidget(noteEditor);
             if(!EditorPage->layout())
                 EditorPage->setLayout(parentLayout);
@@ -135,6 +154,29 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
         &nm->getNewNote(nt);
         updateSideBar();
     }
+}
+
+void MainWindow::UI_LOAD_FROM_SIDE_BAR(const QModelIndex& index){
+    TreeItem * temp = sideBarModel->getItem(index);
+    if(openedFiles.contains(temp->getItemId()->getFilePath()))
+        return;
+    Editor *editor = temp->getItemId()->createAndAttachEditor();
+
+    for(QList<Note*>::iterator it = ressources.begin(); it != ressources.end(); ++it){
+        (*it)->getEditor()->BACKEND_SET();
+        delete (*it)->getEditor();
+    }
+    delete EditorPage->layout();
+
+    ressources.clear();
+    openedFiles.clear();
+
+    QVBoxLayout * layout = new QVBoxLayout();
+    layout->addWidget(editor);
+    EditorPage->setLayout(layout);
+
+    openedFiles << temp->getItemId()->getFilePath();
+    ressources << temp->getItemId();
 }
 
 
@@ -152,7 +194,7 @@ void MainWindow::UI_OPEN_FILE(){
             Note* temp = &nm->getNote(fichier);
             ressources << temp;
 
-            Editor* noteEditor = temp->createAndAttachEditor(this);
+            Editor* noteEditor = temp->createAndAttachEditor();
             parentLayout->addWidget(noteEditor);
             if(!EditorPage->layout())
                 EditorPage->setLayout(parentLayout);
@@ -242,5 +284,11 @@ void MainWindow::BACKEND_CLOSING()
 
 void MainWindow::updateSideBar()
 {
-    ui->noteBookTree->setModel(new TreeModel());
+    TreeModel *old = 0;
+    if(sideBarModel)
+        old = sideBarModel;
+    sideBarModel = new TreeModel();
+    ui->noteBookTree->setModel(sideBarModel);
+    delete old;
+    old = 0;
 }

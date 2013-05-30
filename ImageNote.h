@@ -9,7 +9,7 @@ public:
     ImageNote(const QString& filepath);
     ImageNote(const QString& filePath, const QString& ti, const QString& des, const QString& iPath);
 
-    ImageNoteEditor *createEditor(MainWindow *mw);
+    ImageNoteEditor *createEditor();
     QString exportNote(const ExportStrategy *es, unsigned int level = 0);
 };
 

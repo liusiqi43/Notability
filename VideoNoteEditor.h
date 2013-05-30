@@ -8,7 +8,7 @@ class VideoNoteEditor : public BinaryEditor
 {
     Q_OBJECT
 public:
-    explicit VideoNoteEditor(VideoNote *v, MainWindow *mw, QWidget* parent = 0);
+    explicit VideoNoteEditor(VideoNote *v, QWidget* parent = 0);
 
 signals:
 public slots:

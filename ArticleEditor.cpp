@@ -11,8 +11,8 @@ void ArticleEditor::BACKEND_SET_CONTENT(){
     this->ressource->setText(str);
 }
 
-ArticleEditor::ArticleEditor(Article *art, MainWindow *mw, QWidget *parent) :
-    Editor(art, mw, parent), ressource(art)
+ArticleEditor::ArticleEditor(Article *art, QWidget *parent) :
+    Editor(art, parent), ressource(art)
 {
     textWidget = new QPlainTextEdit(ressource->getText());
 

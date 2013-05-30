@@ -23,7 +23,7 @@ public:
     const QList<Note *> &getNotes() const;
     void setNotes(const QSet<Note> &value);
 
-    DocumentEditor *createEditor(MainWindow *mw){return new DocumentEditor(0, mw);}
+    DocumentEditor *createEditor(){return new DocumentEditor(this);}
     QString exportNote(const ExportStrategy *es, unsigned int level = 0);
 };
 

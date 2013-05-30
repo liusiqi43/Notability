@@ -13,8 +13,8 @@
 #include "NotesManager.h"
 #include "htmlViewer.h"
 
-Editor::Editor(Note *n, MainWindow *mw, QWidget *parent) :
-    QWidget(parent), ressource(n), mainWindow(mw)
+Editor::Editor(Note *n, QWidget *parent) :
+    QWidget(parent), ressource(n)
 {
     btnSave = new QPushButton("Save");
     btnClose= new QPushButton("Close");
@@ -35,8 +35,8 @@ Editor::Editor(Note *n, MainWindow *mw, QWidget *parent) :
 
     editorBaseLayout->addWidget(new QLabel("Title:"));
     editorBaseLayout->addWidget(titleWidget);
-    editorBaseLayout->addWidget(contentWidget);
     editorBaseLayout->addWidget(buttonsWidget);
+    editorBaseLayout->addWidget(contentWidget);
     editorBaseLayout->addWidget(line);
 
     this->setLayout(editorBaseLayout);
@@ -51,14 +51,13 @@ Editor::Editor(Note *n, MainWindow *mw, QWidget *parent) :
 
 
     QObject::connect(titleWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()));
-//    QObject::connect(titleWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_UPDATE_SIDEBAR()));
     QObject::connect(btnSave, SIGNAL(clicked()),this, SLOT(BACKEND_SAVE()));
 }
 
 void Editor::UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()
 {
     BACKEND_SET_TITLE();
-    mainWindow->updateSideBar();
+    MainWindow::getInstance()->updateSideBar();
     this->btnSave->setEnabled(true);
 }
 

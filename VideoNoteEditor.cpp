@@ -3,8 +3,8 @@
 #include <QWidget>
 
 
-VideoNoteEditor::VideoNoteEditor(VideoNote *v, MainWindow *mw, QWidget* parent)
-    :BinaryEditor(v, mw, parent)
+VideoNoteEditor::VideoNoteEditor(VideoNote *v, QWidget* parent)
+    :BinaryEditor(v, parent)
 {
 }
 

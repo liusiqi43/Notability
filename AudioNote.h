@@ -12,7 +12,7 @@ class AudioNote: public Binary{
 public:
     AudioNote(const QString& filePath);
     AudioNote(const QString& filePath, const QString& ti, const QString& des, const QString& aPath);
-    AudioNoteEditor *createEditor(MainWindow *mw){return new AudioNoteEditor(0, mw);}
+    AudioNoteEditor *createEditor(){return new AudioNoteEditor(0);}
     QString exportNote(const ExportStrategy *es, unsigned int level = 0);
 };
 

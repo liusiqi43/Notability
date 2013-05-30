@@ -15,6 +15,9 @@ class Note{
 
     // the Editor associated
     Editor* editor;
+
+    // All documents that directly contains this note. For fast access in editors
+    QSet<Document*> inDocuments;
     bool modified;
     bool deleted;
     bool document;
@@ -42,8 +45,8 @@ public:
     void setDeleted(bool b);
     bool isDeleted() const;
 
-    Editor *createAndAttachEditor(MainWindow *mw);
-    virtual Editor *createEditor(MainWindow *mw) = 0;
+    Editor *createAndAttachEditor();
+    virtual Editor *createEditor() = 0;
     virtual QString exportNote(const ExportStrategy *es, unsigned int level = 0) = 0;
 
     bool isDocument() const;

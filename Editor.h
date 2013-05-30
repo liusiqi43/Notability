@@ -42,7 +42,7 @@ protected:
 
 public:
 
-    explicit Editor(Note *n, MainWindow *mw, QWidget *parent = 0);
+    explicit Editor(Note *n, QWidget *parent = 0);
 
     QLineEdit *getTitleWidget() const;
     void setTitleWidget(QLineEdit *value);

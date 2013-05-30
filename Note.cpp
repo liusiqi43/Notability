@@ -40,9 +40,9 @@ bool Note::isDeleted() const {
     return deleted;
 }
 
-Editor *Note::createAndAttachEditor(MainWindow *mw)
+Editor *Note::createAndAttachEditor()
 {
-    editor = this->createEditor(mw);
+    editor = this->createEditor();
     return editor;
 }
 
