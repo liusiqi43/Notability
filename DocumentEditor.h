@@ -8,7 +8,7 @@ class DocumentEditor : public Editor
 {
     Q_OBJECT
 public:
-    explicit DocumentEditor(Document* doc, QWidget *parent=0);
+    explicit DocumentEditor(Document* doc, MainWindow *mw, QWidget *parent=0);
 
 signals:
 

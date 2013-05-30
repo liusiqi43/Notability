@@ -28,7 +28,7 @@ QList<Note *>::const_iterator Document::end() const{
 
 Note* Document::find(const QString& filepath){
     for(QList<Note *>::const_iterator it = begin(); it!= end(); ++it){
-        qDebug()<<"Comparing:"<<(*it)->getFilePath()<<" & "<<filepath;
+//        qDebug()<<"Comparing:"<<(*it)->getFilePath()<<" & "<<filepath;
         if((*it)->getFilePath() == filepath)
         {
             return *it;

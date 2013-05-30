@@ -10,7 +10,7 @@ class BinaryEditor: public Editor
 {
     Q_OBJECT
 public:
-    explicit BinaryEditor(Binary *b, QWidget *parent = 0);
+    explicit BinaryEditor(Binary *b, MainWindow *mw, QWidget *parent = 0);
 
     QLineEdit *getDescriptionWidget() const;
     void setDescriptionWidget(QLineEdit *value);

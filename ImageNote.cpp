@@ -12,9 +12,9 @@ ImageNote::ImageNote(const QString& filePath, const QString& ti, const QString& 
     :Binary(filePath, ti, des, iPath)
 {}
 
-ImageNoteEditor *ImageNote::createEditor()
+ImageNoteEditor *ImageNote::createEditor(MainWindow *mw)
 {
-    return new ImageNoteEditor(this);
+    return new ImageNoteEditor(this, mw);
 }
 
 QString ImageNote::exportNote(const ExportStrategy *es, unsigned int level)

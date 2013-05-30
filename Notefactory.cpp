@@ -37,7 +37,6 @@ QString NoteFactory::generateNewFilePath()
 QString NoteFactory::getFullFolder()
 {
     QString dir = qApp->applicationDirPath()+"/"+this->getFolder();
-    qDebug()<<dir;
     return dir;
 }
 

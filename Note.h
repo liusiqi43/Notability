@@ -12,6 +12,9 @@ class ExportStrategy;
 class Note{
     QString title;
     QString filePath;
+
+    // the Editor associated
+    Editor* editor;
     bool modified;
     bool deleted;
     bool document;
@@ -39,11 +42,15 @@ public:
     void setDeleted(bool b);
     bool isDeleted() const;
 
-    virtual Editor *createEditor() = 0;
+    Editor *createAndAttachEditor(MainWindow *mw);
+    virtual Editor *createEditor(MainWindow *mw) = 0;
     virtual QString exportNote(const ExportStrategy *es, unsigned int level = 0) = 0;
 
     bool isDocument() const;
     void setDocument(bool value);
+
+    Editor *getEditor() const;
+    void setEditor(Editor *value);
 };
 
 

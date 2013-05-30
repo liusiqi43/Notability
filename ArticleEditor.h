@@ -9,7 +9,7 @@ class ArticleEditor : public Editor
 {
     Q_OBJECT
 public:
-    explicit ArticleEditor(Article *, QWidget *parent = 0);
+    explicit ArticleEditor(Article *, MainWindow *mw, QWidget *parent = 0);
 
     QPlainTextEdit *getTextWidget() const;
     void setTextWidget(QPlainTextEdit *value);

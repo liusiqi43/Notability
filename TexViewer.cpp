@@ -1,13 +1,18 @@
 #include "TexViewer.h"
 
 TexViewer::TexViewer(const QString& tex, QWidget *parent)
-    :QWidget(parent), ressource(tex)
+    :Viewer(parent)
 {
     layout = new QVBoxLayout;
     wv = new QTextEdit();
-    wv->setText(ressource);
+    wv->setText(tex);
 
     layout->addWidget(wv);
 
     this->setLayout(layout);
+}
+
+void TexViewer::setContent(const QString &tex)
+{
+    this->wv->setText(tex);
 }

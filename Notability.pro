@@ -35,7 +35,8 @@ SOURCES += \
     TreeItem.cpp \
     Tag.cpp \
     TagManager.cpp \
-    TreeModel.cpp
+    TreeModel.cpp \
+    viewer.cpp
 
 HEADERS += \
     NotesManager.h \
@@ -73,10 +74,11 @@ HEADERS += \
     mainwindow.h \
     TextViewer.h \
     TreeItem.h \
-    TreeModel.h
+    TreeModel.h \
+    viewer.h
 
 QT      += widgets \
-           webkitwidgets
+           webkitwidgets \
 
 FORMS += \
     mainwindow.ui

@@ -17,7 +17,7 @@ public:
     const QString& getText() const;
     void setText(const QString& t);
 
-    ArticleEditor *createEditor();
+    ArticleEditor *createEditor(MainWindow *mw);
     QString exportNote(const ExportStrategy *es, unsigned int level = 0);
 };
 

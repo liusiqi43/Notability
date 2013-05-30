@@ -11,7 +11,7 @@ class VideoNote: public Binary{
 public:
     VideoNote(const QString& filePath);
     VideoNote(const QString& filePath, const QString& ti, const QString& des, const QString& vPath);
-    VideoNoteEditor *createEditor(){return new VideoNoteEditor(0);}
+    VideoNoteEditor *createEditor(MainWindow *mw){return new VideoNoteEditor(0, mw);}
     QString exportNote(const ExportStrategy *es, unsigned int level = 0);
 };
 

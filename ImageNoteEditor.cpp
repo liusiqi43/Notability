@@ -25,8 +25,8 @@ void ImageNoteEditor::LOAD_IMAGE(){
     }
 }
 
-ImageNoteEditor::ImageNoteEditor(ImageNote *img, QWidget *parent)
-    :BinaryEditor(img, parent), ressource(img), currentImgPath(img->getMediaPath())
+ImageNoteEditor::ImageNoteEditor(ImageNote *img, MainWindow *mw, QWidget *parent)
+    :BinaryEditor(img, mw, parent), ressource(img), currentImgPath(img->getMediaPath())
 {
     btnAddImage = new QPushButton("Picture");
 

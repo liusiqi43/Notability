@@ -10,7 +10,7 @@ class ImageNoteEditor : public BinaryEditor
 {
     Q_OBJECT
 public:
-    explicit ImageNoteEditor(ImageNote *img, QWidget *parent = 0);
+    explicit ImageNoteEditor(ImageNote *img, MainWindow *mw, QWidget *parent = 0);
 
 signals:
 

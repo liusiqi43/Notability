@@ -18,9 +18,9 @@ void Article::setText(const QString& t) {
     text=t;
 }
 
-ArticleEditor *Article::createEditor()
+ArticleEditor *Article::createEditor(MainWindow *mw)
 {
-    return new ArticleEditor(this);
+    return new ArticleEditor(this, mw);
 }
 
 QString Article::exportNote(const ExportStrategy *es, unsigned int level)

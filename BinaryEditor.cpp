@@ -24,8 +24,8 @@ void BinaryEditor::setDescriptionWidget(QLineEdit *value)
     descriptionWidget = value;
 }
 
-BinaryEditor::BinaryEditor(Binary *b, QWidget *parent)
-    :Editor(b, parent), ressource(b)
+BinaryEditor::BinaryEditor(Binary *b, MainWindow *mw, QWidget *parent)
+    :Editor(b, mw, parent), ressource(b)
 {
     descriptionWidget = new QLineEdit(ressource->getDescription());
 }

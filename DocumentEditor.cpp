@@ -2,8 +2,8 @@
 #include "Document.h"
 #include <QWidget>
 
-DocumentEditor::DocumentEditor(Document* doc, QWidget *parent)
-    :Editor(doc, parent)
+DocumentEditor::DocumentEditor(Document* doc, MainWindow *mw, QWidget *parent)
+    :Editor(doc, mw, parent)
 {
 }
 

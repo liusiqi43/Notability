@@ -8,7 +8,7 @@ class AudioNoteEditor : public BinaryEditor
 {
     Q_OBJECT
 public:
-    explicit AudioNoteEditor(AudioNote *a, QWidget *parent = 0);
+    explicit AudioNoteEditor(AudioNote *a, MainWindow *mw, QWidget *parent = 0);
 
 signals:
 public slots:

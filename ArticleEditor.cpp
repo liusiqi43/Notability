@@ -11,15 +11,15 @@ void ArticleEditor::BACKEND_SET_CONTENT(){
     this->ressource->setText(str);
 }
 
-ArticleEditor::ArticleEditor(Article *art, QWidget *parent) :
-    Editor(art, parent), ressource(art)
+ArticleEditor::ArticleEditor(Article *art, MainWindow *mw, QWidget *parent) :
+    Editor(art, mw, parent), ressource(art)
 {
     textWidget = new QPlainTextEdit(ressource->getText());
 
     contentLayout->addWidget(new QLabel("Text:"));
     contentLayout->addWidget(textWidget);
 
-    QObject::connect(textWidget, SIGNAL(textChanged()), this, SLOT(UI_ENABLE_SAVE_BUTTON()));
+    QObject::connect(textWidget, SIGNAL(textChanged()), this, SLOT(UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()));
 }
 
 QPlainTextEdit *ArticleEditor::getTextWidget() const
