@@ -33,9 +33,11 @@ class Editor : public QWidget
     virtual void BACKEND_SET_CONTENT() = 0;
     void UI_INFORM_USER_OF_SAVE();
 
-public:
+protected:
     QVBoxLayout *contentLayout;
     QHBoxLayout *buttonsLayout;
+
+public:
 
     explicit Editor(Note *n, QWidget *parent = 0);
 
