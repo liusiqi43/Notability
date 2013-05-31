@@ -40,6 +40,12 @@ bool Note::isDeleted() const {
     return deleted;
 }
 
+Editor *Note::createAndAttachEditor()
+{
+    editor = this->createEditor();
+    return editor;
+}
+
 bool Note::isDocument() const
 {
     return document;
@@ -68,4 +74,14 @@ Note::Note(const QString& path, const QString& ti)
 bool Note::operator ==(const Note &other)
 {
     return this->getFilePath()==other.getFilePath();
+}
+
+Editor *Note::getEditor() const
+{
+    return editor;
+}
+
+void Note::setEditor(Editor *value)
+{
+    editor = value;
 }

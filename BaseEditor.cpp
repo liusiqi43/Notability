@@ -4,9 +4,11 @@
 #include <QPushButton>
 #include <QDebug>
 #include <QMessageBox>
+#include <QApplication>
 
 #include "Note.h"
 #include "Editor.h"
+#include "mainwindow.h"
 #include "NotesException.h"
 #include "NotesManager.h"
 #include "htmlViewer.h"
@@ -33,8 +35,8 @@ Editor::Editor(Note *n, QWidget *parent) :
 
     editorBaseLayout->addWidget(new QLabel("Title:"));
     editorBaseLayout->addWidget(titleWidget);
-    editorBaseLayout->addWidget(contentWidget);
     editorBaseLayout->addWidget(buttonsWidget);
+    editorBaseLayout->addWidget(contentWidget);
     editorBaseLayout->addWidget(line);
 
     this->setLayout(editorBaseLayout);
@@ -48,12 +50,14 @@ Editor::Editor(Note *n, QWidget *parent) :
     btnSave->setEnabled(false);
 
 
-    QObject::connect(titleWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON()));
+    QObject::connect(titleWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()));
     QObject::connect(btnSave, SIGNAL(clicked()),this, SLOT(BACKEND_SAVE()));
 }
 
-void Editor::UI_ENABLE_SAVE_BUTTON()
+void Editor::UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()
 {
+    BACKEND_SET_TITLE();
+    MainWindow::getInstance()->updateSideBar();
     this->btnSave->setEnabled(true);
 }
 

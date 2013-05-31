@@ -13,6 +13,8 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QDebug>
+#include "ExportStrategy.h"
+#include "viewer.h"
 
 class Editor;
 class HtmlViewer;
@@ -20,6 +22,7 @@ class TexViewer;
 class TextViewer;
 class Note;
 class Document;
+class TreeModel;
 class NotesManager;
 
 namespace Ui {
@@ -29,10 +32,15 @@ class MainWindow;
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    
-public:
+
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    MainWindow(const MainWindow&);
+    MainWindow& operator=(const MainWindow&);
+    static MainWindow* instance;
+public:
+    static MainWindow* getInstance();
+    static void freeInstance();
     
 signals:
 
@@ -42,8 +50,11 @@ public slots:
     void UI_NEW_NOTE_EDITOR(const int type);
     void UI_TAB_CHANGE_HANDLER(int);
     void BACKEND_CLOSING();
-
+    void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
+    void updateSideBar();
 private:
+    void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage, Viewer* viewer);
+
     Ui::MainWindow *ui;
     QWidget *editorWidget;
     QVBoxLayout *layout;
@@ -58,14 +69,15 @@ private:
 
     NotesManager *nm;
 
-    QList<Editor *> * noteEditors;
     QSet<QString> openedFiles;
 
     HtmlViewer * hv;
     TexViewer * tv;
     TextViewer * textv;
 
-    Note* ressource;
+    QList<Note*> ressources;
+
+    TreeModel* sideBarModel;
 
     int lastTabIndex;
 };

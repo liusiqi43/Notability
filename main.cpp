@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("notability.fr");
     QCoreApplication::setApplicationName("Notability");
 
-    MainWindow editor;
-    editor.show();
+    MainWindow *editor = MainWindow::getInstance();
+    editor->show();
     return a.exec();
 }

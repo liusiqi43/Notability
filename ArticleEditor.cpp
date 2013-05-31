@@ -19,7 +19,7 @@ ArticleEditor::ArticleEditor(Article *art, QWidget *parent) :
     contentLayout->addWidget(new QLabel("Text:"));
     contentLayout->addWidget(textWidget);
 
-    QObject::connect(textWidget, SIGNAL(textChanged()), this, SLOT(UI_ENABLE_SAVE_BUTTON()));
+    QObject::connect(textWidget, SIGNAL(textChanged()), this, SLOT(UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()));
 }
 
 QPlainTextEdit *ArticleEditor::getTextWidget() const

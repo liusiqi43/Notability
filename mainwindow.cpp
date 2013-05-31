@@ -18,15 +18,31 @@
 #include <QSettings>
 #include <QCoreApplication>
 #include <assert.h>
+#include "TreeItem.h"
+
+MainWindow* MainWindow::instance = 0;
+
+MainWindow* MainWindow::getInstance(){
+    if(!instance){
+        instance = new MainWindow();
+    }
+    return instance;
+}
+
+void MainWindow::freeInstance()
+{
+    if(instance){
+        delete instance;
+        instance = 0;
+    }
+}
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), sideBarModel(0)
 {
     ui->setupUi(this);
-    ressource = 0;
     editorWidget = new QWidget;
-    noteEditors = new QList<Editor*>;
     ui->editorScroll->setWidget(editorWidget);
 
     QToolBar *toolBar = addToolBar("General");
@@ -81,7 +97,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     editorWidget->setLayout(layout);
 
-    ui->noteBookTree->setModel(new TreeModel());
+
 
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpen, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
@@ -93,8 +109,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
+    QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
+    updateSideBar();
 }
 
 MainWindow::~MainWindow()
@@ -115,44 +133,50 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
     }catch(std::bad_cast& bc){
         QMessageBox::critical(this, "Error", "something serious happenned during creation of new editor..."+QString(bc.what()));
     }
+    if(nt!=document){
 
-    if(EditorPage->layout()){
-        parentLayout = EditorPage->layout();
-        if(ressource != 0 && !ressource->isDocument()){
-            Note *temp = ressource;
-            // Remove it because it will be added to a subDocument of rootDocument
-            nm->removeNote(ressource);
-            // there is already one ressource, create a doc to envelope it.
-            ressource = &nm->getNewNote(document);
-            // ressource here is the first note for the first editor.
-            ressource->addNote(temp);
+        parentLayout = EditorPage->layout() ? EditorPage->layout() : new QVBoxLayout();
+        try{
+            Note* temp = &nm->getNewNote(nt);
+            ressources << temp;
+
+            Editor* noteEditor = temp->createAndAttachEditor();
+            parentLayout->addWidget(noteEditor);
+            if(!EditorPage->layout())
+                EditorPage->setLayout(parentLayout);
+            openedFiles << temp->getFilePath();
+        }
+        catch(NotesException e){
+            QMessageBox::critical(this, "Error", e.getInfo());
         }
     }
-    else{
-        // First time, no layout yet.
-        parentLayout = new QVBoxLayout();
-        EditorPage->setLayout(parentLayout);
+    else {
+        &nm->getNewNote(nt);
+        updateSideBar();
     }
-    try{
-        Note *temp = &nm->getNewNote(nt);
+}
 
-        if(ressource == 0)
-            ressource = temp;
-        else{
-            // Remove it because it will be added to a subDocument of rootDocument
-            nm->removeNote(temp);
-            ressource->addNote(temp);
-        }
+void MainWindow::UI_LOAD_FROM_SIDE_BAR(const QModelIndex& index){
+    TreeItem * temp = sideBarModel->getItem(index);
+    if(openedFiles.contains(temp->getItemId()->getFilePath()))
+        return;
+    Editor *editor = temp->getItemId()->createAndAttachEditor();
 
-        Editor* noteEditor = temp->createEditor();
-        parentLayout->addWidget(noteEditor);
-        noteEditors->append(noteEditor);
-
-        openedFiles << temp->getFilePath();
+    for(QList<Note*>::iterator it = ressources.begin(); it != ressources.end(); ++it){
+        (*it)->getEditor()->BACKEND_SET();
+        delete (*it)->getEditor();
     }
-    catch(NotesException e){
-        QMessageBox::critical(this, "Error", e.getInfo());
-    }
+    delete EditorPage->layout();
+
+    ressources.clear();
+    openedFiles.clear();
+
+    QVBoxLayout * layout = new QVBoxLayout();
+    layout->addWidget(editor);
+    EditorPage->setLayout(layout);
+
+    openedFiles << temp->getItemId()->getFilePath();
+    ressources << temp->getItemId();
 }
 
 
@@ -165,113 +189,81 @@ void MainWindow::UI_OPEN_FILE(){
         if(openedFiles.contains(fichier))
             return;
 
-        if(EditorPage->layout()){
-            parentLayout = EditorPage->layout();
-            if(ressource != 0 && !ressource->isDocument()){
-                Note *temp = ressource;
-                // Remove it because it will be added to a subDocument of rootDocument
-                nm->removeNote(ressource);
-                // there is already one ressource, create a doc to envelope it.
-                ressource = &nm->getNewNote(document);
-                // ressource here is the first note for the first editor.
-                ressource->addNote(temp);
-            }
-        }
-        else{
-            // First time, no layout yet.
-            parentLayout = new QVBoxLayout();
-            EditorPage->setLayout(parentLayout);
-        }
+        parentLayout = EditorPage->layout() ? EditorPage->layout() : new QVBoxLayout();
         try{
-            Note *temp = &nm->getNote(fichier);
+            Note* temp = &nm->getNote(fichier);
+            ressources << temp;
 
-            if(ressource == 0)
-                ressource = temp;
-            else{
-                // Remove it because it will be added to a subDocument of rootDocument
-                nm->removeNote(temp);
-                ressource->addNote(temp);
-            }
-
-            Editor* noteEditor = temp->createEditor();
+            Editor* noteEditor = temp->createAndAttachEditor();
             parentLayout->addWidget(noteEditor);
-            noteEditors->append(noteEditor);
-
-            openedFiles << fichier;
+            if(!EditorPage->layout())
+                EditorPage->setLayout(parentLayout);
+            openedFiles << temp->getFilePath();
         }
         catch(NotesException e){
             QMessageBox::critical(this, "Error", e.getInfo());
         }
     }
+    updateSideBar();
+}
+
+void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage, Viewer* viewer){
+    ExportStrategy *es = NotesManager::getInstance().strategies->value(type);
+    QString content("");
+
+    for(QList<Note*>::iterator it = list.begin(); it != list.end(); ++it){
+        (*it)->getEditor()->BACKEND_SET();
+        content+=(*it)->exportNote(es);
+    }
+
+    QLayout* parentLayout = viewerPage->layout() ? viewerPage->layout() : new QVBoxLayout();
+
+    delete viewer;
+    delete parentLayout;
+
+    // add viewer into tab
+    parentLayout = new QVBoxLayout();
+    switch(type){
+    case html:
+        viewer = new HtmlViewer(content);
+        break;
+    case tex:
+        viewer = new TexViewer(content);
+        break;
+    case text:
+        viewer = new TextViewer(content);
+        break;
+    default:
+        throw NotesException("Error... should not happen. Handling tab action");
+    }
+    parentLayout->addWidget(viewer);
+    viewerPage->setLayout(parentLayout);
 }
 
 void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
-    ui->noteBookTree->setModel(new TreeModel());
-    if(ressource){
+    if(!ressources.empty()){
         switch(n){
         case -1:{
             return;
-        }
         case 1:{
-            qDebug()<<"HTML";
-            for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
-                (*it)->BACKEND_SET();
-
-            // TODO one resource suffice
-            QString HTML = ressource->exportNote(NotesManager::getInstance().strategies->value(html));
-//            qDebug()<<HTML;
-            if(htmlViewerPage->layout()){
-                delete hv;
-                delete htmlViewerPage->layout();
+                qDebug()<<"HTML";
+                LoadExportToViewerPage(html, ressources, htmlViewerPage, hv);
+                break;
             }
-
-            // add html viewer into tab
-            hv = new HtmlViewer(HTML);
-            QVBoxLayout *parentLayoutHV = new QVBoxLayout();
-            parentLayoutHV->addWidget(hv);
-            htmlViewerPage->setLayout(parentLayoutHV);
-            break;
-        }
-        case 2:{
-            qDebug()<<"TeX";
-            for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
-                (*it)->BACKEND_SET();
-            // TODO one resource suffice
-            QString TEX = ressource->exportNote(NotesManager::getInstance().strategies->value(tex));
-            if(texViewerPage->layout()){
-                delete tv;
-                delete texViewerPage->layout();
+            case 2:{
+                qDebug()<<"TeX";
+                LoadExportToViewerPage(tex, ressources, texViewerPage, tv);
+                break;
             }
-
-            // add tex viewer into tab
-            tv = new TexViewer(TEX);
-            QVBoxLayout *parentLayoutTV = new QVBoxLayout();
-            parentLayoutTV->addWidget(tv);
-            texViewerPage->setLayout(parentLayoutTV);
-            break;
-        }
-        case 3:{
-            qDebug()<<"Text";
-            for(QList<Editor*>::iterator it = noteEditors->begin(); it != noteEditors->end(); ++it)
-                (*it)->BACKEND_SET();
-            // TODO one resource suffice
-            QString TEX = ressource->exportNote(NotesManager::getInstance().strategies->value(text));
-            if(textViewerPage->layout()){
-                delete textv;
-                delete textViewerPage->layout();
+            case 3:{
+                qDebug()<<"Text";
+                LoadExportToViewerPage(text, ressources, textViewerPage, textv);
+                break;
             }
-
-            // add tex viewer into tab
-            textv = new TextViewer(TEX);
-            QVBoxLayout *parentLayoutTextV = new QVBoxLayout();
-            parentLayoutTextV->addWidget(textv);
-            textViewerPage->setLayout(parentLayoutTextV);
-            break;
+            default:
+                return;
+            }
         }
-        default:
-            return;
-        }
-
     }
 }
 
@@ -288,4 +280,15 @@ void MainWindow::BACKEND_CLOSING()
             QMessageBox::warning(this, "Saving error", e.getInfo());
         }
     }
+}
+
+void MainWindow::updateSideBar()
+{
+    TreeModel *old = 0;
+    if(sideBarModel)
+        old = sideBarModel;
+    sideBarModel = new TreeModel();
+    ui->noteBookTree->setModel(sideBarModel);
+    delete old;
+    old = 0;
 }
