@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
+#include <QInputDialog>
 
 #include "Note.h"
 #include "Editor.h"
@@ -12,6 +13,8 @@
 #include "NotesException.h"
 #include "NotesManager.h"
 #include "htmlViewer.h"
+#include "TagManager.h"
+#include "Tag.h"
 
 Editor::Editor(Note *n, QWidget *parent) :
     QWidget(parent), ressource(n)
@@ -52,6 +55,14 @@ Editor::Editor(Note *n, QWidget *parent) :
 
     QObject::connect(titleWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()));
     QObject::connect(btnSave, SIGNAL(clicked()),this, SLOT(BACKEND_SAVE()));
+    QObject::connect(btnTag, SIGNAL(clicked()), this, SLOT(ADD_TAG_TO_NOTE()));
+}
+
+void Editor::ADD_TAG_TO_NOTE()
+{
+    QString pseudo = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?");
+    Tag tag(pseudo);
+    tag.addNote(this->getRessource());
 }
 
 void Editor::UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()

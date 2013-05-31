@@ -2,6 +2,7 @@
 #include "viewer.h"
 #include <QTextEdit>
 #include <QWebView>
+#include <QDebug>
 
 HtmlViewer::HtmlViewer(const QString& html, QWidget *parent) :
     Viewer(parent)
@@ -17,5 +18,6 @@ HtmlViewer::HtmlViewer(const QString& html, QWidget *parent) :
 
 void HtmlViewer::setContent(const QString &html)
 {
+    qDebug() << html;
     wv->setHtml(html);
 }
