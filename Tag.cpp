@@ -1,6 +1,6 @@
-#include "Tag.h"
+//#include "Tag.h"
 
-Tag::Tag(const QString& n): name(n)
-{
-    assocs.clear();
-}
+//Tag::Tag(const QString& n): name(n)
+//{
+//    assocs.clear();
+//}

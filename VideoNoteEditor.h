@@ -1,6 +1,8 @@
 #ifndef VIDEONOTEEDITOR_H
 #define VIDEONOTEEDITOR_H
-
+#include <QVideoWidget>
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include "BinaryEditor.h"
 class VideoNote;
 
@@ -13,7 +15,14 @@ public:
 signals:
 public slots:
     void BACKEND_SET_CONTENT();
+    void LOAD_VIDEO();
 private:
+    QPushButton *btnAddVideo;
+    QVideoWidget *videoWidget;
+    VideoNote *ressource;
+    QMediaPlayer *player;
+    QMediaPlaylist *playlist;
+
 
 };
 

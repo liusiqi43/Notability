@@ -1,22 +1,22 @@
-#ifndef TAG_H
-#define TAG_H
+//#ifndef TAG_H
+//#define TAG_H
 
-#include <QObject>
-#include <QString>
-#include <QSet>
+//#include <QObject>
+//#include <QString>
+//#include <QSet>
 
-class Note;
+//class Note;
 
-class Tag
-{
-    QString name;
-    QSet<Note*> assocs;
+//class Tag
+//{
+//    QString name;
+//    QSet<Note*> assocs;
 
-public:
-    Tag(const QString& n);
-    QString getName() { return name; }
-    QSet<Note*> getAssocs() { return assocs; }
-    void addNote(const Note* n);
-};
+//public:
+//    Tag(const QString& n);
+//    QString getName() { return name; }
+//    QSet<Note*> getAssocs() { return assocs; }
+//    void addNote(const Note* n);
+//};
 
-#endif // TAG_H
+//#endif // TAG_H
