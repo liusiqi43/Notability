@@ -24,7 +24,7 @@ TagManager& TagManager::getInstance()
         instance= new TagManager;
     }
 
-    return instance;
+    return *instance;
 
 }
 

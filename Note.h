@@ -8,6 +8,7 @@
 #include "NotesException.h"
 
 class ExportStrategy;
+class Document;
 
 class Note{
     QString title;

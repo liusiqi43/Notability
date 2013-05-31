@@ -15,10 +15,9 @@ class Tag
 public:
     Tag(const QString& n);
 
-    QString getName() { return name; }
+
     QSet<Note*> getAssocs() { return assocs; }
-    void addNote(const Note* n);
-    void addNote(const Note* n);
+    void addNote(Note *n);
     void removeNote(const Note* n);
     void reset() {assocs.clear();}
     QString getName() const;

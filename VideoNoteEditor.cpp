@@ -18,7 +18,7 @@ VideoNoteEditor::VideoNoteEditor(VideoNote *v, QWidget* parent)
 
     if(!ressource->getMediaPath().isNull())
     {
-    playlist->addMedia(QUrl(ressource->getMediaPath()));
+    playlist->addMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
     player->setVideoOutput(videoWidget);
     playlist->setCurrentIndex(0);
     player->setPlaylist(playlist);
