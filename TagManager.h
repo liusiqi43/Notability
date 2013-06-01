@@ -22,6 +22,9 @@ class TagManager // singleton
 
 
 public:
+    // Ajouter une methode Tag* getTag(const QString newTag);
+    // qui creer un nouveau tag s'il n'existe pas encore,
+    // et retourner le tag existant s'il existe deja.
     static TagManager& getInstance(); //
     static void libereInstance(); //
     QSet<Tag *> getTags(); //

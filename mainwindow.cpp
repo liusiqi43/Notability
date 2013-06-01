@@ -311,13 +311,13 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
         QString filename = QFileDialog::getSaveFileName(this, "Export to...", QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory)+defaultFilename);
         if(!filename.isEmpty()){
 
-        QFile f(filename);
-        if (!f.open(QIODevice::WriteOnly | QIODevice::Text))
-            throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
+            QFile f(filename);
+            if (!f.open(QIODevice::WriteOnly | QIODevice::Text))
+                throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
 
-        QTextStream flux(&f);
-        flux<<content;
-        f.close();
+            QTextStream flux(&f);
+            flux<<content;
+            f.close();
         }
     }
 }
@@ -377,24 +377,33 @@ void MainWindow::updateSideBar()
 
 void MainWindow::updateTagList()
 {
+    // Pour pouvoir clicker sur les Tags et filtrer les notes en dessus,
+    // il faut une sous classe de QStandardItem, tu peux regarder QListWidgetItemWithpDocument dans AddToDocDialog.
+    // Chaque item possede un signal(checked) normalement
+    // qui renvoye une MondelIndex.
+    // Il faut donc utilise ce Index (regarde la fonction loadFromSideBar)
+    // pour retrouve l'item qui est clique, et puis comme on a subclasse StandardItem,
+    // On peut y ajoute un pointeur vers un tag.
+    // Qui va ensuite, retrouver les assocs
+    // Dans TreeModel, on peut donc filtrer les Items en utilisant if(assocs.contains())
 
-        QStandardItemModel *model = new QStandardItemModel;
+    QStandardItemModel *model = new QStandardItemModel;
+    qDebug() << "hello";
+    QStringList list;
+    for(nSetIt it = tm->begin(); it != tm->end(); it++)
+    {
+        list << (**it).getName();
         qDebug() << "hello";
-        QStringList list;
-        for(nSetIt it = tm->begin(); it != tm->end(); it++)
-        {
-            list << (**it).getName();
-            qDebug() << "hello";
-        }
-        list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
-        foreach(QString s,list)
-        {
-            QStandardItem * item = new QStandardItem(s);
-            item->setCheckable(true);
-            model->appendRow(item);
-        }
+    }
+    list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
+    foreach(QString s,list)
+    {
+        QStandardItem * item = new QStandardItem(s);
+        item->setCheckable(true);
+        model->appendRow(item);
+    }
 
-        ui->tagList->setModel(model);
+    ui->tagList->setModel(model);
 }
 
 void MainWindow::UI_EXPOR_TO_FILE(const int type)

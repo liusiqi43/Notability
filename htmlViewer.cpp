@@ -8,7 +8,7 @@ HtmlViewer::HtmlViewer(const QString& html, QWidget *parent) :
     Viewer(parent)
 {
     layout = new QVBoxLayout;
-    wv = new QTextEdit();
+    wv = new QWebView();
     wv->setHtml(html);
 
     layout->addWidget(wv);

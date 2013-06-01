@@ -83,6 +83,11 @@ HEADERS += \
 QT      += widgets \
            webkitwidgets \
            core gui \
+           multimedia \
+           multimediawidgets \
+
+CONFIG += mobility
+MOBILITY = multimedia
 
 FORMS += \
     mainwindow.ui \

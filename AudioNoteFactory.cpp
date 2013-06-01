@@ -12,13 +12,14 @@ AudioNote* AudioNoteFactory::buildNote(const QString &path)
     fichier.open(QIODevice::ReadOnly | QIODevice::Text);
     QTextStream flux(&fichier);
 
+    QString fpath = flux.readLine();
     QString title=flux.readLine();
     QString des =flux.readLine();
     QString apath = flux.readLine();
 
     fichier.close();
 
-    AudioNote* a=new AudioNote(path,title,des,apath);
+    AudioNote* a=new AudioNote(fpath,title,des,apath);
     return a;
 }
 

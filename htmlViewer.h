@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QVBoxLayout>
+#include <QWebView>
 #include "viewer.h"
 
 class HtmlViewer : public Viewer
@@ -17,7 +18,7 @@ signals:
 public slots:
 private:
     QVBoxLayout *layout;
-    QTextEdit *wv;
+    QWebView *wv;
 };
 
 #endif // HTMLVIEWER_H

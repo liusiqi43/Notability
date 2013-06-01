@@ -16,13 +16,15 @@ VideoNoteEditor::VideoNoteEditor(VideoNote *v, QWidget* parent)
     playlist = new QMediaPlaylist(player);
     videoWidget = new QVideoWidget();
 
+    videoWidget->setMinimumHeight(400);
+
     if(!ressource->getMediaPath().isNull())
     {
-    playlist->addMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
-    player->setVideoOutput(videoWidget);
-    playlist->setCurrentIndex(0);
-    player->setPlaylist(playlist);
-    player->play();
+        playlist->addMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
+        player->setVideoOutput(videoWidget);
+        playlist->setCurrentIndex(0);
+        player->setPlaylist(playlist);
+        player->play();
     }
     contentLayout->addWidget(videoWidget);
     contentLayout->addWidget(getDescriptionWidget());
@@ -46,8 +48,6 @@ void VideoNoteEditor::LOAD_VIDEO(){
 
     player->setMedia(QMediaContent(QUrl::fromLocalFile(ressource->getMediaPath())));
 
-    qDebug()<<"hello";
     player->setVideoOutput(videoWidget);
-    qDebug()<<"hello";
     player->play();
 }
