@@ -56,10 +56,10 @@ public slots:
     void BACKEND_CLOSING();
     void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
     void updateSideBar();
-    void slot_changed(const QModelIndex& topLeft, const QModelIndex& bottomRight);
+    void UI_EXPOR_TO_FILE(const int type);
 
 private:
-    void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage, Viewer* viewer);
+    void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage = 0, Viewer* viewer = 0);
 
     Ui::MainWindow *ui;
     QWidget *editorWidget;

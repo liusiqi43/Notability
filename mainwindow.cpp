@@ -16,6 +16,7 @@
 #include <QScrollArea>
 #include "ui_mainwindow.h"
 #include <QSettings>
+#include <QStandardPaths>
 #include <QCoreApplication>
 #include <assert.h>
 #include "TreeItem.h"
@@ -60,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent) :
     NoteTypeSignalAction *actionNewVideoNote = new NoteTypeSignalAction(videoNote, "&VideoNote", this);
     NoteTypeSignalAction *actionNewDocument = new NoteTypeSignalAction(document, "&Document", this);
     NoteTypeSignalAction *actionNewImageNote = new NoteTypeSignalAction(imageNote, "&ImageNote", this);
+
     QMenu *menuNew = new QMenu("&New...");
     menuNew->addAction(actionNewArticle);
     menuNew->addAction(actionNewImageNote);
@@ -67,15 +69,26 @@ MainWindow::MainWindow(QWidget *parent) :
     menuNew->addAction(actionNewAudioNote);
     menuNew->addAction(actionNewDocument);
 
+    // subclassed QAction, this emets also the ExportType
+    ExportTypeSignalAction *actionExportHTML = new ExportTypeSignalAction(html, "&HTML", this);
+    ExportTypeSignalAction *actionExportTeX = new ExportTypeSignalAction(tex, "&TeX", this);
+    ExportTypeSignalAction *actionExportText = new ExportTypeSignalAction(text, "&Text", this);
+
+    QMenu *menuExport = new QMenu("&Export");
+    menuExport->addAction(actionExportHTML);
+    menuExport->addAction(actionExportTeX);
+    menuExport->addAction(actionExportText);
+
     menuFichier = menuBar()->addMenu("&File");
     menuEdition = menuBar()->addMenu("&Edit");
 
     menuFichier->addMenu(menuNew);
-//    menuFichier->addAction(actionOpen);
+    menuFichier->addMenu(menuExport);
+    //    menuFichier->addAction(actionOpen);
 
     menuFichier->addAction(actionQuit);
 
-//    toolBar->addAction(actionOpen);
+    //    toolBar->addAction(actionOpen);
     toolBar->addAction(actionNewArticle);
     toolBar->addAction(actionNewImageNote);
     toolBar->addAction(actionNewVideoNote);
@@ -103,32 +116,6 @@ MainWindow::MainWindow(QWidget *parent) :
     editorWidget->setLayout(layout);
 
 
-
-//    QStandardItemModel* model = new QStandardItemModel; // 3 rows, 1 col
-//    QStandardItem* Item = new QStandardItem;
-//    QStandardItem* Item2 = new QStandardItem;
-
-//    Item->setText("test");
-//    Item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-//    Item->setData(Qt::Checked, Qt::CheckStateRole);
-
-
-//    Item2 = new QStandardItem;
-//      Item2->setText("test2");
-//      Item2->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-//      Item2->setData(Qt::Unchecked, Qt::CheckStateRole);
-
-
-//      QObject::connect(model, SIGNAL(dataChanged ( const QModelIndex&, const QModelIndex&)), this, SLOT(slot_changed(const QModelIndex&, const QModelIndex&)));
-//    model->insertRow(0, Item);
-//    model->insertRow(1, Item2);
-//    Items = new std::vector<QStandardItem*>();
-//    Items->push_back(Item);
-//    Items->push_back(Item2);
-
-//    ui->comboBox->setModel(model);
-
-
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpen, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
     QObject::connect(actionNewArticle, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
@@ -136,6 +123,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(actionNewImageNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewAudioNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewVideoNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
+
+    QObject::connect(actionExportHTML, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
+    QObject::connect(actionExportTeX, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
+    QObject::connect(actionExportText, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
+
 
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
@@ -171,11 +163,9 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
                 (*it)->setEditor(0);
             }
         }
-//        delete EditorPage->layout();
         parentLayout = EditorPage->layout() ? EditorPage->layout() : new QVBoxLayout();
         try{
             Note* temp = &nm->getNewNote(nt);
-//            ressources << temp;
             ressources.clear();
             openedFiles.clear();
 
@@ -183,7 +173,6 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
             parentLayout->addWidget(noteEditor);
             if(!EditorPage->layout())
                 EditorPage->setLayout(parentLayout);
-//            openedFiles << temp->getFilePath();
         }
         catch(NotesException e){
             QMessageBox::critical(this, "Error", e.getInfo());
@@ -198,9 +187,6 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
 void MainWindow::UI_LOAD_FROM_SIDE_BAR(const QModelIndex& index){
     TreeItem * temp = sideBarModel->getItem(index);
 
-//    if(openedFiles.contains(temp->getItemId()->getFilePath()))
-//        return;
-
     bool first = false;
     for(QList<Note*>::iterator it = ressources.begin(); it != ressources.end(); ++it){
         if(first) break;
@@ -212,7 +198,6 @@ void MainWindow::UI_LOAD_FROM_SIDE_BAR(const QModelIndex& index){
             first = true;
         }
     }
-//    delete EditorPage->layout();
 
     ressources.clear();
     openedFiles.clear();
@@ -256,39 +241,83 @@ void MainWindow::UI_OPEN_FILE(){
 }
 
 void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage, Viewer* viewer){
+    if(list.isEmpty()){
+        QMessageBox::warning(0, "No opened file", "You need to open some notes in order to export.");
+        return;
+    }
     ExportStrategy *es = NotesManager::getInstance().strategies->value(type);
     QString content("");
 
     for(QList<Note*>::iterator it = list.begin(); it != list.end(); ++it){
         (*it)->getEditor()->BACKEND_SET();
-//        content+=(*it)->exportNote(es);
+        //        content+=(*it)->exportNote(es);
     }
     QList<Note*>::iterator it = list.begin();
     content = (*it)->exportNote(es);
 
-    QLayout* parentLayout = viewerPage->layout() ? viewerPage->layout() : new QVBoxLayout();
+    if(viewerPage){
+        // export to viewer.
+        QLayout* parentLayout = viewerPage->layout();
 
-    delete viewer;
-    delete parentLayout;
+        delete viewer;
+        if(parentLayout)
+            delete parentLayout;
 
-    // add viewer into tab
-    parentLayout = new QVBoxLayout();
-    switch(type){
-    case html:
-        viewer = new HtmlViewer(content);
-        qDebug()<<content;
-        break;
-    case tex:
-        viewer = new TexViewer(content);
-        break;
-    case text:
-        viewer = new TextViewer(content);
-        break;
-    default:
-        throw NotesException("Error... should not happen. Handling tab action");
+        // add viewer into tab
+        parentLayout = new QVBoxLayout();
+        switch(type){
+        case html:
+            viewer = new HtmlViewer(content);
+            qDebug()<<content;
+            break;
+        case tex:
+            viewer = new TexViewer(content);
+            break;
+        case text:
+            viewer = new TextViewer(content);
+            break;
+        default:
+            throw NotesException("Error... should not happen. Handling tab action");
+        }
+        parentLayout->addWidget(viewer);
+        viewerPage->setLayout(parentLayout);
+    } else {
+        // Used to export to file
+        // now that content is prepared, we need a file path to save.
+        QString defaultFilename = (*it)->getTitle();
+        switch(type){
+        case html:
+            defaultFilename+=".html";
+            break;
+        case tex:
+            defaultFilename+=".tex";
+            break;
+        case text:
+            defaultFilename+=".txt";
+            break;
+        default:
+            throw NotesException("Should not happen.");
+        }
+
+        qDebug()<<QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory)+defaultFilename;
+//        QFileDialog dialog(this);
+//        dialog.setDirectory(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory));
+//        dialog.selectFile(defaultFilename);
+//        dialog.setFileMode(QFileDialog::AnyFile);
+
+//        dialog.show();
+        QString filename = QFileDialog::getSaveFileName(this, "Export to...", QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory)+defaultFilename);
+        if(!filename.isEmpty()){
+
+        QFile f(filename);
+        if (!f.open(QIODevice::WriteOnly | QIODevice::Text))
+            throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
+
+        QTextStream flux(&f);
+        flux<<content;
+        f.close();
+        }
     }
-    parentLayout->addWidget(viewer);
-    viewerPage->setLayout(parentLayout);
 }
 
 void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
@@ -344,6 +373,12 @@ void MainWindow::updateSideBar()
     old = 0;
 }
 
+void MainWindow::UI_EXPOR_TO_FILE(const int type)
+{
+    ExportType et = static_cast<ExportType>(type);
+    LoadExportToViewerPage(et, ressources);
+}
+
 //void MainWindow::UI_UPDATE_TITLE_WIDGET(const QModelIndex& index, const QModelIndex& index2)
 //{
 //    qDebug()<<"called here!";
@@ -352,25 +387,6 @@ void MainWindow::updateSideBar()
 //        temp->getItemId()->getEditor()->setTitleWidgetText(temp->data(0).toString());
 //    }
 //}
-
-
-
-void MainWindow::slot_changed(const QModelIndex& topLeft, const QModelIndex& bottomRight)
-{
-  //std::cout << "topLeft: " << topLeft.row() << std::endl;
-  //std::cout << "bottomRight: " << bottomRight.row() << std::endl;
-  std::cout << "Item " << topLeft.row() << " " << std::endl;
-  QStandardItem* item = (*this->Items)[topLeft.row()];
-  if(item->checkState() == Qt::Unchecked)
-    {
-    std::cout << "Unchecked!" << std::endl;
-    }
-  else if(item->checkState() == Qt::Checked)
-    {
-    std::cout << "Checked!" << std::endl;
-    }
-
-}
 
 void MainWindow::addRessources(Note* n)
 {
