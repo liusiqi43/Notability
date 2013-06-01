@@ -5,6 +5,7 @@
 #include "AudioNote.h"
 #include "VideoNote.h"
 #include "Document.h"
+#include "TagManager.h"
 
 //SaveTextExport
 
@@ -33,6 +34,8 @@ QString SaveTextExport::exportNote(const Document *doc, unsigned int level) cons
     QString str;
     str+=doc->getFilePath()+"\n";
     str+=doc->getTitle()+"\n";
+    //TagManager * tm=&TagManager::getInstance;
+
 
     for(QList<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
     {

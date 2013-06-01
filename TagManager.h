@@ -6,6 +6,7 @@
 #include <QSet>
 
 class Note;
+class Tag;
 
 typedef QSet<Tag* >::iterator nSetIt;
 
@@ -22,18 +23,17 @@ class TagManager // singleton
 
 
 public:
-    // Ajouter une methode Tag* getTag(const QString newTag);
-    // qui creer un nouveau tag s'il n'existe pas encore,
-    // et retourner le tag existant s'il existe deja.
-    static TagManager& getInstance(); //
-    static void libereInstance(); //
-    QSet<Tag *> getTags(); //
-    void createTag(const QString &n); //
-    void removeTag(Tag* t); //
+
+    static TagManager& getInstance();
+    static void libereInstance();
+    QSet<Tag *> getTags();
+    void createTag(const QString &n);
+    void removeTag(Tag* t);
     QSet<Tag *> getTagforNote(Note* note);
-    QSet<Note*> getNoteforTag(Tag *tag); //
-    void addTagToNote(Tag *tag, Note *note); //
+    QSet<Note*> getNoteforTag(Tag *tag);
+    void addTagToNote(Tag *tag, Note *note);
     void removeTagToNote(Tag* tag, Note* note);
+    Tag* getTag(const QString& newtag);
 
     nSetIt begin(){return Tags.begin();}
     nSetIt end(){return Tags.end();}

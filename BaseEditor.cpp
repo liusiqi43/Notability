@@ -87,17 +87,13 @@ Editor::Editor(Note *n, QWidget *parent) :
 void Editor::ADD_TAG_TO_NOTE()
 {
     bool ok = false;
-    TagManager& c=TagManager::getInstance();
+    TagManager* tm=&TagManager::getInstance();
     QString newTag = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?",QLineEdit::Normal, QString(), &ok);
 
     if (ok && !newTag.isEmpty())
     {
-        qDebug()  << newTag;
-        // hmmm.. passer toujours par TagManager, c'est mieux pour garder un ensemble de tous les tags.
-        // en faisant ca on perd cet ensemble.
-        Tag* tag = new Tag(newTag);
-        tag->addNote(this->getRessource());
-        qDebug() << this->getRessource();
+        tm->getTag(newTag);
+        tm->addTagToNote(tm->getTag(newTag), this->getRessource());
         MainWindow::getInstance()->updateTagList();
     }
 }

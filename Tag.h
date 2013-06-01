@@ -16,7 +16,7 @@ class Tag
     // Interdit l'instanciation sans passer par TagManager.
     Tag(const QString& n);
 
-    Tag(const Tag other);
+    Tag(const Tag& other);
     const Tag& operator=(const Tag other);
 
 public:

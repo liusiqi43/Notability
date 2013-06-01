@@ -90,4 +90,12 @@ void TagManager::removeTagToNote(Tag *tag, Note *note)
     }
 }
 
+Tag* TagManager::getTag(const QString& newtag)
+{
+    for(nSetIt it= begin(); it != end(); it++)
+    {
+        if((*it)->getName()==newtag) return *it;
+    }
+    createTag(newtag);
+}
 

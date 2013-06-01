@@ -24,6 +24,7 @@
 #include "TagManager.h"
 #include <QStandardItem>
 #include <QDebug>
+//#include "QListWidgetItemCheckTag.h"
 
 MainWindow* MainWindow::instance = 0;
 
@@ -137,7 +138,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
     QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
-
+    QObject::connect(ui->tagList, SIGNAL(clicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
     updateSideBar();
@@ -387,23 +388,26 @@ void MainWindow::updateTagList()
     // Qui va ensuite, retrouver les assocs
     // Dans TreeModel, on peut donc filtrer les Items en utilisant if(assocs.contains())
 
-    QStandardItemModel *model = new QStandardItemModel;
+   /* QStandardItemModel *model = new QStandardItemModel;
     qDebug() << "hello";
     QStringList list;
     for(nSetIt it = tm->begin(); it != tm->end(); it++)
     {
+        QListWidgetItem * item = new QListWidgetItemCheckTag((*it)->getName(), *it);
+        item->setCheckState(Qt::Checked);
         list << (**it).getName();
         qDebug() << "hello";
+      //  model->appendRow(item);
     }
     list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
-    foreach(QString s,list)
+   foreach(QString s,list)
     {
-        QStandardItem * item = new QStandardItem(s);
+
         item->setCheckable(true);
-        model->appendRow(item);
+
     }
 
-    ui->tagList->setModel(model);
+    ui->tagList->setModel(model);*/
 }
 
 void MainWindow::UI_EXPOR_TO_FILE(const int type)

@@ -2,6 +2,9 @@
 #define AUDIONOTEEDITOR_H
 
 #include "BinaryEditor.h"
+#include <QMediaPlayer>
+#include <QMediaPlaylist>
+
 class AudioNote;
 
 class AudioNoteEditor : public BinaryEditor
@@ -15,13 +18,15 @@ signals:
 public slots:
     void BACKEND_SET_CONTENT();
     void LOAD_AUDIO();
+    void PLAY_STOP_VIDEO();
 
 private:
     QPushButton *btnAddAudio;
-    QPixmap audio;
-    QLabel *audioWidget;
+    QMediaPlayer *player;
+    QMediaPlaylist *playlist;
     AudioNote *ressource;
-    QString currentAudioPath;
+    QPushButton *btnPlayStop;
+    bool play;
 
 };
 

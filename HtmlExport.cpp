@@ -60,7 +60,7 @@ QString HtmlExport::exportNote(const AudioNote *note, unsigned int level) const
 
     str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
     str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
-            "</h"+QString::number(titleSize+1)+"><p>"+"@TODO"+note->getDescription()+"</p></div>";
+            "</h"+QString::number(titleSize+1)+"><p>"+"<audio controls><source src=\"file:///"+note->getMediaPath()+"\" type=\"audio/ogg\"><source src=\"file:///"+note->getMediaPath()+"\" type=\"audio/mp3\">Your browser does not support the audio element.</audio>"+note->getDescription()+"</p></div>";
     return str;
 }
 
@@ -73,7 +73,7 @@ QString HtmlExport::exportNote(const VideoNote *note, unsigned int level) const
 
     str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
     str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
-            "</h"+QString::number(titleSize+1)+"><p>"+"<video width=\"640\" height=\"480\" controls><source src=\"file:/"+note->getMediaPath()+"\" type=\"video/mp4\"><source src=\"file:/"+note->getMediaPath()+"\" type=\"video/avi\">Your browser does not support the video tag.</video>"+note->getDescription()+"</p></div>";
+            "</h"+QString::number(titleSize+1)+"><p>"+"<video width=\"640\" height=\"480\" controls><source src=\"file:///"+note->getMediaPath()+"\" type=\"video/mp4\"><source src=\"file:///"+note->getMediaPath()+"\" type=\"video/avi\">Your browser does not support the video tag.</video>"+note->getDescription()+"</p></div>";
     return str;
 }
 
