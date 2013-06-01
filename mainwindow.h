@@ -61,7 +61,7 @@ public slots:
     void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
     void updateSideBar();
 
-    void updateTagList();
+//    void updateTagList();
 
     void UI_EXPOR_TO_FILE(const int type);
 

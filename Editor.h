@@ -83,7 +83,7 @@ public slots:
     void BACKEND_SAVE();
     void BACKEND_SET();
 
-    void ADD_TAG_TO_NOTE();
+//    void ADD_TAG_TO_NOTE();
 
     void updateDocBtnWithRessource(TreeItem *item);
     void FIRE_UP_DOC_DIALOG();

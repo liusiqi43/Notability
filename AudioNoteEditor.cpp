@@ -18,6 +18,7 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
         audioWidget->setPixmap(audio);
     }
     contentLayout->addWidget(audioWidget);
+    contentLayout->addWidget(new QLabel("Description:"));
     contentLayout->addWidget(getDescriptionWidget());
     buttonsLayout->addWidget(btnAddAudio);
 

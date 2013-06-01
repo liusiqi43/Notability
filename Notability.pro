@@ -37,7 +37,11 @@ SOURCES += \
     TagManager.cpp \
     TreeModel.cpp \
     viewer.cpp \
-    AddToDocDialog.cpp
+    AddToDocDialog.cpp \
+    ./player/videowidget.cpp \
+    ./player/playercontrols.cpp \
+    ./player/player.cpp \
+    ./player/histogramwidget.cpp
 
 HEADERS += \
     NotesManager.h \
@@ -78,7 +82,11 @@ HEADERS += \
     TreeModel.h \
     viewer.h \
     CheckComboBox.h \
-    AddToDocDialog.h
+    AddToDocDialog.h \
+    ./player/videowidget.h \
+    ./player/playercontrols.h \
+    ./player/player.h \
+    ./player/histogramwidget.h
 
 QT      += widgets \
            webkitwidgets \

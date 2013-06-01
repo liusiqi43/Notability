@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include "TagManager.h"
 #include <QStandardItem>
+#include "Binary.h"
 #include <QDebug>
 
 MainWindow* MainWindow::instance = 0;
@@ -108,7 +109,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Creat a new article, with generated file path and empty title&text
     nm = &NotesManager::getInstance();
-    tm = &TagManager::getInstance();
+//    tm = &TagManager::getInstance();
 
     tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");
@@ -141,7 +142,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
     updateSideBar();
-    updateTagList();
+//    updateTagList();
 }
 
 MainWindow::~MainWindow()
@@ -272,10 +273,15 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
 
         // add viewer into tab
         parentLayout = new QVBoxLayout();
+
+        QString filePath = (*it)->getFilePath();
         switch(type){
         case html:
-            viewer = new HtmlViewer(content);
-            qDebug()<<content;
+            if(filePath.endsWith(".vid")||filePath.endsWith(".aud"))
+                viewer = new HtmlViewer(content, (dynamic_cast<Binary *>(*it))->getMediaPath());
+            else
+                viewer = new HtmlViewer(content);
+//            qDebug()<<content;
             break;
         case tex:
             viewer = new TexViewer(content);
@@ -375,36 +381,36 @@ void MainWindow::updateSideBar()
     old = 0;
 }
 
-void MainWindow::updateTagList()
-{
-    // Pour pouvoir clicker sur les Tags et filtrer les notes en dessus,
-    // il faut une sous classe de QStandardItem, tu peux regarder QListWidgetItemWithpDocument dans AddToDocDialog.
-    // Chaque item possede un signal(checked) normalement
-    // qui renvoye une MondelIndex.
-    // Il faut donc utilise ce Index (regarde la fonction loadFromSideBar)
-    // pour retrouve l'item qui est clique, et puis comme on a subclasse StandardItem,
-    // On peut y ajoute un pointeur vers un tag.
-    // Qui va ensuite, retrouver les assocs
-    // Dans TreeModel, on peut donc filtrer les Items en utilisant if(assocs.contains())
+//void MainWindow::updateTagList()
+//{
+//    // Pour pouvoir clicker sur les Tags et filtrer les notes en dessus,
+//    // il faut une sous classe de QStandardItem, tu peux regarder QListWidgetItemWithpDocument dans AddToDocDialog.
+//    // Chaque item possede un signal(checked) normalement
+//    // qui renvoye une MondelIndex.
+//    // Il faut donc utilise ce Index (regarde la fonction loadFromSideBar)
+//    // pour retrouve l'item qui est clique, et puis comme on a subclasse StandardItem,
+//    // On peut y ajoute un pointeur vers un tag.
+//    // Qui va ensuite, retrouver les assocs
+//    // Dans TreeModel, on peut donc filtrer les Items en utilisant if(assocs.contains())
 
-    QStandardItemModel *model = new QStandardItemModel;
-    qDebug() << "hello";
-    QStringList list;
-    for(nSetIt it = tm->begin(); it != tm->end(); it++)
-    {
-        list << (**it).getName();
-        qDebug() << "hello";
-    }
-    list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
-    foreach(QString s,list)
-    {
-        QStandardItem * item = new QStandardItem(s);
-        item->setCheckable(true);
-        model->appendRow(item);
-    }
+//    QStandardItemModel *model = new QStandardItemModel;
+//    qDebug() << "hello";
+//    QStringList list;
+//    for(nSetIt it = tm->begin(); it != tm->end(); it++)
+//    {
+//        list << (**it).getName();
+//        qDebug() << "hello";
+//    }
+//    list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
+//    foreach(QString s,list)
+//    {
+//        QStandardItem * item = new QStandardItem(s);
+//        item->setCheckable(true);
+//        model->appendRow(item);
+//    }
 
-    ui->tagList->setModel(model);
-}
+//    ui->tagList->setModel(model);
+//}
 
 void MainWindow::UI_EXPOR_TO_FILE(const int type)
 {

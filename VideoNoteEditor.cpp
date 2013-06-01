@@ -12,21 +12,16 @@ VideoNoteEditor::VideoNoteEditor(VideoNote *v, QWidget* parent)
 {
     btnAddVideo = new QPushButton("Choose a Video");
 
-    player = new QMediaPlayer;
-    playlist = new QMediaPlaylist(player);
-    videoWidget = new QVideoWidget();
+    videoWidget = new Player(this);
 
-    videoWidget->setMinimumHeight(400);
+//    videoWidget->setMinimumHeight(this->height()/2);
 
     if(!ressource->getMediaPath().isNull())
     {
-        playlist->addMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
-        player->setVideoOutput(videoWidget);
-        playlist->setCurrentIndex(0);
-        player->setPlaylist(playlist);
-        player->play();
+        videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
     }
     contentLayout->addWidget(videoWidget);
+    contentLayout->addWidget(new QLabel("Description:"));
     contentLayout->addWidget(getDescriptionWidget());
     buttonsLayout->addWidget(btnAddVideo);
 
@@ -45,9 +40,6 @@ void VideoNoteEditor::BACKEND_SET_CONTENT()
 void VideoNoteEditor::LOAD_VIDEO(){
     ressource->setMediaPath(QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Video (*.mp4 *.avi)"));
     qDebug()<<ressource->getMediaPath();
-
-    player->setMedia(QMediaContent(QUrl::fromLocalFile(ressource->getMediaPath())));
-
-    player->setVideoOutput(videoWidget);
-    player->play();
+    if(!ressource->getMediaPath().isNull())
+        videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
 }
