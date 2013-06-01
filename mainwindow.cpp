@@ -19,6 +19,9 @@
 #include <QCoreApplication>
 #include <assert.h>
 #include "TreeItem.h"
+#include <QCheckBox>
+#include "TagManager.h"
+#include <QStandardItem>
 
 MainWindow* MainWindow::instance = 0;
 
@@ -39,7 +42,7 @@ void MainWindow::freeInstance()
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), sideBarModel(0)
+    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), tm(0), sideBarModel(0), tagL(0)
 {
     ui->setupUi(this);
     editorWidget = new QWidget;
@@ -86,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Creat a new article, with generated file path and empty title&text
     nm = &NotesManager::getInstance();
+    tm = &TagManager::getInstance();
 
     tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");
@@ -114,6 +118,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
     updateSideBar();
+    updateTagList();
 }
 
 MainWindow::~MainWindow()
@@ -292,4 +297,25 @@ void MainWindow::updateSideBar()
     ui->noteBookTree->setModel(sideBarModel);
     delete old;
     old = 0;
+}
+
+void MainWindow::updateTagList()
+{
+
+        QStandardItemModel *model = new QStandardItemModel;
+
+        QStringList list;
+        for(nSetIt it = tm->begin(); it != tm->end(); it++)
+        {
+            list << (**it).getName();
+        }
+        list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
+        foreach(QString s,list)
+        {
+            QStandardItem * item = new QStandardItem(s);
+            item->setCheckable(true);
+            model->appendRow(item);
+        }
+
+        ui->tagList->setModel(model);
 }

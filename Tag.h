@@ -22,6 +22,7 @@ public:
     void reset() {assocs.clear();}
     QString getName() const;
     void setName(const QString &value);
+
 };
 
 #endif // TAG_H

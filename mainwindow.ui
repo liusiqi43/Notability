@@ -104,7 +104,10 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="tagList">
+         <widget class="QListView" name="tagList">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="maximumSize">
            <size>
             <width>200</width>
@@ -112,6 +115,9 @@
            </size>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget" native="true"/>
         </item>
        </layout>
       </item>

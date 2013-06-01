@@ -60,9 +60,15 @@ Editor::Editor(Note *n, QWidget *parent) :
 
 void Editor::ADD_TAG_TO_NOTE()
 {
-    QString pseudo = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?");
-    Tag tag(pseudo);
-    tag.addNote(this->getRessource());
+    bool ok = false;
+    QString newTag = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?",QLineEdit::Normal, QString(), &ok);
+
+    if (ok && !newTag.isEmpty())
+    {
+        Tag* tag = new Tag(newTag);
+        tag->addNote(this->getRessource());
+        MainWindow::getInstance()->updateTagList();
+    }
 }
 
 void Editor::UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()

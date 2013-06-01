@@ -89,3 +89,5 @@ void TagManager::removeTagToNote(Tag *tag, Note *note)
         }
     }
 }
+
+
