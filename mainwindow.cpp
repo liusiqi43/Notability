@@ -300,12 +300,7 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
         }
 
         qDebug()<<QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory)+defaultFilename;
-//        QFileDialog dialog(this);
-//        dialog.setDirectory(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory));
-//        dialog.selectFile(defaultFilename);
-//        dialog.setFileMode(QFileDialog::AnyFile);
 
-//        dialog.show();
         QString filename = QFileDialog::getSaveFileName(this, "Export to...", QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory)+defaultFilename);
         if(!filename.isEmpty()){
 
@@ -378,15 +373,6 @@ void MainWindow::UI_EXPOR_TO_FILE(const int type)
     ExportType et = static_cast<ExportType>(type);
     LoadExportToViewerPage(et, ressources);
 }
-
-//void MainWindow::UI_UPDATE_TITLE_WIDGET(const QModelIndex& index, const QModelIndex& index2)
-//{
-//    qDebug()<<"called here!";
-//    TreeItem * temp = sideBarModel->getItem(index);
-//    if(temp->getItemId()->getEditor()){
-//        temp->getItemId()->getEditor()->setTitleWidgetText(temp->data(0).toString());
-//    }
-//}
 
 void MainWindow::addRessources(Note* n)
 {

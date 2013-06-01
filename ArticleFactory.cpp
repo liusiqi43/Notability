@@ -17,7 +17,12 @@ Article* ArticleFactory::buildNote(const QString &path)
 
     QString fpath = flux.readLine();
     QString title=flux.readLine();
-    QString text=flux.readLine();
+    QString text;
+    QString temp("");
+    while(!temp.isNull()){
+        temp=flux.readLine();
+        text+=temp+"\n";
+    }
     fichier.close();
     qDebug()<<fpath;
     Article *a=new Article(fpath,title,text);

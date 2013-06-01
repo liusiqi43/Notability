@@ -167,6 +167,7 @@ void NotesManager::saveDocument(Document& d){
 
 void NotesManager::saveNote(Note& a){
     if (a.isModified()) {
+        qDebug()<<"saving Note:"<<a.getTitle();
         if(!a.isDocument()){
             // Prepare parent directories
             QString fp = a.getFilePath();
@@ -180,7 +181,7 @@ void NotesManager::saveNote(Note& a){
                 throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
 
             ExportStrategy* es = NotesManager::strategies->value(saveText);
-            QString q = a.exportNote(es, 0);
+            QString q = a.exportNote(es);
 
             QTextStream flux(&file);
             flux<<q;
