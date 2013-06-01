@@ -4,19 +4,25 @@
 #include "Note.h"
 #include "DocumentEditor.h"
 
+typedef QList<Note *>::const_iterator nListIt;
+
 class Document: public Note{
     QList<Note *> notes;
 
 public:
     Document(const QString& path);
     Document(const QString& path, const QString& ti);
+    ~Document();
 
-    QList<Note *>::const_iterator begin() const;
-    QList<Note *>::const_iterator end() const;
+    nListIt begin() const;
+    nListIt end() const;
+    Note* & last();
 
-    void addNote(Note *note);
+    bool contains(Note *n) const;
+
+    void addNote(Note *note) throw (NotesException);
     int count() const;
-    void operator<<(Note *note);
+
     void removeNote(Note *note);
     Note* find(const QString& filepath);
 
@@ -25,6 +31,24 @@ public:
 
     DocumentEditor *createEditor(){return new DocumentEditor(this);}
     QString exportNote(const ExportStrategy *es, unsigned int level = 0);
+
+
+    class DepthFirstIterator{
+        bool finished;
+        Note* currentDoc;
+        QList<Note*> previousDocs;
+        QList<nListIt> previousDocIters;
+        nListIt currentDocIter;
+    public:
+        // prefix
+        DepthFirstIterator & operator++();
+        Note* operator*();
+        bool isDone();
+        DepthFirstIterator(Document *);
+
+    };
+
+    DepthFirstIterator beginDFIterator();
 };
 
 

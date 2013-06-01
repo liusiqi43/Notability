@@ -35,11 +35,16 @@ void NotesManager::addNote(Note* a){
     // QSet will deduplicate automatically, as we have an ID attribute in Note.
     // If Note does not have an ID attribute, we can only use QSet<Note> as it will compares its address and hash.
     rootDocument->addNote(a);
+
+    if(a->isDocument())
+        DocumentsContainer << static_cast<Document*>(a);
 }
 
 void NotesManager::removeNote(Note *a)
 {
     rootDocument->removeNote(a);
+    if(a->isDocument())
+        DocumentsContainer.remove(static_cast<Document*>(a));
 }
 
 Note& NotesManager::getNote(const QString& fileName){
@@ -121,7 +126,7 @@ NotesManager::NotesManager(){
     factories = NoteFactory::getFactories();
     strategies = ExportStrategy::getStrategies();
     rootDocument = static_cast<Document *>(factories->value(document)->buildNewNote());
-    rootDocument->setTitle("/");
+    rootDocument->setTitle("~");
 }
 
 

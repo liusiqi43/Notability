@@ -36,7 +36,8 @@ SOURCES += \
     Tag.cpp \
     TagManager.cpp \
     TreeModel.cpp \
-    viewer.cpp
+    viewer.cpp \
+    AddToDocDialog.cpp
 
 HEADERS += \
     NotesManager.h \
@@ -75,13 +76,17 @@ HEADERS += \
     TextViewer.h \
     TreeItem.h \
     TreeModel.h \
-    viewer.h
+    viewer.h \
+    CheckComboBox.h \
+    AddToDocDialog.h
 
 QT      += widgets \
            webkitwidgets \
+           core gui \
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    AddToDocDialog.ui
 
 RESOURCES += \
     ressources.qrc

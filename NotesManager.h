@@ -12,9 +12,12 @@ class ImageNote;
 
 // On préfère QList car il garde l'ordre. Et c'est bizarre si on n'affiche pas les notes dans l'ordre d'ajout
 typedef QList<Note *>::const_iterator nListIt;
+typedef QSet<Document *>::const_iterator dSetIt;
 
 class NotesManager {
 private:
+    // Used for fast access to a list of all opened documents
+    QSet<Document *> DocumentsContainer;
     Document *rootDocument;
 
     void addNote(Note* a);
@@ -41,6 +44,9 @@ public:
 
     nListIt begin(){return rootDocument->begin();}
     nListIt end(){return rootDocument->end();}
+
+    dSetIt beginDocumentContainer(){return DocumentsContainer.begin();}
+    dSetIt endDocumentContainer(){return DocumentsContainer.end();}
     Document *getRootDocument() const;
     void setRootDocument(Document *value);
 };

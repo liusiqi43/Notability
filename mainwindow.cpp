@@ -37,6 +37,11 @@ void MainWindow::freeInstance()
     }
 }
 
+void MainWindow::addOpenedFiles(const QString & path)
+{
+    openedFiles.insert(path);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), sideBarModel(0)
@@ -66,11 +71,11 @@ MainWindow::MainWindow(QWidget *parent) :
     menuEdition = menuBar()->addMenu("&Edit");
 
     menuFichier->addMenu(menuNew);
-    menuFichier->addAction(actionOpen);
+//    menuFichier->addAction(actionOpen);
 
     menuFichier->addAction(actionQuit);
 
-    toolBar->addAction(actionOpen);
+//    toolBar->addAction(actionOpen);
     toolBar->addAction(actionNewArticle);
     toolBar->addAction(actionNewImageNote);
     toolBar->addAction(actionNewVideoNote);
@@ -97,6 +102,31 @@ MainWindow::MainWindow(QWidget *parent) :
 
     editorWidget->setLayout(layout);
 
+
+
+//    QStandardItemModel* model = new QStandardItemModel; // 3 rows, 1 col
+//    QStandardItem* Item = new QStandardItem;
+//    QStandardItem* Item2 = new QStandardItem;
+
+//    Item->setText("test");
+//    Item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+//    Item->setData(Qt::Checked, Qt::CheckStateRole);
+
+
+//    Item2 = new QStandardItem;
+//      Item2->setText("test2");
+//      Item2->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
+//      Item2->setData(Qt::Unchecked, Qt::CheckStateRole);
+
+
+//      QObject::connect(model, SIGNAL(dataChanged ( const QModelIndex&, const QModelIndex&)), this, SLOT(slot_changed(const QModelIndex&, const QModelIndex&)));
+//    model->insertRow(0, Item);
+//    model->insertRow(1, Item2);
+//    Items = new std::vector<QStandardItem*>();
+//    Items->push_back(Item);
+//    Items->push_back(Item2);
+
+//    ui->comboBox->setModel(model);
 
 
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
@@ -134,17 +164,26 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
         QMessageBox::critical(this, "Error", "something serious happenned during creation of new editor..."+QString(bc.what()));
     }
     if(nt!=document){
-
+        for(QList<Note*>::iterator it = ressources.begin(); it != ressources.end(); ++it){
+            if((*it)->getEditor()){
+                (*it)->getEditor()->BACKEND_SET();
+                delete (*it)->getEditor();
+                (*it)->setEditor(0);
+            }
+        }
+//        delete EditorPage->layout();
         parentLayout = EditorPage->layout() ? EditorPage->layout() : new QVBoxLayout();
         try{
             Note* temp = &nm->getNewNote(nt);
-            ressources << temp;
+//            ressources << temp;
+            ressources.clear();
+            openedFiles.clear();
 
             Editor* noteEditor = temp->createAndAttachEditor();
             parentLayout->addWidget(noteEditor);
             if(!EditorPage->layout())
                 EditorPage->setLayout(parentLayout);
-            openedFiles << temp->getFilePath();
+//            openedFiles << temp->getFilePath();
         }
         catch(NotesException e){
             QMessageBox::critical(this, "Error", e.getInfo());
@@ -152,31 +191,55 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
     }
     else {
         &nm->getNewNote(nt);
-        updateSideBar();
     }
+    updateSideBar();
 }
 
 void MainWindow::UI_LOAD_FROM_SIDE_BAR(const QModelIndex& index){
     TreeItem * temp = sideBarModel->getItem(index);
-    if(openedFiles.contains(temp->getItemId()->getFilePath()))
-        return;
-    Editor *editor = temp->getItemId()->createAndAttachEditor();
 
+//    if(openedFiles.contains(temp->getItemId()->getFilePath()))
+//        return;
+
+    bool first = false;
     for(QList<Note*>::iterator it = ressources.begin(); it != ressources.end(); ++it){
-        (*it)->getEditor()->BACKEND_SET();
-        delete (*it)->getEditor();
+        if(first) break;
+        if((*it)->getEditor()){
+            qDebug()<<(*it)->getTitle();
+            (*it)->getEditor()->BACKEND_SET();
+            delete (*it)->getEditor();
+            (*it)->setEditor(0);
+            first = true;
+        }
     }
-    delete EditorPage->layout();
+//    delete EditorPage->layout();
 
     ressources.clear();
     openedFiles.clear();
 
-    QVBoxLayout * layout = new QVBoxLayout();
-    layout->addWidget(editor);
-    EditorPage->setLayout(layout);
+    Editor *editor = temp->getItemId()->createAndAttachEditor();
+    // TODO Deep
+    editor->updateDocBtnWithRessource(temp);
 
-    openedFiles << temp->getItemId()->getFilePath();
-    ressources << temp->getItemId();
+    QLayout * layout = EditorPage->layout() ? EditorPage->layout() : new QVBoxLayout();
+    layout->addWidget(editor);
+    if(!EditorPage->layout())
+        EditorPage->setLayout(layout);
+
+//    if(temp->getItemId()->isDocument()){
+//        Document *doc = static_cast<Document*>(temp->getItemId());
+////        qDebug()<<"last:"<<doc->last()->getTitle();
+////        for(Document::DepthFirstIterator it = doc->beginDFIterator(); !it.isDone(); ++it){
+////            qDebug()<<(*it)->getTitle();
+////            openedFiles << (*it)->getFilePath();
+////            ressources << (*it);
+////        }
+
+//    }
+//    else{
+//        openedFiles << temp->getItemId()->getFilePath();
+//        ressources << temp->getItemId();
+//    }
 }
 
 
@@ -213,8 +276,10 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
 
     for(QList<Note*>::iterator it = list.begin(); it != list.end(); ++it){
         (*it)->getEditor()->BACKEND_SET();
-        content+=(*it)->exportNote(es);
+//        content+=(*it)->exportNote(es);
     }
+    QList<Note*>::iterator it = list.begin();
+    content = (*it)->exportNote(es);
 
     QLayout* parentLayout = viewerPage->layout() ? viewerPage->layout() : new QVBoxLayout();
 
@@ -226,6 +291,7 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
     switch(type){
     case html:
         viewer = new HtmlViewer(content);
+        qDebug()<<content;
         break;
     case tex:
         viewer = new TexViewer(content);
@@ -291,4 +357,37 @@ void MainWindow::updateSideBar()
     ui->noteBookTree->setModel(sideBarModel);
     delete old;
     old = 0;
+}
+
+//void MainWindow::UI_UPDATE_TITLE_WIDGET(const QModelIndex& index, const QModelIndex& index2)
+//{
+//    qDebug()<<"called here!";
+//    TreeItem * temp = sideBarModel->getItem(index);
+//    if(temp->getItemId()->getEditor()){
+//        temp->getItemId()->getEditor()->setTitleWidgetText(temp->data(0).toString());
+//    }
+//}
+
+
+
+void MainWindow::slot_changed(const QModelIndex& topLeft, const QModelIndex& bottomRight)
+{
+  //std::cout << "topLeft: " << topLeft.row() << std::endl;
+  //std::cout << "bottomRight: " << bottomRight.row() << std::endl;
+  std::cout << "Item " << topLeft.row() << " " << std::endl;
+  QStandardItem* item = (*this->Items)[topLeft.row()];
+  if(item->checkState() == Qt::Unchecked)
+    {
+    std::cout << "Unchecked!" << std::endl;
+    }
+  else if(item->checkState() == Qt::Checked)
+    {
+    std::cout << "Checked!" << std::endl;
+    }
+
+}
+
+void MainWindow::addRessources(Note* n)
+{
+    ressources.append(n);
 }
