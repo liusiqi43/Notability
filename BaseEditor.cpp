@@ -118,8 +118,32 @@ void Editor::UI_INFORM_USER_OF_SAVE(){
 
 void Editor::updateDocBtnWithRessource(TreeItem *item)
 {
-    if(item->parent())
-        documentBtn->setText(item->parent()->data(0).toString());
+    TreeItem *parent = item->parent();
+    qDebug()<<"parent data:"<<parent->data(0).toString();
+    item->getItemId()->getEditor()->setDocumentBtnText(parent->data(0).toString());
+    parent = item;
+    qDebug()<<"new parent data:"<<parent->data(0).toString();
+
+    if(parent){
+        for(int i = 0; i<parent->childCount();i++){
+            Note* current = parent->child(i)->getItemId();
+            qDebug()<<"currentTItle:"<<current->getTitle();
+            if(current->isDocument())
+                updateDocBtnWithRessource(parent->child(i));
+            else
+                current->getEditor()->setDocumentBtnText(parent->data(0).toString());
+        }
+    } else {
+        throw NotesException("Impossible...pas de parent?");
+    }
+}
+
+void Editor::setDocumentBtnText(const QString& doc){
+    qDebug()<<"Setting docBtn:" << this << " title:" << this->getTitleWidget()->text() << " to "<<doc;
+    if(documentBtn)
+        documentBtn->setText(doc);
+    else
+        throw NotesException("documentBtn not found");
 }
 
 QLineEdit *Editor::getTitleWidget() const
@@ -168,7 +192,7 @@ void Editor::retrieveDataFromDocDialog()
             if(!(*it)->contains(this->ressource)){
 
                 try{
-                (*it)->addNote(this->ressource);
+                    (*it)->addNote(this->ressource);
                 } catch (NotesException e){
                     QMessageBox::critical(0, "Circular Inclusion", e.getInfo());
                 }

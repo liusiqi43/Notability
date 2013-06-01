@@ -75,6 +75,7 @@ public:
     void setBtnTag(QPushButton *value);
 
     void setTitleWidgetText(const QString& title);
+    void setDocumentBtnText(const QString& doc);
 signals:
 
 public slots:

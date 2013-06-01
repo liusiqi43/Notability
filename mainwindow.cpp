@@ -225,21 +225,6 @@ void MainWindow::UI_LOAD_FROM_SIDE_BAR(const QModelIndex& index){
     layout->addWidget(editor);
     if(!EditorPage->layout())
         EditorPage->setLayout(layout);
-
-//    if(temp->getItemId()->isDocument()){
-//        Document *doc = static_cast<Document*>(temp->getItemId());
-////        qDebug()<<"last:"<<doc->last()->getTitle();
-////        for(Document::DepthFirstIterator it = doc->beginDFIterator(); !it.isDone(); ++it){
-////            qDebug()<<(*it)->getTitle();
-////            openedFiles << (*it)->getFilePath();
-////            ressources << (*it);
-////        }
-
-//    }
-//    else{
-//        openedFiles << temp->getItemId()->getFilePath();
-//        ressources << temp->getItemId();
-//    }
 }
 
 
