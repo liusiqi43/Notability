@@ -13,6 +13,7 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QListWidget>
 #include "ExportStrategy.h"
 #include "viewer.h"
 #include <QStandardItem>
@@ -25,6 +26,8 @@ class Note;
 class Document;
 class TreeModel;
 class NotesManager;
+class TagManager;
+class Tag;
 
 namespace Ui {
 class MainWindow;
@@ -32,6 +35,7 @@ class MainWindow;
 
 class MainWindow : public QMainWindow
 {
+
     Q_OBJECT
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
@@ -56,6 +60,9 @@ public slots:
     void BACKEND_CLOSING();
     void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
     void updateSideBar();
+
+    void updateTagList();
+
     void UI_EXPOR_TO_FILE(const int type);
 
 private:
@@ -74,6 +81,7 @@ private:
     QWidget *textViewerPage;
 
     NotesManager *nm;
+    TagManager *tm;
 
     QSet<QString> openedFiles;
 
@@ -83,8 +91,10 @@ private:
 
     // On peut utilise qu'une seule ressource
     QList<Note*> ressources;
+    QSet<Tag*> tags;
 
     TreeModel* sideBarModel;
+    QListWidget* tagL;
 
     int lastTabIndex;
 };

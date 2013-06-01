@@ -12,7 +12,7 @@ VideoNote::VideoNote(const QString& filePath, const QString& ti, const QString& 
 {}
 
 //VideoNoteEditor* VideoNote::createEditor(){
-//    return new VideoNoteEditor(this);
+//  return new VideoNoteEditor(this);
 //}
 
 QString VideoNote::exportNote(const ExportStrategy *es, unsigned int level)

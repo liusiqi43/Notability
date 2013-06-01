@@ -20,6 +20,10 @@
 #include <QCoreApplication>
 #include <assert.h>
 #include "TreeItem.h"
+#include <QCheckBox>
+#include "TagManager.h"
+#include <QStandardItem>
+#include <QDebug>
 
 MainWindow* MainWindow::instance = 0;
 
@@ -45,7 +49,7 @@ void MainWindow::addOpenedFiles(const QString & path)
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), sideBarModel(0)
+    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), tm(0), sideBarModel(0), tagL(0)
 {
     ui->setupUi(this);
     editorWidget = new QWidget;
@@ -104,6 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Creat a new article, with generated file path and empty title&text
     nm = &NotesManager::getInstance();
+    tm = &TagManager::getInstance();
 
     tab->addTab(EditorPage, "Editor");
     tab->addTab(htmlViewerPage, "HTML");
@@ -132,9 +137,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
     QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
+
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
     updateSideBar();
+    updateTagList();
 }
 
 MainWindow::~MainWindow()
@@ -368,6 +375,28 @@ void MainWindow::updateSideBar()
     old = 0;
 }
 
+void MainWindow::updateTagList()
+{
+
+        QStandardItemModel *model = new QStandardItemModel;
+        qDebug() << "hello";
+        QStringList list;
+        for(nSetIt it = tm->begin(); it != tm->end(); it++)
+        {
+            list << (**it).getName();
+            qDebug() << "hello";
+        }
+        list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
+        foreach(QString s,list)
+        {
+            QStandardItem * item = new QStandardItem(s);
+            item->setCheckable(true);
+            model->appendRow(item);
+        }
+
+        ui->tagList->setModel(model);
+}
+
 void MainWindow::UI_EXPOR_TO_FILE(const int type)
 {
     ExportType et = static_cast<ExportType>(type);
@@ -377,4 +406,5 @@ void MainWindow::UI_EXPOR_TO_FILE(const int type)
 void MainWindow::addRessources(Note* n)
 {
     ressources.append(n);
+
 }

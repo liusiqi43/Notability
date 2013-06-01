@@ -90,6 +90,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>Search</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QLabel" name="label_2">
           <property name="text">
            <string>Tags:</string>
@@ -97,7 +104,10 @@
          </widget>
         </item>
         <item>
-         <widget class="QListWidget" name="tagList">
+         <widget class="QListView" name="tagList">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="maximumSize">
            <size>
             <width>200</width>
@@ -105,6 +115,9 @@
            </size>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QWidget" name="widget" native="true"/>
         </item>
        </layout>
       </item>
@@ -120,8 +133,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>541</width>
-             <height>502</height>
+             <width>546</width>
+             <height>514</height>
             </rect>
            </property>
           </widget>
@@ -155,7 +168,7 @@
      <x>0</x>
      <y>0</y>
      <width>803</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>

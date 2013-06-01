@@ -82,9 +82,13 @@ public slots:
     void UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR();
     void BACKEND_SAVE();
     void BACKEND_SET();
+
+    void ADD_TAG_TO_NOTE();
+
     void updateDocBtnWithRessource(TreeItem *item);
     void FIRE_UP_DOC_DIALOG();
     void retrieveDataFromDocDialog();
+
 
 };
 

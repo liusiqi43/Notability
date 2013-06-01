@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QApplication>
+#include <QInputDialog>
 
 #include "Note.h"
 #include "Editor.h"
@@ -12,11 +13,16 @@
 #include "NotesException.h"
 #include "NotesManager.h"
 #include "htmlViewer.h"
+
+#include "TagManager.h"
+#include "Tag.h"
+
 #include "CheckComboBox.h"
 #include "AddToDocDialog.h"
 #include "TreeItem.h"
 #include <QListView>
 #include <QComboBox>
+
 
 Editor::Editor(Note *n, QWidget *parent) :
     QWidget(parent), ressource(n), documentBtn(0)
@@ -74,7 +80,27 @@ Editor::Editor(Note *n, QWidget *parent) :
 
     QObject::connect(titleEditWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()));
     QObject::connect(btnSave, SIGNAL(clicked()),this, SLOT(BACKEND_SAVE()));
+
+    QObject::connect(btnTag, SIGNAL(clicked()), this, SLOT(ADD_TAG_TO_NOTE()));
+}
+
+void Editor::ADD_TAG_TO_NOTE()
+{
+    bool ok = false;
+    TagManager& c=TagManager::getInstance();
+    QString newTag = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?",QLineEdit::Normal, QString(), &ok);
+
+    if (ok && !newTag.isEmpty())
+    {
+        qDebug()  << newTag;
+        Tag* tag = new Tag(newTag);
+        tag->addNote(this->getRessource());
+        qDebug() << this->getRessource();
+        MainWindow::getInstance()->updateTagList();
+    }
+
     QObject::connect(documentBtn, SIGNAL(clicked()),this, SLOT(FIRE_UP_DOC_DIALOG()));
+
 }
 
 void Editor::UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()
