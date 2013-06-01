@@ -7,6 +7,7 @@
 #include "Editor.h"
 #include "NotesException.h"
 
+class Document;
 class ExportStrategy;
 class Document;
 
@@ -27,7 +28,7 @@ public:
     Note(const QString &path);
     Note(const QString &path, const QString& ti);
 
-    virtual ~Note(){}
+    virtual ~Note();
 
     // Purement pour facilier a hirarchiser les Notes dans nm.Et puis ca sert a visualiser cette hirarchie dans QTreeView.
     virtual void addNote(Note *){throw NotesException("Should not happen! addNote called for non Document object.");}
@@ -55,6 +56,12 @@ public:
 
     Editor *getEditor() const;
     void setEditor(Editor *value);
+
+    void addToDocument(Document* doc);
+    void removeFromDocument(Document *doc);
+    bool belongs(Document *doc);
+    QSet<Document *>::const_iterator beginInDoc(){return inDocuments.begin();}
+    QSet<Document *>::const_iterator endInDoc(){return inDocuments.end();}
 };
 
 

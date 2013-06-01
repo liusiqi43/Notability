@@ -5,6 +5,7 @@
 #include "Document.h"
 #include <QList>
 #include <assert.h>
+#include "mainwindow.h"
 
 
 TreeModel::TreeModel(QObject *parent)
@@ -13,7 +14,7 @@ TreeModel::TreeModel(QObject *parent)
     nm = &NotesManager::getInstance();
     QVector<QVariant> rootData;
 
-    rootData << "";
+    rootData << "~";
 
     rootItem = new TreeItem(rootData);
     setupModelData(rootItem);
@@ -46,9 +47,9 @@ Qt::ItemFlags TreeModel::flags(const QModelIndex &index) const
 {
     if (!index.isValid())
         return 0;
-    if(getItem(index)->getItemId()->isDocument())
-        return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
-    else
+//    if(getItem(index)->getItemId()->isDocument())
+//        return Qt::ItemIsEditable | Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+//    else
         return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 
@@ -164,9 +165,9 @@ bool TreeModel::setData(const QModelIndex &index, const QVariant &value,
     bool result = item->setData(index.column(), value, 0);
 
     item->updateUnderlyingNoteTitle(value);
-
-    if (result)
+    if (result){
         emit dataChanged(index, index);
+    }
 
     return result;
 }

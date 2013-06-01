@@ -3,6 +3,7 @@
 
 #include <QAction>
 #include "NoteFactory.h"
+#include "ExportStrategy.h"
 
 
 class NoteTypeSignalAction : public QAction
@@ -16,5 +17,19 @@ signals:
 public slots:
     
 };
+
+
+class ExportTypeSignalAction : public QAction
+{
+    Q_OBJECT
+    ExportType nType;
+public:
+    explicit ExportTypeSignalAction(ExportType type, const QString& label, QObject *parent);
+signals:
+    void triggeredWithId(const int id);
+public slots:
+
+};
+
 
 #endif // NOTETYPESIGNALACTION_H

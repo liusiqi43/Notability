@@ -16,6 +16,7 @@
 #include <QListWidget>
 #include "ExportStrategy.h"
 #include "viewer.h"
+#include <QStandardItem>
 
 class Editor;
 class HtmlViewer;
@@ -36,16 +37,19 @@ class MainWindow : public QMainWindow
 {
 
     Q_OBJECT
-
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     MainWindow(const MainWindow&);
     MainWindow& operator=(const MainWindow&);
     static MainWindow* instance;
+    std::vector<QStandardItem*>* Items;
 public:
     static MainWindow* getInstance();
     static void freeInstance();
     
+    void addOpenedFiles(const QString&);
+    void addRessources(Note *);
+
 signals:
 
 public slots:
@@ -56,9 +60,13 @@ public slots:
     void BACKEND_CLOSING();
     void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
     void updateSideBar();
+
     void updateTagList();
+
+    void UI_EXPOR_TO_FILE(const int type);
+
 private:
-    void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage, Viewer* viewer);
+    void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage = 0, Viewer* viewer = 0);
 
     Ui::MainWindow *ui;
     QWidget *editorWidget;
@@ -81,6 +89,7 @@ private:
     TexViewer * tv;
     TextViewer * textv;
 
+    // On peut utilise qu'une seule ressource
     QList<Note*> ressources;
     QSet<Tag*> tags;
 

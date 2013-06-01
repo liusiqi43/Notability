@@ -80,11 +80,17 @@ QString HtmlExport::exportNote(const VideoNote *note, unsigned int level) const
 QString HtmlExport::exportNote(const Document *doc, unsigned int level) const
 {
     QString str;
-    str="<h1>"+doc->getTitle()+"</h1>";
+    int margin = level * 10;
+    int titleSize = (level > 5) ? 5 : level;
+
+    str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
+    str+="<h"+QString::number(titleSize+1)+">"+doc->getTitle()+ \
+            "</h"+QString::number(titleSize+1)+"><p>";
     ++level;
     for(QList<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
     {
         str+=(*it)->exportNote(this, level);
     }
+    str+="</p></div>";
     return str;
 }

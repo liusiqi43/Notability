@@ -1,5 +1,5 @@
 #include "Note.h"
-
+#include "Document.h"
 /***
  *  Note
  */
@@ -61,7 +61,7 @@ void Note::setDocument(bool value)
  * @param path
  */
 Note::Note(const QString& path)
-    :title(""), filePath(path), modified(true), deleted(false), document(false){}
+    :title("New Note"), filePath(path), modified(true), deleted(false), document(false){}
 
 /**
  * @brief Note::Note used to create from existing Note, modified=false
@@ -70,6 +70,14 @@ Note::Note(const QString& path)
  */
 Note::Note(const QString& path, const QString& ti)
     :title(ti), filePath(path), modified(false), deleted(false), document(false){}
+
+Note::~Note()
+{
+    qDebug()<<"Destruction of "<<this->getTitle();
+    for(QSet<Document*>::const_iterator it = inDocuments.begin(); it!=inDocuments.end(); ++it){
+        (*it)->removeNote(this);
+    }
+}
 
 bool Note::operator ==(const Note &other)
 {
@@ -84,4 +92,26 @@ Editor *Note::getEditor() const
 void Note::setEditor(Editor *value)
 {
     editor = value;
+}
+
+void Note::addToDocument(Document *doc)
+{
+    inDocuments << doc;
+    qDebug()<<"Note: "<<this->getTitle()<<" Added to: "<<doc->getTitle();
+
+    qDebug()<<"==========";
+    for(QSet<Document*>::const_iterator it = inDocuments.begin(); it!=inDocuments.end(); ++it){
+        qDebug()<<this->title<<" included in: "<<doc->getTitle();
+    }
+    qDebug()<<"==========";
+}
+
+void Note::removeFromDocument(Document *doc)
+{
+    inDocuments.remove(doc);
+}
+
+bool Note::belongs(Document *doc)
+{
+    return inDocuments.contains(doc);
 }

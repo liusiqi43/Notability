@@ -16,6 +16,7 @@
 #include <QScrollArea>
 #include "ui_mainwindow.h"
 #include <QSettings>
+#include <QStandardPaths>
 #include <QCoreApplication>
 #include <assert.h>
 #include "TreeItem.h"
@@ -41,6 +42,11 @@ void MainWindow::freeInstance()
     }
 }
 
+void MainWindow::addOpenedFiles(const QString & path)
+{
+    openedFiles.insert(path);
+}
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), tm(0), sideBarModel(0), tagL(0)
@@ -59,6 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     NoteTypeSignalAction *actionNewVideoNote = new NoteTypeSignalAction(videoNote, "&VideoNote", this);
     NoteTypeSignalAction *actionNewDocument = new NoteTypeSignalAction(document, "&Document", this);
     NoteTypeSignalAction *actionNewImageNote = new NoteTypeSignalAction(imageNote, "&ImageNote", this);
+
     QMenu *menuNew = new QMenu("&New...");
     menuNew->addAction(actionNewArticle);
     menuNew->addAction(actionNewImageNote);
@@ -66,15 +73,26 @@ MainWindow::MainWindow(QWidget *parent) :
     menuNew->addAction(actionNewAudioNote);
     menuNew->addAction(actionNewDocument);
 
+    // subclassed QAction, this emets also the ExportType
+    ExportTypeSignalAction *actionExportHTML = new ExportTypeSignalAction(html, "&HTML", this);
+    ExportTypeSignalAction *actionExportTeX = new ExportTypeSignalAction(tex, "&TeX", this);
+    ExportTypeSignalAction *actionExportText = new ExportTypeSignalAction(text, "&Text", this);
+
+    QMenu *menuExport = new QMenu("&Export");
+    menuExport->addAction(actionExportHTML);
+    menuExport->addAction(actionExportTeX);
+    menuExport->addAction(actionExportText);
+
     menuFichier = menuBar()->addMenu("&File");
     menuEdition = menuBar()->addMenu("&Edit");
 
     menuFichier->addMenu(menuNew);
-    menuFichier->addAction(actionOpen);
+    menuFichier->addMenu(menuExport);
+    //    menuFichier->addAction(actionOpen);
 
     menuFichier->addAction(actionQuit);
 
-    toolBar->addAction(actionOpen);
+    //    toolBar->addAction(actionOpen);
     toolBar->addAction(actionNewArticle);
     toolBar->addAction(actionNewImageNote);
     toolBar->addAction(actionNewVideoNote);
@@ -103,7 +121,6 @@ MainWindow::MainWindow(QWidget *parent) :
     editorWidget->setLayout(layout);
 
 
-
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionOpen, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
     QObject::connect(actionNewArticle, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
@@ -111,6 +128,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(actionNewImageNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewAudioNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewVideoNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
+
+    QObject::connect(actionExportHTML, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
+    QObject::connect(actionExportTeX, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
+    QObject::connect(actionExportText, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
+
 
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
@@ -141,17 +163,23 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
         QMessageBox::critical(this, "Error", "something serious happenned during creation of new editor..."+QString(bc.what()));
     }
     if(nt!=document){
-
+        for(QList<Note*>::iterator it = ressources.begin(); it != ressources.end(); ++it){
+            if((*it)->getEditor()){
+                (*it)->getEditor()->BACKEND_SET();
+                delete (*it)->getEditor();
+                (*it)->setEditor(0);
+            }
+        }
         parentLayout = EditorPage->layout() ? EditorPage->layout() : new QVBoxLayout();
         try{
             Note* temp = &nm->getNewNote(nt);
-            ressources << temp;
+            ressources.clear();
+            openedFiles.clear();
 
             Editor* noteEditor = temp->createAndAttachEditor();
             parentLayout->addWidget(noteEditor);
             if(!EditorPage->layout())
                 EditorPage->setLayout(parentLayout);
-            openedFiles << temp->getFilePath();
         }
         catch(NotesException e){
             QMessageBox::critical(this, "Error", e.getInfo());
@@ -159,31 +187,36 @@ void MainWindow::UI_NEW_NOTE_EDITOR(const int type){
     }
     else {
         &nm->getNewNote(nt);
-        updateSideBar();
     }
+    updateSideBar();
 }
 
 void MainWindow::UI_LOAD_FROM_SIDE_BAR(const QModelIndex& index){
     TreeItem * temp = sideBarModel->getItem(index);
-    if(openedFiles.contains(temp->getItemId()->getFilePath()))
-        return;
-    Editor *editor = temp->getItemId()->createAndAttachEditor();
 
+    bool first = false;
     for(QList<Note*>::iterator it = ressources.begin(); it != ressources.end(); ++it){
-        (*it)->getEditor()->BACKEND_SET();
-        delete (*it)->getEditor();
+        if(first) break;
+        if((*it)->getEditor()){
+            qDebug()<<(*it)->getTitle();
+            (*it)->getEditor()->BACKEND_SET();
+            delete (*it)->getEditor();
+            (*it)->setEditor(0);
+            first = true;
+        }
     }
-    delete EditorPage->layout();
 
     ressources.clear();
     openedFiles.clear();
 
-    QVBoxLayout * layout = new QVBoxLayout();
-    layout->addWidget(editor);
-    EditorPage->setLayout(layout);
+    Editor *editor = temp->getItemId()->createAndAttachEditor();
+    // TODO Deep
+    editor->updateDocBtnWithRessource(temp);
 
-    openedFiles << temp->getItemId()->getFilePath();
-    ressources << temp->getItemId();
+    QLayout * layout = EditorPage->layout() ? EditorPage->layout() : new QVBoxLayout();
+    layout->addWidget(editor);
+    if(!EditorPage->layout())
+        EditorPage->setLayout(layout);
 }
 
 
@@ -215,36 +248,83 @@ void MainWindow::UI_OPEN_FILE(){
 }
 
 void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage, Viewer* viewer){
+    if(list.isEmpty()){
+        QMessageBox::warning(0, "No opened file", "You need to open some notes in order to export.");
+        return;
+    }
     ExportStrategy *es = NotesManager::getInstance().strategies->value(type);
     QString content("");
 
     for(QList<Note*>::iterator it = list.begin(); it != list.end(); ++it){
         (*it)->getEditor()->BACKEND_SET();
-        content+=(*it)->exportNote(es);
+        //        content+=(*it)->exportNote(es);
     }
+    QList<Note*>::iterator it = list.begin();
+    content = (*it)->exportNote(es);
 
-    QLayout* parentLayout = viewerPage->layout() ? viewerPage->layout() : new QVBoxLayout();
+    if(viewerPage){
+        // export to viewer.
+        QLayout* parentLayout = viewerPage->layout();
 
-    delete viewer;
-    delete parentLayout;
+        delete viewer;
+        if(parentLayout)
+            delete parentLayout;
 
-    // add viewer into tab
-    parentLayout = new QVBoxLayout();
-    switch(type){
-    case html:
-        viewer = new HtmlViewer(content);
-        break;
-    case tex:
-        viewer = new TexViewer(content);
-        break;
-    case text:
-        viewer = new TextViewer(content);
-        break;
-    default:
-        throw NotesException("Error... should not happen. Handling tab action");
+        // add viewer into tab
+        parentLayout = new QVBoxLayout();
+        switch(type){
+        case html:
+            viewer = new HtmlViewer(content);
+            qDebug()<<content;
+            break;
+        case tex:
+            viewer = new TexViewer(content);
+            break;
+        case text:
+            viewer = new TextViewer(content);
+            break;
+        default:
+            throw NotesException("Error... should not happen. Handling tab action");
+        }
+        parentLayout->addWidget(viewer);
+        viewerPage->setLayout(parentLayout);
+    } else {
+        // Used to export to file
+        // now that content is prepared, we need a file path to save.
+        QString defaultFilename = (*it)->getTitle();
+        switch(type){
+        case html:
+            defaultFilename+=".html";
+            break;
+        case tex:
+            defaultFilename+=".tex";
+            break;
+        case text:
+            defaultFilename+=".txt";
+            break;
+        default:
+            throw NotesException("Should not happen.");
+        }
+
+        qDebug()<<QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory)+defaultFilename;
+//        QFileDialog dialog(this);
+//        dialog.setDirectory(QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory));
+//        dialog.selectFile(defaultFilename);
+//        dialog.setFileMode(QFileDialog::AnyFile);
+
+//        dialog.show();
+        QString filename = QFileDialog::getSaveFileName(this, "Export to...", QStandardPaths::locate(QStandardPaths::DocumentsLocation, "", QStandardPaths::LocateDirectory)+defaultFilename);
+        if(!filename.isEmpty()){
+
+        QFile f(filename);
+        if (!f.open(QIODevice::WriteOnly | QIODevice::Text))
+            throw NotesException("Failed to save your note, please check if I have the permission to write on your harddisk and stop hacking the software!");
+
+        QTextStream flux(&f);
+        flux<<content;
+        f.close();
+        }
     }
-    parentLayout->addWidget(viewer);
-    viewerPage->setLayout(parentLayout);
 }
 
 void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
@@ -320,4 +400,25 @@ void MainWindow::updateTagList()
         }
 
         ui->tagList->setModel(model);
+}
+
+void MainWindow::UI_EXPOR_TO_FILE(const int type)
+{
+    ExportType et = static_cast<ExportType>(type);
+    LoadExportToViewerPage(et, ressources);
+}
+
+//void MainWindow::UI_UPDATE_TITLE_WIDGET(const QModelIndex& index, const QModelIndex& index2)
+//{
+//    qDebug()<<"called here!";
+//    TreeItem * temp = sideBarModel->getItem(index);
+//    if(temp->getItemId()->getEditor()){
+//        temp->getItemId()->getEditor()->setTitleWidgetText(temp->data(0).toString());
+//    }
+//}
+
+void MainWindow::addRessources(Note* n)
+{
+    ressources.append(n);
+
 }

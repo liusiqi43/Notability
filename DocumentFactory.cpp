@@ -27,11 +27,16 @@ Document* DocumentFactory::buildNote(const QString &path)
 
     while(!notePath.isNull()) {
          notePath = flux.readLine();
-        if(!notePath.isNull())
+         qDebug()<<"getting note path from Doc" << notePath;
+         QFile noteFile(notePath);
+         if(noteFile.open(QIODevice::ReadOnly | QIODevice::Text))
             d->addNote(&nm->getNote(notePath));
+         else
+             break;
     }
 
-    fichier.close(); qDebug()<<fpath;
+    fichier.close();
+//    qDebug()<<fpath;
     return d;
 }
 
