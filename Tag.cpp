@@ -1,24 +1,24 @@
 
-//#include "Tag.h"
+#include "Tag.h"
 
-//Tag::Tag(const QString& n): name(n)
-//{
-//    assocs.clear();
-//}
+Tag::Tag(const QString& n): name(n)
+{
+    assocs.clear();
+}
 
 
-//QString Tag::getName() const
-//{
-//    return name;
-//}
+QString Tag::getName() const
+{
+    return name;
+}
 
-//void Tag::setName(const QString &value)
-//{
-//    name = value;
-//}
+void Tag::setName(const QString &value)
+{
+    name = value;
+}
 
-//void Tag::addNote(Note* n)
-//{
-//    assocs.insert(n);
-//}
+void Tag::addNote(Note* n)
+{
+    assocs.insert(n);
+}
 

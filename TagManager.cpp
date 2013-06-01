@@ -1,93 +1,93 @@
-//#include "TagManager.h"
+#include "TagManager.h"
 
-//#include "Note.h"
-
-
-////méthodes pour le singleton
-//TagManager* TagManager::instance=0;
-
-//TagManager::TagManager()
-//{
-//    Tags.clear();
-//}
-
-//TagManager::~TagManager()
-//{
-//    Tags.clear();
-//}
+#include "Note.h"
 
 
-//TagManager& TagManager::getInstance()
-//{
-//    if(!instance)
-//    {
-//        instance= new TagManager;
-//    }
+//méthodes pour le singleton
+TagManager* TagManager::instance=0;
 
-//    return *instance;
+TagManager::TagManager()
+{
+    Tags.clear();
+}
 
-//}
+TagManager::~TagManager()
+{
+    Tags.clear();
+}
 
-//void TagManager::libereInstance()
-//{
-//    if(instance)
-//    {
-//        delete instance;
-//        instance=0;
-//    }
-//}
 
-////on passe au chose sérieuse
-//QSet<Tag*> TagManager::getTags()
-//{
-//    return Tags;
-//}
+TagManager& TagManager::getInstance()
+{
+    if(!instance)
+    {
+        instance= new TagManager;
+    }
 
-//void TagManager::createTag(const QString& n)
-//{
-//    Tag *t = new Tag(n);
-//    Tags << t;
-//}
+    return *instance;
 
-//void TagManager::addTagToNote(Tag* tag, Note* note)
-//{
-//    tag->addNote(note);
-//}
+}
 
-//void TagManager::removeTag(Tag* t)
-//{
-//    Tags.remove(t);
-//}
+void TagManager::libereInstance()
+{
+    if(instance)
+    {
+        delete instance;
+        instance=0;
+    }
+}
 
-//QSet<Note *> TagManager::getNoteforTag(Tag* tag)
-//{
+//on passe au chose sérieuse
+QSet<Tag*> TagManager::getTags()
+{
+    return Tags;
+}
 
-//    return tag->getAssocs();
+void TagManager::createTag(const QString& n)
+{
+    Tag *t = new Tag(n);
+    Tags << t;
+}
 
-// //   tag->getAssocs();
+void TagManager::addTagToNote(Tag* tag, Note* note)
+{
+    tag->addNote(note);
+}
 
-//}
+void TagManager::removeTag(Tag* t)
+{
+    Tags.remove(t);
+}
 
-//QSet<Tag*> TagManager::getTagforNote(Note *note)
-//{
-//    QSet<Tag*> res;
-//    for(nSetIt it = begin(); it != end(); it++){
-//        if((**it).getAssocs().contains(note))
-//        {
-//            res<<(*it);
-//        }
-//    }
-//    return res;
-//}
+QSet<Note *> TagManager::getNoteforTag(Tag* tag)
+{
 
-//void TagManager::removeTagToNote(Tag *tag, Note *note)
-//{
-//    for(nSetIt it = begin(); it != end(); it++){
-//        if((*it)==tag && (**it).getAssocs().contains(note))
-//        {
-//            (**it).getAssocs().remove(note);
-//        }
-//    }
-//}
+    return tag->getAssocs();
+
+ //   tag->getAssocs();
+
+}
+
+QSet<Tag*> TagManager::getTagforNote(Note *note)
+{
+    QSet<Tag*> res;
+    for(nSetIt it = begin(); it != end(); it++){
+        if((**it).getAssocs().contains(note))
+        {
+            res<<(*it);
+        }
+    }
+    return res;
+}
+
+void TagManager::removeTagToNote(Tag *tag, Note *note)
+{
+    for(nSetIt it = begin(); it != end(); it++){
+        if((*it)==tag && (**it).getAssocs().contains(note))
+        {
+            (**it).getAssocs().remove(note);
+        }
+    }
+}
 
 

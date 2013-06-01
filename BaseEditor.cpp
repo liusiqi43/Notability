@@ -84,23 +84,23 @@ Editor::Editor(Note *n, QWidget *parent) :
     QObject::connect(btnTag, SIGNAL(clicked()), this, SLOT(ADD_TAG_TO_NOTE()));
 }
 
-//void Editor::ADD_TAG_TO_NOTE()
-//{
-//    bool ok = false;
-//    TagManager& c=TagManager::getInstance();
-//    QString newTag = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?",QLineEdit::Normal, QString(), &ok);
+void Editor::ADD_TAG_TO_NOTE()
+{
+    bool ok = false;
+    TagManager& c=TagManager::getInstance();
+    QString newTag = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?",QLineEdit::Normal, QString(), &ok);
 
-//    if (ok && !newTag.isEmpty())
-//    {
-//        qDebug()  << newTag;
-//        // hmmm.. passer toujours par TagManager, c'est mieux pour garder un ensemble de tous les tags.
-//        // en faisant ca on perd cet ensemble.
-////        Tag* tag = new Tag(newTag);
-////        tag->addNote(this->getRessource());
-////        qDebug() << this->getRessource();
-////        MainWindow::getInstance()->updateTagList();
-//    }
-//}
+    if (ok && !newTag.isEmpty())
+    {
+        qDebug()  << newTag;
+        // hmmm.. passer toujours par TagManager, c'est mieux pour garder un ensemble de tous les tags.
+        // en faisant ca on perd cet ensemble.
+        Tag* tag = new Tag(newTag);
+        tag->addNote(this->getRessource());
+        qDebug() << this->getRessource();
+        MainWindow::getInstance()->updateTagList();
+    }
+}
 
 void Editor::UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()
 {
