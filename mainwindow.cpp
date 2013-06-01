@@ -22,6 +22,7 @@
 #include <QCheckBox>
 #include "TagManager.h"
 #include <QStandardItem>
+#include <QDebug>
 
 MainWindow* MainWindow::instance = 0;
 
@@ -303,11 +304,12 @@ void MainWindow::updateTagList()
 {
 
         QStandardItemModel *model = new QStandardItemModel;
-
+        qDebug() << "hello";
         QStringList list;
         for(nSetIt it = tm->begin(); it != tm->end(); it++)
         {
             list << (**it).getName();
+            qDebug() << "hello";
         }
         list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
         foreach(QString s,list)
