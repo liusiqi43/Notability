@@ -30,7 +30,12 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
 
 
 
+
     contentLayout->addWidget(btnPlayStop);
+
+    contentLayout->addWidget(audioWidget);
+    contentLayout->addWidget(new QLabel("Description:"));
+
     contentLayout->addWidget(getDescriptionWidget());
     buttonsLayout->addWidget(btnAddAudio);
 

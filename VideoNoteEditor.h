@@ -4,6 +4,7 @@
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
 #include "BinaryEditor.h"
+#include "player/player.h"
 class VideoNote;
 
 class VideoNoteEditor : public BinaryEditor
@@ -18,12 +19,8 @@ public slots:
     void LOAD_VIDEO();
 private:
     QPushButton *btnAddVideo;
-    QVideoWidget *videoWidget;
+    Player *videoWidget;
     VideoNote *ressource;
-    QMediaPlayer *player;
-    QMediaPlaylist *playlist;
-
-
 };
 
 #endif // VIDEONOTEEDITOR_H

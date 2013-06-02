@@ -10,7 +10,7 @@
 
 QString TexExport::header() const
 {
-    return "\n\\documentclass[a4paper,11pt]{report}\n\\usepackage{graphicx}\n\\usepackage{multimedia}\n\\usepackage[french]{babel}\n\\usepackage[latin1]{inputenc}\n\\usepackage[T1]{fontenc}\n\\begin{document}";
+    return "\%\%\%\%\%\% These exported files need to use movie15 packages for multimedia support\%\%\%\%\%\n\\documentclass[a4paper,11pt]{report}\n\\usepackage{graphicx}\n\\usepackage{movie15}\n\\usepackage{multimedia}\n\\usepackage[french]{babel}\n\\usepackage[latin1]{inputenc}\n\\usepackage[T1]{fontenc}\n\\begin{document}";
 }
 
 QString TexExport::footer() const
@@ -102,10 +102,54 @@ QString TexExport::exportNote(const Document *doc, unsigned int level) const
 
 QString TexExport::exportNote(const VideoNote *note, unsigned int level) const
 {
-    return "\n@TODO";
+    switch(level){
+    case 0:
+        return " \n\\chapter{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{320}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 1:
+        return " \n\\section{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{320}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 2:
+        return " \n\\subsection{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{320}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 3:
+        return " \n\\subsubsection{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{320}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 4:
+        return " \n\\paragraph{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{320}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 5:
+        return " \n\\subparagraph{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{320}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    default:
+        return " \n\\subparagraph{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{320}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    }
 }
 
 QString TexExport::exportNote(const AudioNote *note, unsigned int level) const
 {
-    return "\n@TODO";
+    switch(level){
+    case 0:
+        return " \n\\chapter{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{100}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 1:
+        return " \n\\section{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{100}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 2:
+        return " \n\\subsection{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{100}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 3:
+        return " \n\\subsubsection{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{100}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 4:
+        return " \n\\paragraph{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{100}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    case 5:
+        return " \n\\subparagraph{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{100}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    default:
+        return " \n\\subparagraph{"+note->getTitle()+"}\n\\begin{center}\n\\includemovie[options]{480}{100}{\""+note->getMediaPath()+"\"}\n\\caption{"+note->getDescription()+\
+                +"} \n\\end{center}";
+    }
 }

@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include "TagManager.h"
 #include <QStandardItem>
+#include "Binary.h"
 #include <QDebug>
 #include "ListWidgetItemCheckTag.h"
 
@@ -273,10 +274,15 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
 
         // add viewer into tab
         parentLayout = new QVBoxLayout();
+
+        QString filePath = (*it)->getFilePath();
         switch(type){
         case html:
-            viewer = new HtmlViewer(content);
-            qDebug()<<content;
+            if(filePath.endsWith(".vid")||filePath.endsWith(".aud"))
+                viewer = new HtmlViewer(content, (dynamic_cast<Binary *>(*it))->getMediaPath());
+            else
+                viewer = new HtmlViewer(content);
+//            qDebug()<<content;
             break;
         case tex:
             viewer = new TexViewer(content);

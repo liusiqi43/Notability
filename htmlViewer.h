@@ -11,8 +11,8 @@ class HtmlViewer : public Viewer
 {
     Q_OBJECT
 public:
-    explicit HtmlViewer(const QString &, QWidget *parent = 0);
-    void setContent(const QString& html);
+    explicit HtmlViewer(const QString &, QString mediaPath = QString(), QWidget *parent = 0);
+    void setContent(const QString& html, QString mediaPath = QString());
 signals:
     
 public slots:
