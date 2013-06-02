@@ -12,6 +12,7 @@ TreeModel::TreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
     nm = &NotesManager::getInstance();
+
     QVector<QVariant> rootData;
 
     rootData << "~";
@@ -235,3 +236,4 @@ void TreeModel::setupModelData(TreeItem* parent)
 
     deployDocument(nm->getRootDocument(), parents, indentations);
 }
+

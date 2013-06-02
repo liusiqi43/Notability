@@ -38,7 +38,7 @@ SOURCES += \
     TreeModel.cpp \
     viewer.cpp \
     AddToDocDialog.cpp \
-    QListWidgetItemCheckTag.cpp
+    ListWidgetItemCheckTag.cpp
 
 HEADERS += \
     NotesManager.h \
@@ -80,7 +80,7 @@ HEADERS += \
     viewer.h \
     CheckComboBox.h \
     AddToDocDialog.h \
-    QListWidgetItemCheckTag.h
+    ListWidgetItemCheckTag.h
 
 QT      += widgets \
            webkitwidgets \

@@ -24,7 +24,7 @@
 #include "TagManager.h"
 #include <QStandardItem>
 #include <QDebug>
-//#include "QListWidgetItemCheckTag.h"
+#include "ListWidgetItemCheckTag.h"
 
 MainWindow* MainWindow::instance = 0;
 
@@ -50,7 +50,7 @@ void MainWindow::addOpenedFiles(const QString & path)
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), tm(0), sideBarModel(0), tagL(0)
+    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), tm(0), sideBarModel(0), tagListModel(0)
 {
     ui->setupUi(this);
     editorWidget = new QWidget;
@@ -138,11 +138,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
     QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
-    QObject::connect(ui->tagList, SIGNAL(clicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
+    QObject::connect(ui->tagList, SIGNAL(clicked(const QModelIndex&)), this, SLOT(updateTagList()));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
     updateSideBar();
-    updateTagList();
+    createTagList();
 }
 
 MainWindow::~MainWindow()
@@ -375,8 +375,27 @@ void MainWindow::updateSideBar()
     delete old;
     old = 0;
 }
+void MainWindow::createTagList()
+{
+    tm = &TagManager::getInstance();
+ QListWidget *listWidget = new QListWidget(ui->tagList);
+ qDebug() << "hello";
 
-void MainWindow::updateTagList()
+    QListWidgetItem* item = new ListWidgetItemCheckTag("All", 0, listWidget);
+    item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+    item->setCheckState(Qt::Checked);
+    for(nSetIt it = tm->begin(); it != tm->end(); it++)
+    {
+        qDebug() << (*it)->getName();
+        QListWidgetItem* item = new ListWidgetItemCheckTag((*it)->getName(), (*it), listWidget);
+        qDebug() << (*it)->getName();
+
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+        item->setCheckState(Qt::Checked);
+    }
+}
+
+QSet<Tag*> MainWindow::updateTagList()
 {
     // Pour pouvoir clicker sur les Tags et filtrer les notes en dessus,
     // il faut une sous classe de QStandardItem, tu peux regarder QListWidgetItemWithpDocument dans AddToDocDialog.
@@ -388,26 +407,34 @@ void MainWindow::updateTagList()
     // Qui va ensuite, retrouver les assocs
     // Dans TreeModel, on peut donc filtrer les Items en utilisant if(assocs.contains())
 
-   /* QStandardItemModel *model = new QStandardItemModel;
-    qDebug() << "hello";
-    QStringList list;
+ //QStandardItemModel *model = new QStandardItemModel;
+    tm = &TagManager::getInstance();
+ QSet<Tag*> * tags = new QSet<Tag*>;
+ QListWidget *listWidget = new QListWidget(ui->tagList);
+ qDebug() << "hello";
+
+    QListWidgetItem* item = new ListWidgetItemCheckTag("All", 0, listWidget);
+    item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+    item->setCheckState(Qt::Checked);
     for(nSetIt it = tm->begin(); it != tm->end(); it++)
     {
-        QListWidgetItem * item = new QListWidgetItemCheckTag((*it)->getName(), *it);
-        item->setCheckState(Qt::Checked);
-        list << (**it).getName();
-        qDebug() << "hello";
-      //  model->appendRow(item);
+        qDebug() << (*it)->getName();
+        QListWidgetItem* item2 = new ListWidgetItemCheckTag((*it)->getName(), (*it), listWidget);
+        qDebug() << (*it)->getName();
+        item2->setFlags(item2->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+        if(item2->checkState()==Qt::Checked)
+        {
+            if(!tags->contains(*it))
+                tags->insert(*it);
+        }
+        if(item2->checkState()==Qt::Unchecked)
+        {
+            if(tags->contains(*it))
+                tags->remove(*it);
+        }
+      //  item2->setCheckState(Qt::Checked);
     }
-    list <<"a"<<"b"<<"c"<<"d"<<"e"<<"f";
-   foreach(QString s,list)
-    {
-
-        item->setCheckable(true);
-
-    }
-
-    ui->tagList->setModel(model);*/
+    return *tags;
 }
 
 void MainWindow::UI_EXPOR_TO_FILE(const int type)

@@ -11,6 +11,7 @@
 
 QString SaveTextExport::header() const
 {
+    TagManager *tm =&TagManager::getInstance();
     return "";
 }
 

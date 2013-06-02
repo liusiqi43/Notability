@@ -3,11 +3,13 @@
 
 #include <QObject>
 #include <QAbstractItemModel>
+#include <QListWidget>
 
 class NotesManager;
 class Note;
 class TreeItem;
 class Document;
+class TagManager;
 
 class TreeModel : public QAbstractItemModel
 {
@@ -50,5 +52,11 @@ private:
     TreeItem *rootItem;
 
     NotesManager *nm;
+
+    TagManager *tm;
+
+    QListWidget* tagListModel;
+
+
 };
 #endif // TREEMODEL_H

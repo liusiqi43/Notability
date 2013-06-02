@@ -10,10 +10,12 @@
 class Document;
 class ExportStrategy;
 class Document;
+class Tag;
 
 class Note{
     QString title;
     QString filePath;
+    QSet<Tag*> tags;
 
     // the Editor associated
     Editor* editor;

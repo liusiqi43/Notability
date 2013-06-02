@@ -60,8 +60,8 @@ public slots:
     void BACKEND_CLOSING();
     void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
     void updateSideBar();
-
-    void updateTagList();
+    void createTagList();
+    QSet<Tag *> updateTagList();
 
     void UI_EXPOR_TO_FILE(const int type);
 
@@ -94,7 +94,7 @@ private:
     QSet<Tag*> tags;
 
     TreeModel* sideBarModel;
-    QListWidget* tagL;
+    QListWidget* tagListModel;
 
     int lastTabIndex;
 };
