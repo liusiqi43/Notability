@@ -25,11 +25,11 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
         btnPlayPause = new QPushButton("PLay/Pause");
         btnStop = new QPushButton("Stop");
         btnStop->resize(32,32);
-        btnStop->setIcon(QIcon("Icons/stop.png"));
+        btnStop->setIcon(QIcon("images/stop.png"));
         progression = new QProgressBar;
         progression->setMinimum(0);
         progression->setMaximum(100);
-        btnPlayPause->setIcon(QIcon("Icons/play.png"));
+        btnPlayPause->setIcon(QIcon("images/play.png"));
         QObject::connect(btnPlayPause, SIGNAL(clicked()), this, SLOT(PLAY_PAUSE_SONG()));
         QObject::connect(btnStop, SIGNAL(clicked()), this, SLOT(STOP_SONG()));
         //QObject::connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(SET_VALUE(qint64)));
@@ -41,7 +41,7 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
     btnLine->addWidget(btnPlayPause);
     btnLine->addWidget(btnStop);
     btnLine->addWidget(progression);
-    QObject::connect(btnPlayStop, SIGNAL(clicked()), this, SLOT(PLAY_STOP_AUDIO()));
+    QObject::connect(btnPlayPause, SIGNAL(clicked()), this, SLOT(PLAY_STOP_AUDIO()));
 
     contentLayout->addWidget(new QLabel("Description:"));
 
@@ -86,13 +86,13 @@ void AudioNoteEditor::PLAY_PAUSE_SONG()
     if(play)
     {
         player->pause();
-        btnPlayPause->setIcon(QIcon("play.png"));
+        btnPlayPause->setIcon(QIcon("images/play.png"));
         play = false;
     }
     else
     {
         player->play();
-        btnPlayPause->setIcon(QIcon("pause.png"));
+        btnPlayPause->setIcon(QIcon("images/pause.png"));
         play = true;
     }
 }

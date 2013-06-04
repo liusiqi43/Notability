@@ -52,7 +52,7 @@ void MainWindow::addOpenedFiles(const QString & path)
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), nm(0), textv(0), tm(0), sideBarModel(0), tagListModel(0)
+    ui(new Ui::MainWindow), hv(0), tv(0), nm(0), textv(0), tm(0), sideBarModel(0)
 {
     ui->setupUi(this);
     editorWidget = new QWidget;
@@ -140,14 +140,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
     QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
-    QObject::connect(ui->tagList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(STOCK_DISABLED_TAGS(QListWidgetItem*));
+    QObject::connect(ui->tagList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(STOCK_DISABLED_TAGS(QListWidgetItem*)));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
-<<<<<<< HEAD
 
-=======
     QObject::connect(ui->searchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateSideBarWithNewSearchFilter(QString)));
->>>>>>> bda8f0eb543f9cfac26982b4c5511ac8c91dcfde
+
     updateSideBar();
     createTagList();
 }
@@ -386,13 +384,7 @@ void MainWindow::updateSideBar()
 void MainWindow::createTagList()
 {
     tm = &TagManager::getInstance();
-<<<<<<< HEAD
-// QListWidget *listWidget = new QListWidget(ui->tagList);
-// qDebug() << "hello";
-=======
-    QListWidget *listWidget = new QListWidget(ui->tagList);
-    qDebug() << "hello";
->>>>>>> bda8f0eb543f9cfac26982b4c5511ac8c91dcfde
+
 
     ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag("All", 0, ui->tagList);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag

@@ -3,7 +3,7 @@
 
 #include "TreeItem.h"
 #include <QSet>
-#include <multimap.h>
+#include <Qmultimap>
 #include "Tag.h"
 
 enum FilterType{tag, search};
