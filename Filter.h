@@ -18,11 +18,12 @@ public:
 
 class TagFilter : public Filter
 {
-    QSet<Tag *> enabledTags;
+    QSet<Tag *> disabledTags;
 public:
     TagFilter():Filter(){}
-    void addEnabledTag(Tag* tag) {enabledTags << tag;}
-    void removeEnabledTag(Tag* tag) {enabledTags.remove(tag);}
+    bool contains(Tag *tag) {return disabledTags.contains(tag);}
+    void addDisabledTag(Tag* tag) {disabledTags << tag;}
+    void removeDisabledTag(Tag* tag) {disabledTags.remove(tag);}
     bool shallBeFiltered(Note *item) const;
 };
 

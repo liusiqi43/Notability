@@ -4,5 +4,6 @@
         <file alias="pause">Icons/pause.png</file>
         <file alias="stop">Icons/stop.png</file>
         <file alias="play">Icons/play.png</file>
+        <file alias="music">Icons/music.png</file>
     </qresource>
 </RCC>

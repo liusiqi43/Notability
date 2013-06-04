@@ -63,6 +63,7 @@ Note& NotesManager::getNote(const QString& fileName){
     NoteFactory* f = NotesManager::factories->value(type);
     Note* n = f->buildNote(fileName);
     addNote(n);
+    qDebug()<<"New NOTE:::::::::::::::::"<<n->getFilePath();
     return *n;
 }
 

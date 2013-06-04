@@ -54,10 +54,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow), hv(0), tv(0), nm(0), textv(0), tm(0), sideBarModel(0)
 {
+
     ui->setupUi(this);
     editorWidget = new QWidget;
     ui->editorScroll->setWidget(editorWidget);
-
+    qDebug() << "hello";
     QToolBar *toolBar = addToolBar("General");
     QAction *actionQuit = new QAction("&Quit", this);
     QAction *actionOpen = new QAction("&Open...", this);
@@ -68,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
     NoteTypeSignalAction *actionNewVideoNote = new NoteTypeSignalAction(videoNote, "&VideoNote", this);
     NoteTypeSignalAction *actionNewDocument = new NoteTypeSignalAction(document, "&Document", this);
     NoteTypeSignalAction *actionNewImageNote = new NoteTypeSignalAction(imageNote, "&ImageNote", this);
-
+    actionNewAudioNote->setIcon(QIcon(":images/music"));
     QMenu *menuNew = new QMenu("&New...");
     menuNew->addAction(actionNewArticle);
     menuNew->addAction(actionNewImageNote);
@@ -80,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ExportTypeSignalAction *actionExportHTML = new ExportTypeSignalAction(html, "&HTML", this);
     ExportTypeSignalAction *actionExportTeX = new ExportTypeSignalAction(tex, "&TeX", this);
     ExportTypeSignalAction *actionExportText = new ExportTypeSignalAction(text, "&Text", this);
-
+    qDebug() << "hello";
     QMenu *menuExport = new QMenu("&Export");
     menuExport->addAction(actionExportHTML);
     menuExport->addAction(actionExportTeX);
@@ -135,8 +136,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(actionExportHTML, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
     QObject::connect(actionExportTeX, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
     QObject::connect(actionExportText, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
-
-
+    QObject::connect(ui->addTag, SIGNAL(clicked()), this, SLOT(ADD_TAG()));
+    QObject::connect(ui->removeTag, SIGNAL(clicked()), this, SLOT(REMOVE_TAG()));
+    QObject::connect(ui->tagList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(CHANGE_NAME_TAG(QListWidgetItem*)));
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
     QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
@@ -385,29 +387,30 @@ void MainWindow::createTagList()
 {
     tm = &TagManager::getInstance();
 
-
-    ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag("All", 0, ui->tagList);
-    item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-    item->setCheckState(Qt::Checked);
     for(tagSetIt it = tm->begin(); it != tm->end(); it++)
     {
-//        qDebug() << (*it)->getName();
+        qDebug() << (*it)->getName();
         ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag((*it)->getName(), (*it), ui->tagList);
-//        qDebug() << (*it)->getName();
-
-        item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable); // set checkable flag
         item->setCheckState(Qt::Checked);
     }
 }
 
 void MainWindow::STOCK_DISABLED_TAGS(QListWidgetItem* item){
+
+    TagFilter *f = new TagFilter();
+    Tag* t;
     if(item->checkState()==Qt::Checked)
     {
-        Tag* t=static_cast<ListWidgetItemCheckTag *>(item)->getTag();
-        if(tagsDisabled.contains(t))
-            tagsDisabled.remove(t);
+        t=static_cast<ListWidgetItemCheckTag *>(item)->getTag();
+        if(f->contains(t))
+            f->removeDisabledTag(t);
     }
-    else tagsDisabled << t;
+    else f->addDisabledTag(t);
+
+    FilterKit* kit = FilterKit::getInstance();
+    kit->setFilter(tag, f);
+    updateSideBar();
 }
 
 
@@ -430,4 +433,37 @@ void MainWindow::addRessources(Note* n)
 {
     ressources.append(n);
 
+}
+
+void MainWindow::ADD_TAG()
+{
+    TagManager* tm=&TagManager::getInstance();
+    if(ui->tagList->findItems("New Tag", Qt::MatchExactly).count()==0)
+    {
+        qDebug() << "hello";
+        ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag("New Tag", tm->getTag("New Tag"), ui->tagList);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable); // set checkable flag
+        qDebug() << "hello";
+        item->setCheckState(Qt::Checked);
+    }
+    else QMessageBox::information(this, "Erreur", "Nouveau Tag déjà existant...");
+    qDebug() << "hello";
+}
+
+void MainWindow::REMOVE_TAG()
+{
+    qDebug() << "Got current item to delete: " << ui->tagList->currentItem()->data(0).toString();
+    if(ui->tagList->currentItem())
+    {
+        ListWidgetItemCheckTag* item = static_cast<ListWidgetItemCheckTag*>(ui->tagList->currentItem());
+        tm->removeTag(item->getTag());
+        delete item;
+    }
+
+}
+
+void MainWindow::CHANGE_NAME_TAG(QListWidgetItem* item)
+{
+    ListWidgetItemCheckTag* itemTag = static_cast<ListWidgetItemCheckTag*>(item);
+    itemTag->getTag()->setName(item->data(0).toString());
 }

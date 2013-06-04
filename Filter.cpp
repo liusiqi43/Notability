@@ -30,5 +30,9 @@ FilterKit* FilterKit::getInstance(){
 bool TagFilter::shallBeFiltered(Note *item) const
 {
     // filtrer les notes
+    for(QSet<Tag*>::const_iterator it=disabledTags.begin(); it!=disabledTags.end(); it++)
+    {
+        if((*it)->getAssocs().contains(item)) return true;
+    }
     return false;
 }

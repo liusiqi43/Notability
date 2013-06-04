@@ -27,7 +27,7 @@ public:
     static TagManager& getInstance();
     static void libereInstance();
     QSet<Tag *> getTags();
-    void createTag(const QString &n);
+    Tag* createTag(const QString &n);
     void removeTag(Tag* t);
     QSet<Tag *>& getTagforNote(Note* note);
     QSet<Note*>& getNotesforTag(Tag *tag);
