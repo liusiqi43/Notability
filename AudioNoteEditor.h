@@ -13,6 +13,7 @@ class AudioNoteEditor : public BinaryEditor
     Q_OBJECT
 public:
     explicit AudioNoteEditor(AudioNote *a, QWidget *parent = 0);
+    ~AudioNoteEditor();
 
 signals:
 
@@ -22,6 +23,7 @@ public slots:
     void PLAY_PAUSE_SONG();
     void STOP_SONG();
     void SET_VALUE(qint64 val);
+    void CLOSING();
 
 private:
     QPushButton *btnAddAudio;

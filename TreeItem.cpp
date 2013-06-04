@@ -25,6 +25,10 @@ int TreeItem::childCount() const
     return childItems.count();
  }
 
+/**
+ * @brief TreeItem::childNumber: return current Node's index in its parent
+ * @return
+ */
 int TreeItem::childNumber() const
 {
     if (parentItem)
@@ -55,6 +59,10 @@ bool TreeItem::setData(int column, const QVariant &n, Note* ID)
      return true;
 }
 
+/**
+ * @brief TreeItem::updateUnderlyingNoteTitle: deprecated. Edit in document editor instead of editing in TreeView, which may cause confusion to user when he double click on TreeItem
+ * @param newTitle
+ */
 void TreeItem::updateUnderlyingNoteTitle(const QVariant & newTitle)
 {
     this->itemId->setTitle(newTitle.toString());

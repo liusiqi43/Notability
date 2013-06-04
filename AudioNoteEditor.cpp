@@ -34,16 +34,15 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
         QObject::connect(btnStop, SIGNAL(clicked()), this, SLOT(STOP_SONG()));
         //QObject::connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(SET_VALUE(qint64)));
         qDebug() << player->position();
-
     }
-
-
 
     btnLine = new QHBoxLayout;
     contentLayout->addLayout(btnLine);
     btnLine->addWidget(btnPlayPause);
     btnLine->addWidget(btnStop);
     btnLine->addWidget(progression);
+    QObject::connect(btnPlayStop, SIGNAL(clicked()), this, SLOT(PLAY_STOP_AUDIO()));
+
     contentLayout->addWidget(new QLabel("Description:"));
 
     contentLayout->addWidget(getDescriptionWidget());
@@ -52,6 +51,16 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
 
 
     QObject::connect(btnAddAudio, SIGNAL(clicked()), this, SLOT(LOAD_AUDIO()));
+    QObject::connect(this, SIGNAL(destroyed()), this, SLOT(CLOSING()));
+}
+
+AudioNoteEditor::~AudioNoteEditor(){
+    player->stop();
+}
+
+void AudioNoteEditor::CLOSING()
+{
+    player->stop();
 }
 
 void AudioNoteEditor::BACKEND_SET_CONTENT()

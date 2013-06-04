@@ -6,13 +6,14 @@
 #include <QList>
 #include <assert.h>
 #include "mainwindow.h"
+#include "Filter.h"
 
 
 TreeModel::TreeModel(QObject *parent)
     : QAbstractItemModel(parent)
 {
     nm = &NotesManager::getInstance();
-
+    filterKit = FilterKit::getInstance();
     QVector<QVariant> rootData;
 
     rootData << "~";
@@ -187,6 +188,12 @@ bool TreeModel::setHeaderData(int section, Qt::Orientation orientation,
     return result;
 }
 
+/**
+ * @brief TreeModel::deployDocument this function is a recursive implementation of depth-first trasversal in a tree. With the depth-first iterator implemented later, we would be able to make this code shorter
+ * @param current the root we begin at
+ * @param parents une file des parents
+ * @param indent une file des indentation.
+ */
 void TreeModel::deployDocument(Document* current, QList<TreeItem*>& parents, QList<int>& indent){
 
     TreeItem *parent = parents.last();
@@ -206,6 +213,13 @@ void TreeModel::deployDocument(Document* current, QList<TreeItem*>& parents, QLi
 
 
     for (nListIt it = current->begin(); it!=current->end(); ++it){
+//        qDebug()<<"Note Title: " << current->getTitle()<<" Filtered? :"<<filterKit->isFilteredByFilters(current);
+//        qDebug()<<"is ~ Document? " << (current!=nm->getRootDocument());
+        if((*it)!=rootItem->getItemId() && filterKit->isFilteredByFilters((*it))){
+            // We don't want to filter our root Document.
+            // We apply all enabled filters.
+            continue;
+        }
         // If it is a doc, we deploy this doc.
         if((*it)->isDocument()){
             deployDocument(dynamic_cast<Document*>(*it), parents, indent);
@@ -226,6 +240,10 @@ void TreeModel::deployDocument(Document* current, QList<TreeItem*>& parents, QLi
     indent.pop_back();
 }
 
+//void removingFilteredItems(TreeItem * root, FilterKit* filters){
+
+//}
+
 
 void TreeModel::setupModelData(TreeItem* parent)
 {
@@ -235,5 +253,6 @@ void TreeModel::setupModelData(TreeItem* parent)
     indentations << 0;
 
     deployDocument(nm->getRootDocument(), parents, indentations);
+//    removingFilteredItems(parent, filterKit);
 }
 

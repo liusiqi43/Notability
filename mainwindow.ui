@@ -75,24 +75,20 @@
         <item>
          <widget class="QLabel" name="label">
           <property name="text">
-           <string>Search:</string>
+           <string>Search for notes:</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="searchLineEdit">
           <property name="maximumSize">
            <size>
             <width>200</width>
             <height>16777215</height>
            </size>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="search">
           <property name="text">
-           <string>Search</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -133,8 +129,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>546</width>
-             <height>514</height>
+             <width>541</width>
+             <height>502</height>
             </rect>
            </property>
           </widget>
@@ -168,7 +164,7 @@
      <x>0</x>
      <y>0</y>
      <width>803</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

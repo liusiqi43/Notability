@@ -62,7 +62,7 @@ public slots:
     void updateSideBar();
     void createTagList();
     void STOCK_DISABLED_TAGS(QListWidgetItem *item);
-
+    void updateSideBarWithNewSearchFilter(QString);
 
     void UI_EXPOR_TO_FILE(const int type);
 

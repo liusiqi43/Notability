@@ -27,3 +27,5 @@ QString ImageNote::exportNote(const ExportStrategy *es, unsigned int level)
     }
 }
 
+
+

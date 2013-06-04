@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include "TagManager.h"
 #include <QStandardItem>
+#include "Filter.h"
 #include "Binary.h"
 #include <QDebug>
 #include "ListWidgetItemCheckTag.h"
@@ -51,7 +52,7 @@ void MainWindow::addOpenedFiles(const QString & path)
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), tm(0), sideBarModel(0), tagListModel(0)
+    ui(new Ui::MainWindow), hv(0), tv(0), nm(0), textv(0), tm(0), sideBarModel(0), tagListModel(0)
 {
     ui->setupUi(this);
     editorWidget = new QWidget;
@@ -142,7 +143,11 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->tagList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(STOCK_DISABLED_TAGS(QListWidgetItem*));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
+<<<<<<< HEAD
 
+=======
+    QObject::connect(ui->searchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateSideBarWithNewSearchFilter(QString)));
+>>>>>>> bda8f0eb543f9cfac26982b4c5511ac8c91dcfde
     updateSideBar();
     createTagList();
 }
@@ -276,14 +281,10 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
         // add viewer into tab
         parentLayout = new QVBoxLayout();
 
-        QString filePath = (*it)->getFilePath();
         switch(type){
         case html:
-            if(filePath.endsWith(".vid")||filePath.endsWith(".aud"))
-                viewer = new HtmlViewer(content, (dynamic_cast<Binary *>(*it))->getMediaPath());
-            else
-                viewer = new HtmlViewer(content);
-//            qDebug()<<content;
+            viewer = new HtmlViewer(content);
+            //            qDebug()<<content;
             break;
         case tex:
             viewer = new TexViewer(content);
@@ -385,8 +386,13 @@ void MainWindow::updateSideBar()
 void MainWindow::createTagList()
 {
     tm = &TagManager::getInstance();
+<<<<<<< HEAD
 // QListWidget *listWidget = new QListWidget(ui->tagList);
 // qDebug() << "hello";
+=======
+    QListWidget *listWidget = new QListWidget(ui->tagList);
+    qDebug() << "hello";
+>>>>>>> bda8f0eb543f9cfac26982b4c5511ac8c91dcfde
 
     ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag("All", 0, ui->tagList);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
@@ -410,7 +416,15 @@ void MainWindow::STOCK_DISABLED_TAGS(QListWidgetItem* item){
             tagsDisabled.remove(t);
     }
     else tagsDisabled << t;
+}
 
+
+void MainWindow::updateSideBarWithNewSearchFilter(QString str)
+{
+    FilterKit* kit = FilterKit::getInstance();
+    SearchFilter* filter = new SearchFilter(str);
+    kit->setFilter(search, filter);
+    updateSideBar();
 }
 
 

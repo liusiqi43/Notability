@@ -6,6 +6,7 @@
 #include <QListWidget>
 
 class NotesManager;
+class FilterKit;
 class Note;
 class TreeItem;
 class Document;
@@ -52,6 +53,8 @@ private:
     TreeItem *rootItem;
 
     NotesManager *nm;
+
+    FilterKit *filterKit;
 
     TagManager *tm;
 

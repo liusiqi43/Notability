@@ -1,5 +1,5 @@
 #include "TagManager.h"
-
+#include "Tag.h"
 #include "Note.h"
 
 
@@ -15,7 +15,6 @@ TagManager::~TagManager()
 {
     Tags.clear();
 }
-
 
 TagManager& TagManager::getInstance()
 {
@@ -59,35 +58,20 @@ void TagManager::removeTag(Tag* t)
     Tags.remove(t);
 }
 
-QSet<Note *> TagManager::getNoteforTag(Tag* tag)
+QSet<Note *>& TagManager::getNotesforTag(Tag* tag)
 {
-
     return tag->getAssocs();
-
- //   tag->getAssocs();
-
 }
 
-QSet<Tag*> TagManager::getTagforNote(Note *note)
+QSet<Tag*>& TagManager::getTagforNote(Note *note)
 {
-    QSet<Tag*> res;
-    for(tagSetIt it = begin(); it != end(); it++){
-        if((**it).getAssocs().contains(note))
-        {
-            res<<(*it);
-        }
-    }
-    return res;
+    return note->getTags();
 }
 
-void TagManager::removeTagToNote(Tag *tag, Note *note)
+void TagManager::removeTagForNote(Tag *tag, Note *note)
 {
-    for(tagSetIt it = begin(); it != end(); it++){
-        if((*it)==tag && (**it).getAssocs().contains(note))
-        {
-            (**it).getAssocs().remove(note);
-        }
-    }
+    tag->removeNote(note);
+    note->removeTag(tag);
 }
 
 Tag* TagManager::getTag(const QString& newtag)

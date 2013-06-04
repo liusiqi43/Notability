@@ -21,6 +21,7 @@ public:
 signals:
 
 public slots:
+    virtual void CLOSING() = 0;
 private:
     QLineEdit *descriptionWidget;
     Binary *ressource;
