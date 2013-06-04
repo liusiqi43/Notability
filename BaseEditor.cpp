@@ -19,7 +19,10 @@
 
 #include "CheckComboBox.h"
 #include "AddToDocDialog.h"
+#include "Trash.h"
 #include "TreeItem.h"
+
+#include "BinaryEditor.h"
 #include <QListView>
 #include <QComboBox>
 
@@ -34,7 +37,7 @@ Editor::Editor(Note *n, QWidget *parent) :
 
     btnSave = new QPushButton("Save");
     btnClose= new QPushButton("Close");
-    btnMove = new QPushButton("Move");
+    btnDelete = new QPushButton("Delete");
     btnTag = new QPushButton("Tag");
     documentBtn = new QPushButton("~");
 
@@ -74,7 +77,7 @@ Editor::Editor(Note *n, QWidget *parent) :
 
     buttonsLayout->addWidget(btnSave);
     buttonsLayout->addWidget(btnClose);
-    buttonsLayout->addWidget(btnMove);
+    buttonsLayout->addWidget(btnDelete);
     buttonsLayout->addWidget(btnTag);
     btnSave->setEnabled(false);
 
@@ -82,6 +85,7 @@ Editor::Editor(Note *n, QWidget *parent) :
     QObject::connect(btnSave, SIGNAL(clicked()),this, SLOT(BACKEND_SAVE()));
     QObject::connect(documentBtn, SIGNAL(clicked()),this, SLOT(FIRE_UP_DOC_DIALOG()));
     QObject::connect(btnTag, SIGNAL(clicked()), this, SLOT(ADD_TAG_TO_NOTE()));
+    QObject::connect(btnDelete, SIGNAL(clicked()), this, SLOT(REMOVE_NOTE_TO_TRASH()));
 }
 
 void Editor::ADD_TAG_TO_NOTE()
@@ -94,7 +98,6 @@ void Editor::ADD_TAG_TO_NOTE()
     {
         tm->getTag(newTag);
         tm->addTagToNote(tm->getTag(newTag), this->getRessource());
-//        MainWindow::getInstance()->cr;
     }
 }
 
@@ -227,4 +230,19 @@ void Editor::retrieveDataFromDocDialog()
     MainWindow::getInstance()->updateSideBar();
     delete dialog;
     dialog = 0;
+}
+
+void Editor::REMOVE_NOTE_TO_TRASH()
+{
+    BinaryEditor * binEditor = 0;
+    try{
+        binEditor = dynamic_cast<BinaryEditor *>(this);
+    } catch (std::bad_cast e){}
+    if(binEditor)
+        binEditor->CLOSING();
+    ressource->setEditor(0);
+    Trash::getInstance()->recycle(ressource);
+    MainWindow::getInstance()->removeRessource(ressource);
+    ressource = 0;
+    this->close();
 }

@@ -31,7 +31,7 @@ class Editor : public QWidget
     Note * ressource;
     QPushButton * btnSave;
     QPushButton * btnClose;
-    QPushButton * btnMove;
+    QPushButton * btnDelete;
     QPushButton * btnTag;
     QPushButton * documentBtn;
 
@@ -68,9 +68,6 @@ public:
     QPushButton *getBtnClose() const;
     void setBtnClose(QPushButton *value);
 
-    QPushButton *getBtnMove() const;
-    void setBtnMove(QPushButton *value);
-
     QPushButton *getBtnTag() const;
     void setBtnTag(QPushButton *value);
 
@@ -88,6 +85,8 @@ public slots:
     void updateDocBtnWithRessource(TreeItem *item);
     void FIRE_UP_DOC_DIALOG();
     void retrieveDataFromDocDialog();
+
+    void REMOVE_NOTE_TO_TRASH();
 
 
 };

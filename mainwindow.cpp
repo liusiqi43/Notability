@@ -11,6 +11,7 @@
 #include "Document.h"
 #include "TextViewer.h"
 #include "TreeModel.h"
+#include "trashDialog.h"
 #include <typeinfo>
 #include <QMap>
 #include <QScrollArea>
@@ -61,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QToolBar *toolBar = addToolBar("General");
     QAction *actionQuit = new QAction("&Quit", this);
     QAction *actionOpen = new QAction("&Open...", this);
+    QAction *actionTrashBin = new QAction("&Trash", this);
 
     // subclassed QAction, this emets also the NoteType. So that we don't need different handling slot
     NoteTypeSignalAction *actionNewArticle = new NoteTypeSignalAction(article, "&Article", this);
@@ -91,16 +93,19 @@ MainWindow::MainWindow(QWidget *parent) :
 
     menuFichier->addMenu(menuNew);
     menuFichier->addMenu(menuExport);
-    //    menuFichier->addAction(actionOpen);
 
     menuFichier->addAction(actionQuit);
 
-    //    toolBar->addAction(actionOpen);
     toolBar->addAction(actionNewArticle);
     toolBar->addAction(actionNewImageNote);
     toolBar->addAction(actionNewVideoNote);
     toolBar->addAction(actionNewAudioNote);
+    toolBar->addSeparator();
     toolBar->addAction(actionNewDocument);
+    QWidget* spacer = new QWidget();
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    toolBar->addWidget(spacer);
+    toolBar->addAction(actionTrashBin);
     toolBar->addAction(actionQuit);
 
     tab = new QTabWidget();
@@ -144,6 +149,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
     QObject::connect(ui->searchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateSideBarWithNewSearchFilter(QString)));
+    QObject::connect(actionTrashBin, SIGNAL(triggered()), this, SLOT(FIRE_UP_TRASH_BIN_DIALOG()));
     updateSideBar();
     createTagList();
 }
@@ -426,4 +432,9 @@ void MainWindow::addRessources(Note* n)
 {
     ressources.append(n);
 
+}
+
+void MainWindow::FIRE_UP_TRASH_BIN_DIALOG()
+{
+    new TrashDialog();
 }

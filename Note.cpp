@@ -115,3 +115,13 @@ bool Note::belongs(Document *doc)
 {
     return inDocuments.contains(doc);
 }
+
+QSet<Document *> Note::getInDocuments() const
+{
+    return inDocuments;
+}
+
+void Note::setInDocuments(const QSet<Document *> &value)
+{
+    inDocuments = value;
+}

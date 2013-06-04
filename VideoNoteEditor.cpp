@@ -25,7 +25,6 @@ VideoNoteEditor::VideoNoteEditor(VideoNote *v, QWidget* parent)
     buttonsLayout->addWidget(btnAddVideo);
 
     QObject::connect(btnAddVideo, SIGNAL(clicked()), this, SLOT(LOAD_VIDEO()));
-
 }
 
 void VideoNoteEditor::BACKEND_SET_CONTENT()
@@ -37,7 +36,7 @@ void VideoNoteEditor::BACKEND_SET_CONTENT()
 void VideoNoteEditor::LOAD_VIDEO(){
     ressource->setMediaPath(QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Video (*.mp4 *.avi)"));
     qDebug()<<ressource->getMediaPath();
-    if(!ressource->getMediaPath().isNull()) {}
+    if(!ressource->getMediaPath().isNull())
         videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
 }
 

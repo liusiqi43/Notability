@@ -32,15 +32,14 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
         btnPlayPause->setIcon(QIcon("Icons/play.png"));
         QObject::connect(btnPlayPause, SIGNAL(clicked()), this, SLOT(PLAY_PAUSE_SONG()));
         QObject::connect(btnStop, SIGNAL(clicked()), this, SLOT(STOP_SONG()));
-        //QObject::connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(SET_VALUE(qint64)));
-        qDebug() << player->position();
+        QObject::connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(SET_VALUE(qint64)));
     }
 
     btnLine = new QHBoxLayout;
+    contentLayout->addWidget(progression);
     contentLayout->addLayout(btnLine);
     btnLine->addWidget(btnPlayPause);
     btnLine->addWidget(btnStop);
-    btnLine->addWidget(progression);
 
     contentLayout->addWidget(new QLabel("Description:"));
 
@@ -101,9 +100,8 @@ void AudioNoteEditor::STOP_SONG()
 
 void AudioNoteEditor::SET_VALUE(qint64 val)
 {
-    int v;
-    //v= int(val)*100/int(val);
-    v = static_cast<int>(val)*100/static_cast<int>(val);
-    progression->setValue(v);
+    qDebug()<<val << "/"<<player->duration();
+    qDebug()<< "=" << val/player->duration();
+    progression->setValue(val*100/player->duration());
 }
 

@@ -43,7 +43,10 @@ SOURCES += \
     player/playercontrols.cpp \
     player/player.cpp \
     player/histogramwidget.cpp \
-    Filter.cpp
+    Filter.cpp \
+    Trash.cpp \
+    trashDialog.cpp \
+    QListWidgetItemWithItemAndNote.cpp
 
 
 HEADERS += \
@@ -91,7 +94,10 @@ HEADERS += \
     player/playercontrols.h \
     player/player.h \
     player/histogramwidget.h \
-    Filter.h
+    Filter.h \
+    Trash.h \
+    trashDialog.h \
+    QListWidgetItemWithItemAndNote.h
 
 
 QT      += widgets \
@@ -105,7 +111,8 @@ MOBILITY = multimedia
 
 FORMS += \
     mainwindow.ui \
-    AddToDocDialog.ui
+    AddToDocDialog.ui \
+    trashDialog.ui
 
 RESOURCES += \
     ressources.qrc

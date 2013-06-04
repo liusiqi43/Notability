@@ -13,7 +13,7 @@ AddToDocDialog::AddToDocDialog(Note *n, QWidget *parent) :
     activatedDocuments = new QSet<Document*>();
 
     for(QSet<Document*>::const_iterator it=nm->beginDocumentContainer(); it!=nm->endDocumentContainer(); ++it){
-        if((*it)==n)
+        if((*it)==n || (*it)->isDeleted())
             continue;
         QListWidgetItem* item = new QListWidgetItemWithpDocument((*it)->getTitle(), *it, ui->docListWidget);
         item->setData(0, (*it)->getTitle());

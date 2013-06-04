@@ -4,5 +4,7 @@
         <file alias="pause">Icons/pause.png</file>
         <file alias="stop">Icons/stop.png</file>
         <file alias="play">Icons/play.png</file>
+        <file alias="restore">Icons/System Restore.png</file>
+        <file alias="delete">Icons/Visualpharm-Icons8-Metro-Style-Editing-Delete.ico</file>
     </qresource>
 </RCC>
