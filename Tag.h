@@ -13,16 +13,12 @@ class Tag
     QString name;
     QSet<Note*> assocs;
 
-    // Interdit l'instanciation sans passer par TagManager.
-    Tag(const QString& n);
-
+public:
     Tag(const Tag& other);
+    Tag(const QString& n);
     const Tag& operator=(const Tag other);
 
-public:
-    friend class TagManager;
-
-    QSet<Note*> getAssocs() { return assocs; }
+    QSet<Note*>& getAssocs() { return assocs; }
     void addNote(Note *n);
     void removeNote(const Note* n);
     void reset() {assocs.clear();}

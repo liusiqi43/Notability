@@ -8,7 +8,7 @@
 class Note;
 class Tag;
 
-typedef QSet<Tag* >::iterator nSetIt;
+typedef QSet<Tag* >::iterator tagSetIt;
 
 class TagManager // singleton
 {
@@ -29,14 +29,14 @@ public:
     QSet<Tag *> getTags();
     void createTag(const QString &n);
     void removeTag(Tag* t);
-    QSet<Tag *> getTagforNote(Note* note);
-    QSet<Note*> getNoteforTag(Tag *tag);
+    QSet<Tag *>& getTagforNote(Note* note);
+    QSet<Note*> getNotesforTag(Tag *tag);
     void addTagToNote(Tag *tag, Note *note);
-    void removeTagToNote(Tag* tag, Note* note);
+    void removeTagForNote(Tag* tag, Note* note);
     Tag* getTag(const QString& newtag);
 
-    nSetIt begin(){return Tags.begin();}
-    nSetIt end(){return Tags.end();}
+    tagSetIt begin(){return Tags.begin();}
+    tagSetIt end(){return Tags.end();}
 };
 
 #endif // TAGMANAGER_H

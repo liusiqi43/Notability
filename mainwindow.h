@@ -62,6 +62,7 @@ public slots:
     void updateSideBar();
     void createTagList();
     QSet<Tag *> updateTagList();
+    void updateSideBarWithNewSearchFilter(QString);
 
     void UI_EXPOR_TO_FILE(const int type);
 

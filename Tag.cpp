@@ -22,3 +22,8 @@ void Tag::addNote(Note* n)
     assocs.insert(n);
 }
 
+void Tag::removeNote(const Note *n)
+{
+    assocs.remove(n);
+}
+

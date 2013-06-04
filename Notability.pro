@@ -38,13 +38,12 @@ SOURCES += \
     TreeModel.cpp \
     viewer.cpp \
     AddToDocDialog.cpp \
-
     ListWidgetItemCheckTag.cpp \
-
-    ./player/videowidget.cpp \
-    ./player/playercontrols.cpp \
-    ./player/player.cpp \
-    ./player/histogramwidget.cpp
+    player/videowidget.cpp \
+    player/playercontrols.cpp \
+    player/player.cpp \
+    player/histogramwidget.cpp \
+    Filter.cpp
 
 
 HEADERS += \
@@ -87,13 +86,12 @@ HEADERS += \
     viewer.h \
     CheckComboBox.h \
     AddToDocDialog.h \
-
     ListWidgetItemCheckTag.h \
-
-   ./player/videowidget.h \
-   ./player/playercontrols.h \
-   ./player/player.h \
-   ./player/histogramwidget.h
+    player/videowidget.h \
+    player/playercontrols.h \
+    player/player.h \
+    player/histogramwidget.h \
+    Filter.h
 
 
 QT      += widgets \

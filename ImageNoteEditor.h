@@ -17,6 +17,7 @@ signals:
 public slots:
     void BACKEND_SET_CONTENT();
     void LOAD_IMAGE();
+    void CLOSING(){}
 
 private:
     QPushButton *btnAddImage;

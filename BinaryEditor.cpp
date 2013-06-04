@@ -28,4 +28,6 @@ BinaryEditor::BinaryEditor(Binary *b, QWidget *parent)
     :Editor(b, parent), ressource(b)
 {
     descriptionWidget = new QLineEdit(ressource->getDescription());
+
+    QObject::connect(this, SIGNAL(destroyed()), this, SLOT(CLOSING()));
 }

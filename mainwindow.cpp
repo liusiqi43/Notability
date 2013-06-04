@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include "TagManager.h"
 #include <QStandardItem>
+#include "Filter.h"
 #include "Binary.h"
 #include <QDebug>
 #include "ListWidgetItemCheckTag.h"
@@ -51,7 +52,7 @@ void MainWindow::addOpenedFiles(const QString & path)
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), textv(0), nm(0), tm(0), sideBarModel(0), tagListModel(0)
+    ui(new Ui::MainWindow), hv(0), tv(0), nm(0), textv(0), tm(0), sideBarModel(0), tagListModel(0)
 {
     ui->setupUi(this);
     editorWidget = new QWidget;
@@ -142,6 +143,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->tagList, SIGNAL(clicked(const QModelIndex&)), this, SLOT(updateTagList()));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
+    QObject::connect(ui->searchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateSideBarWithNewSearchFilter(QString)));
     updateSideBar();
     createTagList();
 }
@@ -275,14 +277,10 @@ void MainWindow::LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWi
         // add viewer into tab
         parentLayout = new QVBoxLayout();
 
-        QString filePath = (*it)->getFilePath();
         switch(type){
         case html:
-            if(filePath.endsWith(".vid")||filePath.endsWith(".aud"))
-                viewer = new HtmlViewer(content, (dynamic_cast<Binary *>(*it))->getMediaPath());
-            else
-                viewer = new HtmlViewer(content);
-//            qDebug()<<content;
+            viewer = new HtmlViewer(content);
+            //            qDebug()<<content;
             break;
         case tex:
             viewer = new TexViewer(content);
@@ -384,13 +382,13 @@ void MainWindow::updateSideBar()
 void MainWindow::createTagList()
 {
     tm = &TagManager::getInstance();
- QListWidget *listWidget = new QListWidget(ui->tagList);
- qDebug() << "hello";
+    QListWidget *listWidget = new QListWidget(ui->tagList);
+    qDebug() << "hello";
 
     QListWidgetItem* item = new ListWidgetItemCheckTag("All", 0, listWidget);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
     item->setCheckState(Qt::Checked);
-    for(nSetIt it = tm->begin(); it != tm->end(); it++)
+    for(tagSetIt it = tm->begin(); it != tm->end(); it++)
     {
         qDebug() << (*it)->getName();
         QListWidgetItem* item = new ListWidgetItemCheckTag((*it)->getName(), (*it), listWidget);
@@ -413,16 +411,16 @@ QSet<Tag*> MainWindow::updateTagList()
     // Qui va ensuite, retrouver les assocs
     // Dans TreeModel, on peut donc filtrer les Items en utilisant if(assocs.contains())
 
- //QStandardItemModel *model = new QStandardItemModel;
+    //QStandardItemModel *model = new QStandardItemModel;
     tm = &TagManager::getInstance();
- QSet<Tag*> * tags = new QSet<Tag*>;
- QListWidget *listWidget = new QListWidget(ui->tagList);
- qDebug() << "hello";
+    QSet<Tag*> * tags = new QSet<Tag*>;
+    QListWidget *listWidget = new QListWidget(ui->tagList);
+    qDebug() << "hello";
 
     QListWidgetItem* item = new ListWidgetItemCheckTag("All", 0, listWidget);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
     item->setCheckState(Qt::Checked);
-    for(nSetIt it = tm->begin(); it != tm->end(); it++)
+    for(tagSetIt it = tm->begin(); it != tm->end(); it++)
     {
         qDebug() << (*it)->getName();
         QListWidgetItem* item2 = new ListWidgetItemCheckTag((*it)->getName(), (*it), listWidget);
@@ -438,9 +436,17 @@ QSet<Tag*> MainWindow::updateTagList()
             if(tags->contains(*it))
                 tags->remove(*it);
         }
-      //  item2->setCheckState(Qt::Checked);
+        //  item2->setCheckState(Qt::Checked);
     }
     return *tags;
+}
+
+void MainWindow::updateSideBarWithNewSearchFilter(QString str)
+{
+    FilterKit* kit = FilterKit::getInstance();
+    SearchFilter* filter = new SearchFilter(str);
+    kit->setFilter(search, filter);
+    updateSideBar();
 }
 
 void MainWindow::UI_EXPOR_TO_FILE(const int type)

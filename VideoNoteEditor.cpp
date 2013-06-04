@@ -43,3 +43,8 @@ void VideoNoteEditor::LOAD_VIDEO(){
     if(!ressource->getMediaPath().isNull())
         videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
 }
+
+void VideoNoteEditor::CLOSING()
+{
+    videoWidget->stop();
+}
