@@ -47,6 +47,7 @@ SOURCES += \
     Trash.cpp \
     trashDialog.cpp \
     QListWidgetItemWithItemAndNote.cpp
+    Filter.cpp
 
 
 HEADERS += \
@@ -98,6 +99,7 @@ HEADERS += \
     Trash.h \
     trashDialog.h \
     QListWidgetItemWithItemAndNote.h
+    Filter.h
 
 
 QT      += widgets \

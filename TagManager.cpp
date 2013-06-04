@@ -1,5 +1,6 @@
 #include "TagManager.h"
 #include "Tag.h"
+#include <QSet>
 #include "Note.h"
 
 
@@ -42,10 +43,11 @@ QSet<Tag*> TagManager::getTags()
     return Tags;
 }
 
-void TagManager::createTag(const QString& n)
+Tag* TagManager::createTag(const QString& n)
 {
     Tag *t = new Tag(n);
     Tags << t;
+    return t;
 }
 
 void TagManager::addTagToNote(Tag* tag, Note* note)
@@ -55,6 +57,11 @@ void TagManager::addTagToNote(Tag* tag, Note* note)
 
 void TagManager::removeTag(Tag* t)
 {
+
+    for(QSet<Note*>::iterator it = t->getAssocs().begin(); it != t->getAssocs().end(); it++)
+    {
+        removeTagForNote(t, *it);
+    }
     Tags.remove(t);
 }
 
@@ -80,6 +87,6 @@ Tag* TagManager::getTag(const QString& newtag)
     {
         if((*it)->getName()==newtag) return *it;
     }
-    createTag(newtag);
+    return createTag(newtag);
 }
 

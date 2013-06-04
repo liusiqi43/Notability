@@ -98,6 +98,7 @@ void Editor::ADD_TAG_TO_NOTE()
     {
         tm->getTag(newTag);
         tm->addTagToNote(tm->getTag(newTag), this->getRessource());
+//        MainWindow::getInstance()->cr;
     }
 }
 

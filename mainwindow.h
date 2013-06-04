@@ -62,8 +62,11 @@ public slots:
     void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
     void updateSideBar();
     void createTagList();
-    void STOCK_DISABLED_TAGS(QListWidgetItem *item);
+    void STOCK_DISABLED_TAGS(QListWidgetItem*);
     void updateSideBarWithNewSearchFilter(QString);
+    void ADD_TAG();
+    void REMOVE_TAG();
+    void CHANGE_NAME_TAG(QListWidgetItem *item);
 
     void UI_EXPOR_TO_FILE(const int type);
     void FIRE_UP_TRASH_BIN_DIALOG();
