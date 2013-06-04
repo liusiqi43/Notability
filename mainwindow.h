@@ -61,7 +61,8 @@ public slots:
     void UI_LOAD_FROM_SIDE_BAR(const QModelIndex &index);
     void updateSideBar();
     void createTagList();
-    QSet<Tag *> updateTagList();
+    void STOCK_DISABLED_TAGS(QListWidgetItem *item);
+
 
     void UI_EXPOR_TO_FILE(const int type);
 
@@ -92,9 +93,10 @@ private:
     // On peut utilise qu'une seule ressource
     QList<Note*> ressources;
     QSet<Tag*> tags;
+    QSet<Tag*> tagsDisabled;
 
     TreeModel* sideBarModel;
-    QListWidget* tagListModel;
+
 
     int lastTabIndex;
 };

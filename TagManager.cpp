@@ -71,7 +71,7 @@ QSet<Note *> TagManager::getNoteforTag(Tag* tag)
 QSet<Tag*> TagManager::getTagforNote(Note *note)
 {
     QSet<Tag*> res;
-    for(nSetIt it = begin(); it != end(); it++){
+    for(tagSetIt it = begin(); it != end(); it++){
         if((**it).getAssocs().contains(note))
         {
             res<<(*it);
@@ -82,7 +82,7 @@ QSet<Tag*> TagManager::getTagforNote(Note *note)
 
 void TagManager::removeTagToNote(Tag *tag, Note *note)
 {
-    for(nSetIt it = begin(); it != end(); it++){
+    for(tagSetIt it = begin(); it != end(); it++){
         if((*it)==tag && (**it).getAssocs().contains(note))
         {
             (**it).getAssocs().remove(note);
@@ -92,7 +92,7 @@ void TagManager::removeTagToNote(Tag *tag, Note *note)
 
 Tag* TagManager::getTag(const QString& newtag)
 {
-    for(nSetIt it= begin(); it != end(); it++)
+    for(tagSetIt it= begin(); it != end(); it++)
     {
         if((*it)->getName()==newtag) return *it;
     }

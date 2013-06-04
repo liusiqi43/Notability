@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/images">
         <file alias="image_not_found">image_not_found.jpg</file>
+        <file alias="pause">Icons/pause.png</file>
+        <file alias="stop">Icons/stop.png</file>
+        <file alias="play">Icons/play.png</file>
     </qresource>
 </RCC>

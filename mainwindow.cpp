@@ -139,9 +139,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
 
     QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
-    QObject::connect(ui->tagList, SIGNAL(clicked(const QModelIndex&)), this, SLOT(updateTagList()));
+    QObject::connect(ui->tagList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(STOCK_DISABLED_TAGS(QListWidgetItem*));
     // Tab change handling
     QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
+
     updateSideBar();
     createTagList();
 }
@@ -384,64 +385,34 @@ void MainWindow::updateSideBar()
 void MainWindow::createTagList()
 {
     tm = &TagManager::getInstance();
- QListWidget *listWidget = new QListWidget(ui->tagList);
- qDebug() << "hello";
+// QListWidget *listWidget = new QListWidget(ui->tagList);
+// qDebug() << "hello";
 
-    QListWidgetItem* item = new ListWidgetItemCheckTag("All", 0, listWidget);
+    ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag("All", 0, ui->tagList);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
     item->setCheckState(Qt::Checked);
-    for(nSetIt it = tm->begin(); it != tm->end(); it++)
+    for(tagSetIt it = tm->begin(); it != tm->end(); it++)
     {
-        qDebug() << (*it)->getName();
-        QListWidgetItem* item = new ListWidgetItemCheckTag((*it)->getName(), (*it), listWidget);
-        qDebug() << (*it)->getName();
+//        qDebug() << (*it)->getName();
+        ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag((*it)->getName(), (*it), ui->tagList);
+//        qDebug() << (*it)->getName();
 
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
         item->setCheckState(Qt::Checked);
     }
 }
 
-QSet<Tag*> MainWindow::updateTagList()
-{
-    // Pour pouvoir clicker sur les Tags et filtrer les notes en dessus,
-    // il faut une sous classe de QStandardItem, tu peux regarder QListWidgetItemWithpDocument dans AddToDocDialog.
-    // Chaque item possede un signal(checked) normalement
-    // qui renvoye une MondelIndex.
-    // Il faut donc utilise ce Index (regarde la fonction loadFromSideBar)
-    // pour retrouve l'item qui est clique, et puis comme on a subclasse StandardItem,
-    // On peut y ajoute un pointeur vers un tag.
-    // Qui va ensuite, retrouver les assocs
-    // Dans TreeModel, on peut donc filtrer les Items en utilisant if(assocs.contains())
-
- //QStandardItemModel *model = new QStandardItemModel;
-    tm = &TagManager::getInstance();
- QSet<Tag*> * tags = new QSet<Tag*>;
- QListWidget *listWidget = new QListWidget(ui->tagList);
- qDebug() << "hello";
-
-    QListWidgetItem* item = new ListWidgetItemCheckTag("All", 0, listWidget);
-    item->setFlags(item->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-    item->setCheckState(Qt::Checked);
-    for(nSetIt it = tm->begin(); it != tm->end(); it++)
+void MainWindow::STOCK_DISABLED_TAGS(QListWidgetItem* item){
+    if(item->checkState()==Qt::Checked)
     {
-        qDebug() << (*it)->getName();
-        QListWidgetItem* item2 = new ListWidgetItemCheckTag((*it)->getName(), (*it), listWidget);
-        qDebug() << (*it)->getName();
-        item2->setFlags(item2->flags() | Qt::ItemIsUserCheckable); // set checkable flag
-        if(item2->checkState()==Qt::Checked)
-        {
-            if(!tags->contains(*it))
-                tags->insert(*it);
-        }
-        if(item2->checkState()==Qt::Unchecked)
-        {
-            if(tags->contains(*it))
-                tags->remove(*it);
-        }
-      //  item2->setCheckState(Qt::Checked);
+        Tag* t=static_cast<ListWidgetItemCheckTag *>(item)->getTag();
+        if(tagsDisabled.contains(t))
+            tagsDisabled.remove(t);
     }
-    return *tags;
+    else tagsDisabled << t;
+
 }
+
 
 void MainWindow::UI_EXPOR_TO_FILE(const int type)
 {

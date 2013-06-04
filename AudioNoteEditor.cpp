@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QUrl>
+#include <QProgressBar>
 
 AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
     :BinaryEditor(a, parent), ressource(a)
@@ -21,19 +22,28 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
         playlist->setCurrentIndex(0);
         player->setPlaylist(playlist);
         play = false;
-       // player->play();
-        btnPlayStop = new QPushButton("PLay/Stop");
+        btnPlayPause = new QPushButton("PLay/Pause");
+        btnStop = new QPushButton("Stop");
+        btnStop->resize(32,32);
+        btnStop->setIcon(QIcon("Icons/stop.png"));
+        progression = new QProgressBar;
+        progression->setMinimum(0);
+        progression->setMaximum(100);
+        btnPlayPause->setIcon(QIcon("Icons/play.png"));
+        QObject::connect(btnPlayPause, SIGNAL(clicked()), this, SLOT(PLAY_PAUSE_SONG()));
+        QObject::connect(btnStop, SIGNAL(clicked()), this, SLOT(STOP_SONG()));
+        //QObject::connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(SET_VALUE(qint64)));
+        qDebug() << player->position();
 
-        QObject::connect(btnPlayStop, SIGNAL(clicked()), this, SLOT(PLAY_STOP_VIDEO()));
     }
 
 
 
-
-
-    contentLayout->addWidget(btnPlayStop);
-
-    contentLayout->addWidget(audioWidget);
+    btnLine = new QHBoxLayout;
+    contentLayout->addLayout(btnLine);
+    btnLine->addWidget(btnPlayPause);
+    btnLine->addWidget(btnStop);
+    btnLine->addWidget(progression);
     contentLayout->addWidget(new QLabel("Description:"));
 
     contentLayout->addWidget(getDescriptionWidget());
@@ -58,20 +68,36 @@ void AudioNoteEditor::LOAD_AUDIO(){
 
     player->setMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
     play = false;
-    //player->play();
+
 }
 
-void AudioNoteEditor::PLAY_STOP_VIDEO()
+void AudioNoteEditor::PLAY_PAUSE_SONG()
 {
 
     if(play)
     {
-        player->stop();
+        player->pause();
+        btnPlayPause->setIcon(QIcon("play.png"));
         play = false;
     }
     else
     {
         player->play();
+        btnPlayPause->setIcon(QIcon("pause.png"));
         play = true;
     }
 }
+
+void AudioNoteEditor::STOP_SONG()
+{
+    player->stop();
+}
+
+void AudioNoteEditor::SET_VALUE(qint64 val)
+{
+    int v;
+    //v= int(val)*100/int(val);
+    v = static_cast<int>(val)*100/static_cast<int>(val);
+    progression->setValue(v);
+}
+

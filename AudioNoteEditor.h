@@ -4,6 +4,7 @@
 #include "BinaryEditor.h"
 #include <QMediaPlayer>
 #include <QMediaPlaylist>
+#include <QProgressBar>
 
 class AudioNote;
 
@@ -18,14 +19,19 @@ signals:
 public slots:
     void BACKEND_SET_CONTENT();
     void LOAD_AUDIO();
-    void PLAY_STOP_VIDEO();
+    void PLAY_PAUSE_SONG();
+    void STOP_SONG();
+    void SET_VALUE(qint64 val);
 
 private:
     QPushButton *btnAddAudio;
     QMediaPlayer *player;
     QMediaPlaylist *playlist;
     AudioNote *ressource;
-    QPushButton *btnPlayStop;
+    QPushButton *btnPlayPause;
+    QPushButton *btnStop;
+    QProgressBar *progression;
+    QHBoxLayout *btnLine;
     bool play;
 
 };

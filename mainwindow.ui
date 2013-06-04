@@ -104,7 +104,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QListView" name="tagList">
+         <widget class="QListWidget" name="tagList">
           <property name="enabled">
            <bool>true</bool>
           </property>
