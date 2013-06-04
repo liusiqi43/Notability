@@ -41,14 +41,11 @@ AudioNoteEditor::AudioNoteEditor(AudioNote* a, QWidget *parent)
     btnLine->addWidget(btnPlayPause);
     btnLine->addWidget(btnStop);
     btnLine->addWidget(progression);
-    QObject::connect(btnPlayStop, SIGNAL(clicked()), this, SLOT(PLAY_STOP_AUDIO()));
 
     contentLayout->addWidget(new QLabel("Description:"));
 
     contentLayout->addWidget(getDescriptionWidget());
     buttonsLayout->addWidget(btnAddAudio);
-
-
 
     QObject::connect(btnAddAudio, SIGNAL(clicked()), this, SLOT(LOAD_AUDIO()));
     QObject::connect(this, SIGNAL(destroyed()), this, SLOT(CLOSING()));

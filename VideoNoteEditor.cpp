@@ -1,5 +1,6 @@
 #include "VideoNoteEditor.h"
 #include "VideoNote.h"
+#include "player/player.h"
 #include <QWidget>
 #include <QFileDialog>
 #include <QPushButton>
@@ -12,20 +13,16 @@ VideoNoteEditor::VideoNoteEditor(VideoNote *v, QWidget* parent)
 {
     btnAddVideo = new QPushButton("Choose a Video");
 
-   // videoWidget = new Player(this);
-
-//    videoWidget->setMinimumHeight(this->height()/2);
+    videoWidget = new Player(this);
 
     if(!ressource->getMediaPath().isNull())
     {
-       // videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
+        videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
     }
-   // contentLayout->addWidget(videoWidget);
+    contentLayout->addWidget(videoWidget);
     contentLayout->addWidget(new QLabel("Description:"));
     contentLayout->addWidget(getDescriptionWidget());
     buttonsLayout->addWidget(btnAddVideo);
-
-
 
     QObject::connect(btnAddVideo, SIGNAL(clicked()), this, SLOT(LOAD_VIDEO()));
 
@@ -41,7 +38,7 @@ void VideoNoteEditor::LOAD_VIDEO(){
     ressource->setMediaPath(QFileDialog::getOpenFileName(this, "Ouvrir un fichier", QString(), "Video (*.mp4 *.avi)"));
     qDebug()<<ressource->getMediaPath();
     if(!ressource->getMediaPath().isNull()) {}
-       // videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
+        videoWidget->openMedia(QUrl::fromLocalFile(ressource->getMediaPath()));
 }
 
 void VideoNoteEditor::CLOSING()

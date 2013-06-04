@@ -6,6 +6,7 @@
 #include "BinaryEditor.h"
 #include <QPushButton>
 
+class Player;
 class VideoNote;
 
 class VideoNoteEditor : public BinaryEditor
@@ -21,7 +22,7 @@ public slots:
     void CLOSING();
 private:
     QPushButton *btnAddVideo;
-    // *videoWidget;
+    Player *videoWidget;
     VideoNote *ressource;
 };
 
