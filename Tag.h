@@ -20,7 +20,7 @@ public:
 
     QSet<Note*>& getAssocs() { return assocs; }
     void addNote(Note *n);
-    void removeNote(const Note* n);
+    void removeNote(Note* n);
     void reset() {assocs.clear();}
     QString getName() const;
     void setName(const QString &value);
