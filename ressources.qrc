@@ -5,5 +5,22 @@
         <file alias="stop">Icons/stop.png</file>
         <file alias="play">Icons/play.png</file>
         <file alias="music">Icons/music.png</file>
+        <file alias="image">Icons/image.png</file>
+        <file alias="article">Icons/article.png</file>
+        <file alias="document">Icons/document.png</file>
+        <file alias="newArticle">Icons/newArticle.png</file>
+        <file alias="newDocument">Icons/NewDocument.png</file>
+        <file>Icons/attache.png</file>
+        <file>Icons/edit.png</file>
+        <file>Icons/save.png</file>
+        <file>Icons/supp.png</file>
+        <file>Icons/poub.png</file>
+        <file>Icons/poubelle.png</file>
+        <file>Icons/tag.png</file>
+        <file>Icons/tag-.png</file>
+        <file>Icons/tag+.png</file>
+        <file alias="video">Icons/video.png</file>
+        <file>Icons/poube.png</file>
+        <file alias="quit">Icons/quit.png</file>
     </qresource>
 </RCC>

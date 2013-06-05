@@ -62,7 +62,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QToolBar *toolBar = addToolBar("General");
     QAction *actionQuit = new QAction("&Quit", this);
     QAction *actionOpen = new QAction("&Open...", this);
-
+    actionQuit->setIcon(QIcon(":images/quit"));
     // subclassed QAction, this emets also the NoteType. So that we don't need different handling slot
     NoteTypeSignalAction *actionNewArticle = new NoteTypeSignalAction(article, "&Article", this);
     NoteTypeSignalAction *actionNewAudioNote = new NoteTypeSignalAction(audioNote, "&AudioNote", this);
@@ -70,6 +70,10 @@ MainWindow::MainWindow(QWidget *parent) :
     NoteTypeSignalAction *actionNewDocument = new NoteTypeSignalAction(document, "&Document", this);
     NoteTypeSignalAction *actionNewImageNote = new NoteTypeSignalAction(imageNote, "&ImageNote", this);
     actionNewAudioNote->setIcon(QIcon(":images/music"));
+    actionNewArticle->setIcon(QIcon(":images/article"));
+    actionNewDocument->setIcon(QIcon(":images/document"));
+    actionNewImageNote->setIcon(QIcon(":images/image"));
+    actionNewVideoNote->setIcon(QIcon(":images/video"));
     QMenu *menuNew = new QMenu("&New...");
     menuNew->addAction(actionNewArticle);
     menuNew->addAction(actionNewImageNote);
@@ -442,8 +446,9 @@ void MainWindow::ADD_TAG()
     {
         qDebug() << "hello";
         ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag("New Tag", tm->getTag("New Tag"), ui->tagList);
+        qDebug() << "hello2";
         item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable); // set checkable flag
-        qDebug() << "hello";
+        qDebug() << "hello3";
         item->setCheckState(Qt::Checked);
     }
     else QMessageBox::information(this, "Erreur", "Nouveau Tag déjà existant...");
