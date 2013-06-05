@@ -25,7 +25,6 @@ VideoNoteEditor::VideoNoteEditor(VideoNote *v, QWidget* parent)
     buttonsLayout->addWidget(btnAddVideo);
 
     QObject::connect(btnAddVideo, SIGNAL(clicked()), this, SLOT(LOAD_VIDEO()));
-
 }
 
 void VideoNoteEditor::BACKEND_SET_CONTENT()

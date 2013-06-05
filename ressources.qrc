@@ -4,6 +4,8 @@
         <file alias="pause">Icons/pause.png</file>
         <file alias="stop">Icons/stop.png</file>
         <file alias="play">Icons/play.png</file>
+        <file alias="restore">Icons/System Restore.png</file>
+        <file alias="delete">Icons/Visualpharm-Icons8-Metro-Style-Editing-Delete.ico</file>
         <file alias="music">Icons/music.png</file>
         <file alias="image">Icons/image.png</file>
         <file alias="article">Icons/article.png</file>

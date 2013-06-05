@@ -215,7 +215,7 @@ void TreeModel::deployDocument(Document* current, QList<TreeItem*>& parents, QLi
     for (nListIt it = current->begin(); it!=current->end(); ++it){
 //        qDebug()<<"Note Title: " << current->getTitle()<<" Filtered? :"<<filterKit->isFilteredByFilters(current);
 //        qDebug()<<"is ~ Document? " << (current!=nm->getRootDocument());
-        if((*it)!=rootItem->getItemId() && filterKit->isFilteredByFilters((*it))){
+        if((*it)->isDeleted() || (*it)!=rootItem->getItemId() && filterKit->isFilteredByFilters((*it))){
             // We don't want to filter our root Document.
             // We apply all enabled filters.
             continue;

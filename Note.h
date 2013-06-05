@@ -71,6 +71,8 @@ public:
     bool belongs(Document *doc);
     QSet<Document *>::const_iterator beginInDoc(){return inDocuments.begin();}
     QSet<Document *>::const_iterator endInDoc(){return inDocuments.end();}
+    QSet<Document *> getInDocuments() const;
+    void setInDocuments(const QSet<Document *> &value);
 };
 
 

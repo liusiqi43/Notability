@@ -49,6 +49,7 @@ public:
     
     void addOpenedFiles(const QString&);
     void addRessources(Note *);
+    void removeRessource(Note *n) {ressources.removeOne(n);}
 
 signals:
 
@@ -68,6 +69,7 @@ public slots:
     void CHANGE_NAME_TAG(QListWidgetItem *item);
 
     void UI_EXPOR_TO_FILE(const int type);
+    void FIRE_UP_TRASH_BIN_DIALOG();
 
 private:
     void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage = 0, Viewer* viewer = 0);
