@@ -90,7 +90,9 @@ MainWindow::MainWindow(QWidget *parent) :
     menuExport->addAction(actionExportHTML);
     menuExport->addAction(actionExportTeX);
     menuExport->addAction(actionExportText);
-
+    actionExportHTML->setIcon(QIcon(":images/html"));
+    actionExportTeX->setIcon(QIcon(":images/tex"));
+    actionExportText->setIcon(QIcon(":images/text"));
     menuFichier = menuBar()->addMenu("&File");
     menuEdition = menuBar()->addMenu("&Edit");
 
@@ -122,6 +124,10 @@ MainWindow::MainWindow(QWidget *parent) :
     tab->addTab(htmlViewerPage, "HTML");
     tab->addTab(texViewerPage, "TeX");
     tab->addTab(textViewerPage, "Text");
+    tab->setTabIcon(0,QIcon(":images/edit"));
+    tab->setTabIcon(1,QIcon(":images/html"));
+    tab->setTabIcon(2,QIcon(":images/tex"));
+    tab->setTabIcon(3,QIcon(":images/text"));
 
     layout = new QVBoxLayout();
     layout->addWidget(tab);

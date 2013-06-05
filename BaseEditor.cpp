@@ -37,7 +37,8 @@ Editor::Editor(Note *n, QWidget *parent) :
     btnMove = new QPushButton("Move");
     btnTag = new QPushButton("Tag");
     documentBtn = new QPushButton("~");
-
+    btnSave->setIcon(QIcon(":images/save"));
+    btnTag->setIcon(QIcon(":images/tag"));
     titleEditWidget = new QLineEdit(ressource->getTitle());
 
 
