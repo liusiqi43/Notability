@@ -4,7 +4,6 @@
 #include <QObject>
 #include <QString>
 #include <QSet>
-#include "TagManager.h"
 
 class Note;
 

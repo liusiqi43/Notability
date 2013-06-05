@@ -17,6 +17,7 @@ class Note;
 class MainWindow;
 class TreeItem;
 class AddToDocDialog;
+class AddTagToNoteDialog;
 
 /**
  * @brief The Editor class: Editor::Editor, base class for Article editor, Binary Editor. Abstract class
@@ -37,7 +38,8 @@ class Editor : public QWidget
 
     QVBoxLayout * editorBaseLayout;
 
-    AddToDocDialog *dialog;
+    AddToDocDialog *docDialog;
+    AddTagToNoteDialog *tagDialog;
 
     MainWindow * mainWindow;
     QHBoxLayout* titleLayout;
@@ -85,6 +87,7 @@ public slots:
     void updateDocBtnWithRessource(TreeItem *item);
     void FIRE_UP_DOC_DIALOG();
     void retrieveDataFromDocDialog();
+    void retrieveDataFromTagDialog();
 
     void REMOVE_NOTE_TO_TRASH();
 

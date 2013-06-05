@@ -19,6 +19,7 @@
 
 #include "CheckComboBox.h"
 #include "AddToDocDialog.h"
+#include "AddTagToNoteDialog.h"
 #include "Trash.h"
 #include "TreeItem.h"
 
@@ -28,7 +29,7 @@
 
 
 Editor::Editor(Note *n, QWidget *parent) :
-    QWidget(parent), ressource(n), documentBtn(0)
+    QWidget(parent), ressource(n), documentBtn(0), tagDialog(0), docDialog(0)
 {
     MainWindow *mw = MainWindow::getInstance();
 
@@ -91,17 +92,32 @@ Editor::Editor(Note *n, QWidget *parent) :
 
 void Editor::ADD_TAG_TO_NOTE()
 {
-    bool ok = false;
-    TagManager* tm=&TagManager::getInstance();
-    QString newTag = QInputDialog::getText(NULL, "Tag", "Quel est le tag auquel vous voulez associé la note ?",QLineEdit::Normal, QString(), &ok);
-
-    if (ok && !newTag.isEmpty())
-    {
-        tm->getTag(newTag);
-        tm->addTagToNote(tm->getTag(newTag), this->getRessource());
-//        MainWindow::getInstance()->cr;
-    }
+    tagDialog = new AddTagToNoteDialog(this->ressource);
+    tagDialog->show();
+    QObject::connect(tagDialog, SIGNAL(accepted()), this, SLOT(retrieveDataFromTagDialog()));
 }
+
+
+void Editor::retrieveDataFromTagDialog()
+{
+    qDebug()<<"Retrieving data...";
+    TagManager *tm = &TagManager::getInstance();
+    QSet<Tag *> *newEnclosingTags = tagDialog->getTags();
+    for(tagSetIt it = tm->begin(); it!=tm->end(); ++it){
+        if(newEnclosingTags->contains(*it)){
+            if(!(*it)->getAssocs().contains(this->ressource)){
+                tm->addTagToNote((*it), ressource);
+            }
+        }
+        else{
+            tm->removeTagForNote((*it), ressource);
+        }
+    }
+    MainWindow::getInstance()->updateSideBar();
+    delete tagDialog;
+    tagDialog = 0;
+}
+
 
 void Editor::UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()
 {
@@ -203,16 +219,16 @@ void Editor::setTitleWidgetText(const QString &title)
 }
 
 void Editor::FIRE_UP_DOC_DIALOG(){
-    dialog = new AddToDocDialog(this->ressource);
-    dialog->show();
-    QObject::connect(dialog, SIGNAL(accepted()), this, SLOT(retrieveDataFromDocDialog()));
+    docDialog = new AddToDocDialog(this->ressource);
+    docDialog->show();
+    QObject::connect(docDialog, SIGNAL(accepted()), this, SLOT(retrieveDataFromDocDialog()));
 }
 
 void Editor::retrieveDataFromDocDialog()
 {
     qDebug()<<"Retrieving data...";
     NotesManager *nm = &NotesManager::getInstance();
-    QSet<Document *> * newEnclosingDocuments = dialog->getDocuments();
+    QSet<Document *> * newEnclosingDocuments = docDialog->getDocuments();
     for(QSet<Document*>::const_iterator it = nm->beginDocumentContainer(); it!=nm->endDocumentContainer(); ++it){
         if(newEnclosingDocuments->contains(*it)){
             if(!(*it)->contains(this->ressource)){
@@ -230,8 +246,8 @@ void Editor::retrieveDataFromDocDialog()
         }
     }
     MainWindow::getInstance()->updateSideBar();
-    delete dialog;
-    dialog = 0;
+    delete docDialog;
+    docDialog = 0;
 }
 
 void Editor::REMOVE_NOTE_TO_TRASH()

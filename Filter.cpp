@@ -1,10 +1,10 @@
 #include "Filter.h"
 #include "Note.h"
 
+TagFilter *TagFilter::instance = 0;
+
 bool SearchFilter::shallBeFiltered(Note *item) const
 {
-//    qDebug()<<"Keep all notes that contain : "+enabledTitleContaining;
-//    qDebug()<<"Testing note: " << item->getTitle();
     return !item->getTitle().contains(enabledTitleContaining, Qt::CaseInsensitive);
 }
 
@@ -29,6 +29,7 @@ FilterKit* FilterKit::getInstance(){
 
 bool TagFilter::shallBeFiltered(Note *item) const
 {
+    qDebug() << "DisabledTags size: " << disabledTags.size();
     // filtrer les notes
     for(QSet<Tag*>::const_iterator it=disabledTags.begin(); it!=disabledTags.end(); it++)
     {

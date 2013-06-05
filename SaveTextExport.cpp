@@ -11,7 +11,6 @@
 
 QString SaveTextExport::header() const
 {
-    TagManager *tm =&TagManager::getInstance();
     return "";
 }
 
@@ -22,12 +21,25 @@ QString SaveTextExport::footer() const
 
 QString SaveTextExport::exportNote(const Article *note, unsigned int level) const
 {
-    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getText()+"\n";
+    QString str;
+    str += note->getFilePath()+"\n"+note->getTitle()+"\n";
+    str += TagsToString(note->getTags()) + "\n";
+    str += note->isDeleted() ? "isDeleted\n" : "notDeleted\n";
+    str += note->getText()+"\n";
+    return str;
 }
 
 QString SaveTextExport::exportNote(const ImageNote *note, unsigned int level) const
 {
-    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath();
+    QString str;
+
+    str += note->getFilePath()+"\n"+note->getTitle()+"\n";
+    str += TagsToString(note->getTags()) + "\n";
+    str += note->isDeleted() ? "isDeleted\n" : "notDeleted\n";
+    str += note->getDescription()+"\n";
+    str += note->getMediaPath()+"\n";
+
+    return str;
 }
 
 QString SaveTextExport::exportNote(const Document *doc, unsigned int level) const
@@ -35,8 +47,8 @@ QString SaveTextExport::exportNote(const Document *doc, unsigned int level) cons
     QString str;
     str+=doc->getFilePath()+"\n";
     str+=doc->getTitle()+"\n";
-    //TagManager * tm=&TagManager::getInstance;
-
+    str+= TagsToString(doc->getTags()) + "\n";
+    str+= doc->isDeleted() ? "isDeleted\n" : "notDeleted\n";
 
     for(QList<Note *>::const_iterator it = doc->begin(); it!=doc->end(); it++)
     {
@@ -47,11 +59,27 @@ QString SaveTextExport::exportNote(const Document *doc, unsigned int level) cons
 
 QString SaveTextExport::exportNote(const AudioNote *note, unsigned int level) const
 {
-    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath()+"\n";
+    QString str;
+
+    str += note->getFilePath()+"\n"+note->getTitle()+"\n";
+    str += TagsToString(note->getTags()) + "\n";
+    str += note->isDeleted() ? "isDeleted\n" : "notDeleted\n";
+    str += note->getDescription()+"\n";
+    str += note->getMediaPath()+"\n";
+
+    return str;
 }
 
 QString SaveTextExport::exportNote(const VideoNote *note, unsigned int level) const
 {
-    return note->getFilePath()+"\n"+note->getTitle()+"\n"+note->getDescription()+"\n"+note->getMediaPath()+"\n";
+    QString str;
+
+    str += note->getFilePath()+"\n"+note->getTitle()+"\n";
+    str += TagsToString(note->getTags()) + "\n";
+    str += note->isDeleted() ? "isDeleted\n" : "notDeleted\n";
+    str += note->getDescription()+"\n";
+    str += note->getMediaPath()+"\n";
+
+    return str;
 }
 

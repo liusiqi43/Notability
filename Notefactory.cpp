@@ -4,6 +4,7 @@
 #include "VideoNoteFactory.h"
 #include "ArticleFactory.h"
 #include "DocumentFactory.h"
+#include "TagManager.h"
 
 #include <QMap>
 #include <QApplication>
@@ -14,7 +15,9 @@
  */
 
 NoteFactory::NoteFactory()
-{}
+{
+    tm = &TagManager::getInstance();
+}
 
 QMap<NoteType, NoteFactory *> *NoteFactory::getFactories()
 {

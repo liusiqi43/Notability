@@ -4,6 +4,8 @@
 #include <QTextStream>
 #include <exception>
 #include "NotesManager.h"
+#include "TagManager.h"
+#include "Trash.h"
 
 /***
  * Document
@@ -21,6 +23,21 @@ Document* DocumentFactory::buildNote(const QString &path)
     QString title=flux.readLine();
     Document *d = new Document(fpath, title);
 
+    QString tags = flux.readLine();
+
+    QStringList tagList = QStringList();
+    if(!tags.isEmpty())
+        tagList = tags.split("|||");
+    qDebug()<<"Factory: getting taglist: " << tagList;
+
+    for(QStringList::iterator it = tagList.begin(); it!=tagList.end(); ++it){
+        Tag* t = this->tm->getTag(*it);
+        // double binding method
+        tm->addTagToNote(t, d);
+    }
+
+    QString isDeleted = flux.readLine();
+
     NotesManager *nm = &NotesManager::getInstance();
 
     QString notePath = "";
@@ -36,7 +53,15 @@ Document* DocumentFactory::buildNote(const QString &path)
     }
 
     fichier.close();
-//    qDebug()<<fpath;
+
+    // We do this at the end so that all documents are properly loaded.
+    if(isDeleted == "isDeleted"){
+        // Trash will take care of all unbinding staff
+        Trash::getInstance()->recycle(d);
+    }
+    else
+        d->setDeleted(false);
+
     return d;
 }
 

@@ -6,7 +6,7 @@
 class SaveTextExport: public ExportStrategy
 {
 public:
-    SaveTextExport(){}
+    SaveTextExport():ExportStrategy(){}
     QString header() const;
     QString footer() const;
     QString exportNote(const ImageNote *note, unsigned int level = 0) const;

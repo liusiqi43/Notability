@@ -29,7 +29,7 @@ public:
     QSet<Tag *> getTags();
     Tag* createTag(const QString &n);
     void removeTag(Tag* t);
-    QSet<Tag *>& getTagforNote(Note* note);
+    const QSet<Tag *>& getTagforNote(Note* note);
     QSet<Note*>& getNotesforTag(Tag *tag);
     void addTagToNote(Tag *tag, Note *note);
     void removeTagForNote(Tag* tag, Note* note);

@@ -3,13 +3,27 @@
 #include "TexExport.h"
 #include "TextExport.h"
 #include "SaveTextExport.h"
+#include "TagManager.h"
+#include "Tag.h"
 #include <QMap>
 
 //QMap<ExportType, ExportStrategy*> ExportStrategy::strategies = QMap<ExportType, ExportStrategy*>();
 
 //ExportStrategy
 ExportStrategy::ExportStrategy()
-{}
+{
+    tm = &TagManager::getInstance();
+}
+
+QString ExportStrategy::TagsToString(const QSet<Tag*>& set) const{
+    QString str;
+    for(QSet<Tag*>::const_iterator it = set.begin(); it!=set.end(); ++it){
+        str += (*it)->getName() + "|||";
+    }
+    if(!str.isNull())
+        str.chop(3);
+    return str;
+}
 
 QMap<ExportType, ExportStrategy*>* ExportStrategy::getStrategies()
 {

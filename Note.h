@@ -33,11 +33,11 @@ public:
 
     virtual ~Note();
 
-    QSet<Tag*>& getTags(){
+    const QSet<Tag*>& getTags() const{
         return tags;
     }
-    void addTag(Tag *tag) {tags << tag;}
-    void removeTag(Tag *tag) {tags.remove(tag);}
+    void addTag(Tag *tag) {this->setModified(true); tags << tag;}
+    void removeTag(Tag *tag) {this->setModified(true); tags.remove(tag);}
 
     // Purement pour facilier a hirarchiser les Notes dans nm.Et puis ca sert a visualiser cette hirarchie dans QTreeView.
     virtual void addNote(Note *){throw NotesException("Should not happen! addNote called for non Document object.");}

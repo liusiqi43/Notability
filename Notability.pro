@@ -46,7 +46,8 @@ SOURCES += \
     Filter.cpp \
     Trash.cpp \
     trashDialog.cpp \
-    QListWidgetItemWithItemAndNote.cpp
+    QListWidgetItemWithItemAndNote.cpp \
+    AddTagToNoteDialog.cpp
     Filter.cpp
 
 
@@ -98,7 +99,8 @@ HEADERS += \
     Filter.h \
     Trash.h \
     trashDialog.h \
-    QListWidgetItemWithItemAndNote.h
+    QListWidgetItemWithItemAndNote.h \
+    AddTagToNoteDialog.h
     Filter.h
 
 
@@ -114,7 +116,8 @@ MOBILITY = multimedia
 FORMS += \
     mainwindow.ui \
     AddToDocDialog.ui \
-    trashDialog.ui
+    trashDialog.ui \
+    AddTagToNoteDialogs.ui
 
 RESOURCES += \
     ressources.qrc

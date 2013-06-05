@@ -3,22 +3,28 @@
 
 #include <QString>
 #include <QMap>
+#include "Tag.h"
+
 //#include "Article.h"
 class ImageNote;
 class Article;
 class Document;
 class AudioNote;
 class VideoNote;
+class TagManager;
 
 enum ExportType {html=1, text, saveText, tex, unkownType};
 
 class ExportStrategy
 {
-//    static QMap<ExportType, ExportStrategy*> strategies;
+protected:
+    TagManager * tm;
 public:
     static QMap<ExportType, ExportStrategy*>* getStrategies();
 
     ExportStrategy();
+
+    QString TagsToString(const QSet<Tag *> &set) const;
 
     virtual QString exportNote(const ImageNote *note, unsigned int level = 0) const = 0;
     virtual QString exportNote(const Article *note, unsigned int level = 0) const = 0;

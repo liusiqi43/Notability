@@ -4,6 +4,7 @@
 #include "TreeItem.h"
 #include <QSet>
 #include <Qmultimap>
+#include <QDebug>
 #include "Tag.h"
 
 enum FilterType{tag, search};
@@ -19,10 +20,19 @@ public:
 class TagFilter : public Filter
 {
     QSet<Tag *> disabledTags;
-public:
     TagFilter():Filter(){}
+    TagFilter(const TagFilter&);
+    TagFilter& operator=(TagFilter&);
+
+    static TagFilter *instance;
+public:
+    static TagFilter* getInstance() {if(!instance) instance = new TagFilter(); return instance;}
+    static void releaseInstance() {if(instance) delete instance; instance = 0; }
     bool contains(Tag *tag) {return disabledTags.contains(tag);}
-    void addDisabledTag(Tag* tag) {disabledTags << tag;}
+    void addDisabledTag(Tag* tag) {
+        qDebug()<<"adding disabled tag: " << tag->getName();
+        disabledTags << tag;
+    }
     void removeDisabledTag(Tag* tag) {disabledTags.remove(tag);}
     bool shallBeFiltered(Note *item) const;
 };

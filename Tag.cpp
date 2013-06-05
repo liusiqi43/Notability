@@ -1,4 +1,4 @@
-
+#include <QDebug>
 #include "Tag.h"
 
 Tag::Tag(const QString& n): name(n)
@@ -14,6 +14,7 @@ QString Tag::getName() const
 
 void Tag::setName(const QString &value)
 {
+    qDebug() << "Setting tag: " << name << " to " << value;
     name = value;
 }
 

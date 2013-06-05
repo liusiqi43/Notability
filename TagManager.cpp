@@ -2,6 +2,7 @@
 #include "Tag.h"
 #include <QSet>
 #include "Note.h"
+#include <QDebug>
 
 
 //méthodes pour le singleton
@@ -52,6 +53,7 @@ Tag* TagManager::createTag(const QString& n)
 
 void TagManager::addTagToNote(Tag* tag, Note* note)
 {
+    note->addTag(tag);
     tag->addNote(note);
 }
 
@@ -60,8 +62,10 @@ void TagManager::removeTag(Tag* t)
 
     for(QSet<Note*>::iterator it = t->getAssocs().begin(); it != t->getAssocs().end(); it++)
     {
-        removeTagForNote(t, *it);
+//        removeTagForNote(t, *it);
+        (*it)->removeTag(t);
     }
+    t->reset();
     Tags.remove(t);
 }
 
@@ -70,7 +74,7 @@ QSet<Note *>& TagManager::getNotesforTag(Tag* tag)
     return tag->getAssocs();
 }
 
-QSet<Tag*>& TagManager::getTagforNote(Note *note)
+const QSet<Tag*>& TagManager::getTagforNote(Note *note)
 {
     return note->getTags();
 }
@@ -87,6 +91,7 @@ Tag* TagManager::getTag(const QString& newtag)
     {
         if((*it)->getName()==newtag) return *it;
     }
+    qDebug()<<"created Tag: " << newtag;
     return createTag(newtag);
 }
 
