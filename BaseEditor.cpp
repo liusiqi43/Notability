@@ -45,7 +45,6 @@ Editor::Editor(Note *n, QWidget *parent) :
     btnTag->setIcon(QIcon(":images/tag"));
     titleEditWidget = new QLineEdit(ressource->getTitle());
 
-
     titleWidget = new QWidget();
     contentWidget = new QWidget();
     buttonsWidget = new QWidget();
@@ -239,7 +238,6 @@ void Editor::retrieveDataFromDocDialog()
     for(QSet<Document*>::const_iterator it = nm->beginDocumentContainer(); it!=nm->endDocumentContainer(); ++it){
         if(newEnclosingDocuments->contains(*it)){
             if(!(*it)->contains(this->ressource)){
-
                 try{
                     (*it)->addNote(this->ressource);
                 } catch (NotesException e){

@@ -13,6 +13,8 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QUndoStack>
+#include <QUndoView>
 #include <QListWidget>
 #include "ExportStrategy.h"
 #include "viewer.h"
@@ -43,6 +45,9 @@ class MainWindow : public QMainWindow
     MainWindow& operator=(const MainWindow&);
     static MainWindow* instance;
     std::vector<QStandardItem*>* Items;
+
+
+
 public:
     static MainWindow* getInstance();
     static void freeInstance();
@@ -72,6 +77,10 @@ public slots:
 
 private:
     void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage = 0, Viewer* viewer = 0);
+    void createUndoView();
+    void createActions();
+    void layingOutStuff();
+    void preparingUndoableCommands();
 
     Ui::MainWindow *ui;
     QWidget *editorWidget;
@@ -101,6 +110,10 @@ private:
 
     TreeModel* sideBarModel;
 
+
+    QAction * undoAction, *redoAction;
+    QUndoStack *undoStack;
+    QUndoView *undoView;
 
     int lastTabIndex;
 };

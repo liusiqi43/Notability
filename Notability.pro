@@ -47,7 +47,8 @@ SOURCES += \
     Trash.cpp \
     trashDialog.cpp \
     QListWidgetItemWithItemAndNote.cpp \
-    AddTagToNoteDialog.cpp
+    AddTagToNoteDialog.cpp \
+    UndoableActions.cpp
     Filter.cpp
 
 
@@ -100,7 +101,8 @@ HEADERS += \
     Trash.h \
     trashDialog.h \
     QListWidgetItemWithItemAndNote.h \
-    AddTagToNoteDialog.h
+    AddTagToNoteDialog.h \
+    UndoableActions.h
     Filter.h
 
 

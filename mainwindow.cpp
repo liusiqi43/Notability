@@ -29,6 +29,7 @@
 #include <QDebug>
 #include <QProcess>
 #include "ListWidgetItemCheckTag.h"
+#include "UndoableActions.h"
 
 MainWindow* MainWindow::instance = 0;
 
@@ -52,22 +53,75 @@ void MainWindow::addOpenedFiles(const QString & path)
     openedFiles.insert(path);
 }
 
-MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow), hv(0), tv(0), nm(0), textv(0), tm(0), sideBarModel(0)
+void MainWindow::createUndoView()
 {
+    undoView = new QUndoView(undoStack);
+    undoView->setWindowTitle(tr("Command List"));
+    undoView->show();
+    undoView->setAttribute(Qt::WA_QuitOnClose, false);
+}
 
-    ui->setupUi(this);
+void MainWindow::layingOutStuff(){
+
+    tab = new QTabWidget();
+    EditorPage = new QWidget();
+    htmlViewerPage = new QWidget();
+    texViewerPage = new QWidget();
+    textViewerPage = new QWidget();
+
+
     editorWidget = new QWidget;
     ui->editorScroll->setWidget(editorWidget);
+    tab->addTab(EditorPage, "Editor");
+    tab->addTab(htmlViewerPage, "HTML");
+    tab->addTab(texViewerPage, "TeX");
+    tab->addTab(textViewerPage, "Text");
+    tab->setTabIcon(0,QIcon(":images/edit"));
+    tab->setTabIcon(1,QIcon(":images/html"));
+    tab->setTabIcon(2,QIcon(":images/tex"));
+    tab->setTabIcon(3,QIcon(":images/text"));
 
+    layout = new QVBoxLayout();
+    layout->addWidget(tab);
+
+    editorWidget->setLayout(layout);
+
+
+    QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
+
+    QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
+    QObject::connect(ui->tagList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(CHANGE_NAME_TAG_OR_STOCK_DISABLED_TAGS(QListWidgetItem*)));
+    // Tab change handling
+    QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
+
+    QObject::connect(ui->searchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateSideBarWithNewSearchFilter(QString)));
+
+}
+
+void MainWindow::preparingUndoableCommands()
+{
+    undoStack = new QUndoStack(this);
+    undoAction = undoStack->createUndoAction(this, tr("&Undo"));
+    undoAction->setShortcuts(QKeySequence::Undo);
+
+    redoAction = undoStack->createRedoAction(this, tr("&Redo"));
+    redoAction->setShortcuts(QKeySequence::Redo);
+    createUndoView();
+
+    // Undo redo
+    QObject::connect(redoAction, SIGNAL(triggered()), QApplication::activeWindow(), SLOT());
+    QObject::connect(undoAction, SIGNAL(triggered()), QApplication::activeWindow(), SLOT());
+}
+
+void MainWindow::createActions(){
     QToolBar *toolBar = addToolBar("General");
     QAction *actionQuit = new QAction("&Quit", this);
-    QAction *actionOpen = new QAction("&Open...", this);
 
     actionQuit->setIcon(QIcon(":images/quit"));
 
     QAction *actionTrashBin = new QAction("&Trash", this);
+
+    QAction *actionSaveAll = new QAction("&Save all", this);
 
     // subclassed QAction, this emets also the NoteType. So that we don't need different handling slot
     NoteTypeSignalAction *actionNewArticle = new NoteTypeSignalAction(article, "&Article", this);
@@ -116,36 +170,15 @@ MainWindow::MainWindow(QWidget *parent) :
     toolBar->addAction(actionNewAudioNote);
     toolBar->addSeparator();
     toolBar->addAction(actionNewDocument);
+    toolBar->addAction(actionSaveAll);
+    toolBar->addSeparator();
+    toolBar->addAction(undoAction);
+    toolBar->addAction(redoAction);
     QWidget* spacer = new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     toolBar->addWidget(spacer);
     toolBar->addAction(actionTrashBin);
     toolBar->addAction(actionQuit);
-
-    tab = new QTabWidget();
-    EditorPage = new QWidget();
-    htmlViewerPage = new QWidget();
-    texViewerPage = new QWidget();
-    textViewerPage = new QWidget();
-
-    // Creat a new article, with generated file path and empty title&text
-    nm = &NotesManager::getInstance();
-    tm = &TagManager::getInstance();
-
-    tab->addTab(EditorPage, "Editor");
-    tab->addTab(htmlViewerPage, "HTML");
-    tab->addTab(texViewerPage, "TeX");
-    tab->addTab(textViewerPage, "Text");
-    tab->setTabIcon(0,QIcon(":images/edit"));
-    tab->setTabIcon(1,QIcon(":images/html"));
-    tab->setTabIcon(2,QIcon(":images/tex"));
-    tab->setTabIcon(3,QIcon(":images/text"));
-
-    layout = new QVBoxLayout();
-    layout->addWidget(tab);
-
-    editorWidget->setLayout(layout);
-
 
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
     QObject::connect(actionNewArticle, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
@@ -162,15 +195,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QObject::connect(ui->addTag, SIGNAL(clicked()), this, SLOT(ADD_TAG()));
     QObject::connect(ui->removeTag, SIGNAL(clicked()), this, SLOT(REMOVE_TAG()));
-    QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
-
-    QObject::connect(ui->noteBookTree, SIGNAL(doubleClicked(const QModelIndex&)), this, SLOT(UI_LOAD_FROM_SIDE_BAR(const QModelIndex&)));
-    QObject::connect(ui->tagList, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(CHANGE_NAME_TAG_OR_STOCK_DISABLED_TAGS(QListWidgetItem*)));
-    // Tab change handling
-    QObject::connect(tab, SIGNAL(currentChanged(int)), this, SLOT(UI_TAB_CHANGE_HANDLER(int)));
-
-    QObject::connect(ui->searchLineEdit, SIGNAL(textChanged(QString)), this, SLOT(updateSideBarWithNewSearchFilter(QString)));
     QObject::connect(actionTrashBin, SIGNAL(triggered()), this, SLOT(FIRE_UP_TRASH_BIN_DIALOG()));
+
+    QObject::connect(actionSaveAll, SIGNAL(triggered()), this, SLOT(BACKEND_CLOSING()));
+
+
+}
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow), hv(0), tv(0), nm(0), textv(0), tm(0), sideBarModel(0)
+{
+    ui->setupUi(this);
+
+    // Creat a new article, with generated file path and empty title&text
+    nm = &NotesManager::getInstance();
+    tm = &TagManager::getInstance();
+
+    layingOutStuff();
+    preparingUndoableCommands();
+    createActions();
 
     updateSideBar();
     createTagList();
@@ -362,6 +406,15 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
 void MainWindow::BACKEND_CLOSING()
 {
     if(nm->getRootDocument()->isModified()){
+        //        QMessageBox msgBox;
+        //        msgBox.setText("Unsaved modifications");
+        //        msgBox.setInformativeText("You have unsaved modifications, do you want to save them?");
+        //        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+        //        msgBox.setDefaultButton(QMessageBox::No);
+        //        int ret = msgBox.exec();
+
+        //        switch(ret){
+        //        case QMessageBox::Yes:{
         try{
             nm->saveNote(*nm->getRootDocument());
             QSettings settings;
@@ -374,6 +427,13 @@ void MainWindow::BACKEND_CLOSING()
         catch (NotesException e){
             QMessageBox::warning(this, "Saving error", e.getInfo());
         }
+        //            break;
+        //        }
+        //        case QMessageBox::No: {
+        //            break;
+        //        }
+        //        default:{}
+        //        }
     }
 }
 
@@ -498,24 +558,19 @@ void MainWindow::FIRE_UP_TRASH_BIN_DIALOG()
 
 void MainWindow::ADD_TAG()
 {
-    TagManager* tm=&TagManager::getInstance();
     if(ui->tagList->findItems("New Tag", Qt::MatchExactly).count()==0)
     {
-        ListWidgetItemCheckTag* item = new ListWidgetItemCheckTag("New Tag", tm->getTag("New Tag"), ui->tagList);
-        item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable); // set checkable flag
-        item->setCheckState(Qt::Checked);
+        undoStack->push(new AddNewTagCmd(ui->tagList));
     }
     else QMessageBox::information(this, "Erreur", "Nouveau Tag déjà existant...");
 }
 
 void MainWindow::REMOVE_TAG()
 {
-    qDebug() << "Got current item to delete: " << ui->tagList->currentItem()->data(0).toString();
+//    qDebug() << "Got current item to delete: " << ui->tagList->currentItem()->data(0).toString();
     if(ui->tagList->currentItem())
     {
-        ListWidgetItemCheckTag* item = static_cast<ListWidgetItemCheckTag*>(ui->tagList->currentItem());
-        tm->removeTag(item->getTag());
-        delete item;
+        undoStack->push(new RemoveCurrentTagCmd(ui->tagList, dynamic_cast<ListWidgetItemCheckTag *>(ui->tagList->currentItem())));
     }
 
 }
@@ -538,8 +593,6 @@ void MainWindow::CHANGE_NAME_TAG_OR_STOCK_DISABLED_TAGS(QListWidgetItem* item)
         kit->setFilter(tag, f);
         updateSideBar();
 
-        ListWidgetItemCheckTag* itemTag = static_cast<ListWidgetItemCheckTag*>(item);
-        if(itemTag->getTag()->getName() != item->data(0).toString())
-            itemTag->getTag()->setName(item->data(0).toString());
+        undoStack->push(new EditCurrentTagCmd(dynamic_cast<ListWidgetItemCheckTag *>(item), ui->tagList, 0));
     }
 }

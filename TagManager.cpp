@@ -62,7 +62,6 @@ void TagManager::removeTag(Tag* t)
 
     for(QSet<Note*>::iterator it = t->getAssocs().begin(); it != t->getAssocs().end(); it++)
     {
-//        removeTagForNote(t, *it);
         (*it)->removeTag(t);
     }
     t->reset();

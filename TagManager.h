@@ -23,7 +23,7 @@ class TagManager // singleton
 
 
 public:
-
+    void addTag(Tag *t) {Tags<<t;}
     static TagManager& getInstance();
     static void libereInstance();
     QSet<Tag *> getTags();

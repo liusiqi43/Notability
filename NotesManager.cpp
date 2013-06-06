@@ -189,9 +189,7 @@ void NotesManager::saveNote(Note& a){
             saveDocument(static_cast<Document&>(a));
         }
     }
-//    else{
-//        throw NotesException("You are not supposed to save! No modification made!");
-//    }
+    a.setModified(false);
 }
 
 
