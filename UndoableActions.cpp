@@ -15,39 +15,63 @@ AddNewTagCmd::AddNewTagCmd(QListWidget *l, QUndoCommand* parent)
 void AddNewTagCmd::redo(){
     if(!tag){
         tag = TagManager::getInstance().getTag("New Tag");
-        TagManager::getInstance().addTag(tag);
     }
-    if(!item){
-        item = new ListWidgetItemCheckTag("New Tag", tag, list);
-    }
+
+    TagManager::getInstance().addTag(tag);
+    bool oldState = list->blockSignals(true);
+    item = new ListWidgetItemCheckTag("New Tag", tag, list);
+    list->blockSignals(oldState);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable); // set checkable flag
     item->setCheckState(Qt::Checked);
-    qDebug() << "tag addr: " << tag << " Name: " << tag->getName();
+//    qDebug() << "tag addr: " << tag << " Name: " << tag->getName();
 }
 
 void AddNewTagCmd::undo(){
+
+    ListWidgetItemCheckTag *item = 0;
+    for(int i=0; i<list->count(); i++){
+        item = dynamic_cast<ListWidgetItemCheckTag*>(list->item(i));
+        if(item->getTag() == tag){
+            break;
+        }
+    }
+
     if(item){
-        TagManager::getInstance().removeTag(item->getTag());
+        TagManager::getInstance().removeTag(tag);
+        bool oldState = list->blockSignals(true);
         delete item;
+        list->blockSignals(oldState);
         item = 0;
     }
 }
 
 RemoveCurrentTagCmd::RemoveCurrentTagCmd(QListWidget *l, ListWidgetItemCheckTag* t, QUndoCommand *parent)
-    :QUndoCommand(parent), item(t), tag(t->getTag()),  list(l)
+    :QUndoCommand(parent), tag(t->getTag()),  list(l)
 {
     setText("Remove "+tag->getName());
 }
 
 void RemoveCurrentTagCmd::redo(){
     TagManager *tagM = &TagManager::getInstance();
-    checkstate = item->checkState();
-    assos = tag->getAssocs();
-    tagM->removeTag(item->getTag());
-    delete item;
+    ListWidgetItemCheckTag *item = 0;
+    for(int i=0; i<list->count(); i++){
+        item = dynamic_cast<ListWidgetItemCheckTag*>(list->item(i));
+        if(item->getTag() == tag){
+            break;
+        }
+    }
+    if(item){
+        checkstate = item->checkState();
+        assos = tag->getAssocs();
+        tagM->removeTag(tag);
+        bool oldState = list->blockSignals(true);
+        delete item;
+        list->blockSignals(oldState);
+    }
 }
 
 void RemoveCurrentTagCmd::undo(){
+    bool oldState = list->blockSignals(true);
     TagManager *tagM = &TagManager::getInstance();
     for(QSet<Note*>::iterator it = assos.begin(); it != assos.end(); ++it){
         if(*it)
@@ -57,6 +81,7 @@ void RemoveCurrentTagCmd::undo(){
     ListWidgetItemCheckTag *item = new ListWidgetItemCheckTag(tag->getName(), tag, list);
     item->setFlags(item->flags() | Qt::ItemIsUserCheckable | Qt::ItemIsEditable); // set checkable flag
     item->setCheckState(checkstate);
+    list->blockSignals(oldState);
 }
 
 bool EditCurrentTagCmd::first = true;
@@ -75,36 +100,71 @@ EditCurrentTagCmd::EditCurrentTagCmd(ListWidgetItemCheckTag* i, QListWidget *l, 
 void EditCurrentTagCmd::redo()
 {
     if(list->findItems(newName, Qt::MatchExactly).count()<=1){
-        ListWidgetItemCheckTag *item;
-        if(!list->findItems(newName, Qt::MatchExactly).isEmpty())
-            item = dynamic_cast<ListWidgetItemCheckTag*>(list->findItems(newName, Qt::MatchExactly).first());
-        else if (!list->findItems(oldName, Qt::MatchExactly).isEmpty())
-            item = dynamic_cast<ListWidgetItemCheckTag*>(list->findItems(oldName, Qt::MatchExactly).first());
-        if(item->getTag() == tag){
-            tag->setName(newName);
-            item->setData(0, newName);
+        ListWidgetItemCheckTag *item = 0;
+        for(int i=0; i<list->count(); i++){
+            item = dynamic_cast<ListWidgetItemCheckTag*>(list->item(i));
+            if(item->getTag() == tag){
+                break;
+            }
         }
-        EditCurrentTagCmd::first = false;
+        if(item){
+            bool oldState = list->blockSignals(true);
+            item->setData(0, newName);
+            list->blockSignals(oldState);
+            tag->setName(newName);
+        }
     }
     else{
         QMessageBox::warning(MainWindow::getInstance(), "Duplicate tag", "There is already a tag named "+newName);
-        ListWidgetItemCheckTag *item = dynamic_cast<ListWidgetItemCheckTag*>(list->findItems(tag->getName(), Qt::MatchExactly).first());
-        if(item->getTag() == tag)
+        return;
+        ListWidgetItemCheckTag *item = 0;
+        for(int i=0; i<list->count(); i++){
+            item = dynamic_cast<ListWidgetItemCheckTag*>(list->item(i));
+            if(item->getTag() == tag){
+                break;
+            }
+        }
+        if(item){
+            bool oldState = list->blockSignals(true);
             item->setData(0, oldName);
+            list->blockSignals(oldState);
+            tag->setName(oldName);
+        }
     }
 }
 
 void EditCurrentTagCmd::undo()
 {
     if(list->findItems(oldName, Qt::MatchExactly).count()<=1){
-        ListWidgetItemCheckTag *item = dynamic_cast<ListWidgetItemCheckTag*>(list->findItems(tag->getName(), Qt::MatchExactly).first());
-        if(item->getTag() == tag){
+        ListWidgetItemCheckTag *item = 0;
+        for(int i=0; i<list->count(); i++){
+            item = dynamic_cast<ListWidgetItemCheckTag*>(list->item(i));
+            if(item->getTag() == tag){
+                break;
+            }
+        }
+        if(item){
+            bool oldState = list->blockSignals(true);
             item->setData(0, oldName);
+            list->blockSignals(oldState);
             tag->setName(oldName);
         }
     }
     else{
-        QMessageBox::warning(MainWindow::getInstance(), "Duplicate tag", "Try to undo for your edited tag but there is already a tag named "+oldName);
+        QMessageBox::warning(MainWindow::getInstance(), "Duplicate tag", "There is already a tag named "+oldName);
+        ListWidgetItemCheckTag *item = 0;
+        for(int i=0; i<list->count(); i++){
+            item = dynamic_cast<ListWidgetItemCheckTag*>(list->item(i));
+            if(item->getTag() == tag){
+                break;
+            }
+        }
+        if(item){
+            bool oldState = list->blockSignals(true);
+            item->setData(0, newName);
+            list->blockSignals(oldState);
+            tag->setName(newName);
+        }
     }
 }
 

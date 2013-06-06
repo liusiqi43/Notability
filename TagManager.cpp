@@ -88,7 +88,10 @@ Tag* TagManager::getTag(const QString& newtag)
 {
     for(tagSetIt it= begin(); it != end(); it++)
     {
-        if((*it)->getName()==newtag) return *it;
+        if((*it)->getName()==newtag) {
+            qDebug()<<"Gotcha!";
+            return *it;
+        }
     }
     qDebug()<<"created Tag: " << newtag;
     return createTag(newtag);

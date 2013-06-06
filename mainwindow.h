@@ -74,10 +74,10 @@ public slots:
 
     void UI_EXPOR_TO_FILE(const int type);
     void FIRE_UP_TRASH_BIN_DIALOG();
+    void createUndoView();
 
 private:
     void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage = 0, Viewer* viewer = 0);
-    void createUndoView();
     void createActions();
     void layingOutStuff();
     void preparingUndoableCommands();
@@ -112,6 +112,7 @@ private:
 
 
     QAction * undoAction, *redoAction;
+    QAction *historyBtn;
     QUndoStack *undoStack;
     QUndoView *undoView;
 

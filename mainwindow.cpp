@@ -57,7 +57,6 @@ void MainWindow::createUndoView()
 {
     undoView = new QUndoView(undoStack);
     undoView->setWindowTitle(tr("Command List"));
-    undoView->show();
     undoView->setAttribute(Qt::WA_QuitOnClose, false);
 }
 
@@ -106,9 +105,12 @@ void MainWindow::preparingUndoableCommands()
 
     redoAction = undoStack->createRedoAction(this, tr("&Redo"));
     redoAction->setShortcuts(QKeySequence::Redo);
+
+    historyBtn = new QAction("History", this);
     createUndoView();
 
     // Undo redo
+    QObject::connect(historyBtn, SIGNAL(triggered()), undoView, SLOT(show()));
     QObject::connect(redoAction, SIGNAL(triggered()), QApplication::activeWindow(), SLOT());
     QObject::connect(undoAction, SIGNAL(triggered()), QApplication::activeWindow(), SLOT());
 }
@@ -174,6 +176,7 @@ void MainWindow::createActions(){
     toolBar->addSeparator();
     toolBar->addAction(undoAction);
     toolBar->addAction(redoAction);
+    toolBar->addAction(historyBtn);
     QWidget* spacer = new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     toolBar->addWidget(spacer);
