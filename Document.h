@@ -23,7 +23,7 @@ public:
     void addNote(Note *note) throw (NotesException);
     int count() const;
 
-    void removeNote(Note *note);
+    void removeNote(Note *note, bool twoway = true);
     Note* find(const QString& filepath);
 
     const QList<Note *> &getNotes() const;

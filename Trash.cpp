@@ -22,8 +22,9 @@ void Trash::recycle(Note *n)
 
     // remove all relationships between notes and docs.
     for(QSet<Document*>::ConstIterator it = n->beginInDoc(); it!=n->endInDoc(); ++it){
-        (*it)->removeNote(n);
+        (*it)->removeNote(n, false);
     }
+    n->resetInDocuments();
     n->setDeleted(true);
     deletedNotes.insert(dn);
     MainWindow::getInstance()->updateSideBar();

@@ -75,6 +75,8 @@ public:
     QSet<Document *>::const_iterator endInDoc(){return inDocuments.end();}
     QSet<Document *> getInDocuments() const;
     void setInDocuments(const QSet<Document *> &value);
+
+    void resetInDocuments(){inDocuments.clear();}
 };
 
 

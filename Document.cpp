@@ -82,10 +82,11 @@ int Document::count() const
     return notes.count();
 }
 
-void Document::removeNote(Note *note)
+void Document::removeNote(Note *note, bool twoway)
 {
     this->notes.removeOne(note);
-    note->removeFromDocument(this);
+    if(twoway)
+        note->removeFromDocument(this);
     this->setModified(true);
 }
 
