@@ -51,7 +51,7 @@ public:
 
     };
 
-    DepthFirstIterator beginDFIterator();
+    DepthFirstIterator &beginDFIterator();
 };
 
 

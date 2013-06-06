@@ -148,7 +148,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     QObject::connect(actionQuit, SIGNAL(triggered()), qApp, SLOT(quit()));
-    QObject::connect(actionOpen, SIGNAL(triggered()), this, SLOT(UI_OPEN_FILE()));
     QObject::connect(actionNewArticle, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewDocument, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
     QObject::connect(actionNewImageNote, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_NEW_NOTE_EDITOR(const int)));
@@ -446,9 +445,9 @@ void MainWindow::CHANGE_NEW_WORKSPACE()
             msgBox.setDefaultButton(QMessageBox::No);
             int ret = msgBox.exec();
 
-
             switch (ret)  {
             case QMessageBox::Yes:{
+                qDebug()<<"You clicked on yes";
                 settings.setValue("workspaceChanged", true);
                 settings.setValue("workspace", fileNames);
                 // New workspace, we copy all notes or start from scratch
@@ -458,12 +457,16 @@ void MainWindow::CHANGE_NEW_WORKSPACE()
 
                 nm->setRootDocument(newRoot);
                 for(Document::DepthFirstIterator it = oldRoot->beginDFIterator(); !it.isDone(); ++it){
+                    qDebug() << "Copyinig" << (*it)->getTitle();
                     nm->getNoteClone(**it);
                 }
                 settings.setValue("rootDocument", newRoot->getFilePath());
                 // Stock new workspace and the corresponding rootdoc path
                 settings.setValue(fileNames, newRoot->getFilePath());
                 settings.sync();
+                this->BACKEND_CLOSING();
+                QProcess::startDetached(QApplication::applicationFilePath());
+                exit(12);
                 break;
             }
             case QMessageBox::No:{
@@ -471,6 +474,7 @@ void MainWindow::CHANGE_NEW_WORKSPACE()
                 settings.setValue("workspace", fileNames);
                 settings.setValue("rootDocument", QString());
                 settings.sync();
+                this->BACKEND_CLOSING();
                 QProcess::startDetached(QApplication::applicationFilePath());
                 exit(12);
                 // Don't Save was clicked
@@ -483,9 +487,6 @@ void MainWindow::CHANGE_NEW_WORKSPACE()
                 // should never be reached
                 break;
             }
-
-
-
         }
     }
 }

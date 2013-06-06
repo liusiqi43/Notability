@@ -24,10 +24,6 @@
         <file alias="video">Icons/video.png</file>
         <file>Icons/poube.png</file>
         <file alias="quit">Icons/quit.png</file>
-        <file alias="html">Icons/html.png</file>
-        <file alias="latex">Icons/latex.png</file>
-        <file alias="text">Icons/text.png</file>
-        <file alias="text2">Icons/text2.png</file>
-        <file alias="tex">Icons/tex.png</file>
+        <file alias="notability">Icons/notability.png</file>
     </qresource>
 </RCC>

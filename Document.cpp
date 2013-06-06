@@ -99,59 +99,24 @@ QString Document::exportNote(const ExportStrategy *es, unsigned int level)
     }
 }
 
-Document::DepthFirstIterator Document::beginDFIterator()
+Document::DepthFirstIterator& Document::beginDFIterator()
 {
-    Document::DepthFirstIterator it(this);
-    return it;
+    Document::DepthFirstIterator *it = new Document::DepthFirstIterator(this);
+    return *it;
 }
 
 Document::DepthFirstIterator & Document::DepthFirstIterator::operator++()
 {
-//    qDebug()<<"Compare: " << (*currentDocIter)->getTitle();
-//    qDebug()<< " to " << (*static_cast<Document *>(currentDoc)->end())->getTitle();
-//    if(*currentDocIter != static_cast<Document *>(currentDoc)->last() && !(*currentDocIter)->isDocument()){
-//        ++currentDocIter;
-//    } else if ((*currentDocIter)->isDocument()) {
-//        qDebug()<<"currentIsADocument";
-//        previousDocs.push_back(currentDoc);
-//        currentDoc = *currentDocIter;
-//        previousDocIters.push_back(currentDocIter);
-//        currentDocIter = static_cast<Document *>(currentDoc)->begin();
-//    } else {
-//        throw NotesException("Bizarre!");
-//    }
-
-//    if (*currentDocIter == static_cast<Document *>(currentDoc)->last() && !(*currentDocIter)->isDocument()){
-//            if(previousDocs.size()<=1){
-//                qDebug()<<"Finished...";
-//                //finished
-//                finished = true;
-//            } else {
-//                qDebug()<<"Restoring...";
-//                // restore
-//                currentDoc = previousDocs.last();
-//                qDebug()<<"New currentDoc:"<<currentDoc->getTitle();
-//                previousDocs.pop_back();
-//                currentDocIter = ++previousDocIters.last();
-//                previousDocIters.pop_back();
-//            }
-//    }
-
-    /*if((*currentDocIter)->isDocument())
-        return deploy(dynamic_cast<Document*>(*currentDocIter));
-    else{
-
-    }*/
-
-    if(nextNote==0){
-        nextNote=getNextNote();
-    }
+    nextNote=getNextNote();
     return *this;
 }
 
 Note *Document::DepthFirstIterator::operator*()
 {
-    return nextNote;
+    if(nextNote == 0)
+        return *currentDocIter;
+    else
+        return nextNote;
 }
 
 bool Document::DepthFirstIterator::isDone()
@@ -160,6 +125,7 @@ bool Document::DepthFirstIterator::isDone()
 }
 
 Note * Document::DepthFirstIterator::getNextNote(){
+    qDebug()<<"getting next note";
     while(*currentDocIter!=currentDoc->last()){
         if((*currentDocIter)->isDocument()){
             previousDocs.push_back(static_cast<Document*>(*currentDocIter));
@@ -192,5 +158,6 @@ Document::DepthFirstIterator::DepthFirstIterator(Document * doc)
 {
     finished = false;
     currentDoc = doc;
+    nextNote = 0;
     currentDocIter = doc->begin();
 }
