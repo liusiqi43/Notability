@@ -67,16 +67,10 @@ Note& NotesManager::getNote(const QString& fileName){
     return *n;
 }
 
-Note &NotesManager::getNoteClone(const QString &fileName)
-{
-    NoteType type = DetectType(fileName);
-    
-    if(type == unknownType)
-        throw NotesException("File type not supported now! Please send an email to me@siqi.fr for support! :P");
-    
-    NoteFactory* f = NotesManager::factories->value(type);
-    Note* n = f->buildNote(fileName);
-    n->setFilePath(f->generateNewFilePath());
+Note &NotesManager::getNoteClone(const Note& note)
+{   
+    NoteFactory* f = NotesManager::factories->value(note.type);
+    Note * n = f->buildNoteCopy(note);
     addNote(n);
     return *n;
 }
@@ -104,6 +98,7 @@ NotesManager& NotesManager::getInstance(){
         // TODO, populates this by file stored on disk.
         QSettings settings;
         QVariant rootPath = settings.value("rootDocument");
+        qDebug()<<"rootPath = " << rootPath << "During NotesManager construction";
         if(!rootPath.isNull()){
             Document* old = instance->getRootDocument();
             instance->setRootDocument(static_cast<Document *>(instance->factories->value(document)->buildNote(rootPath.toString())));
@@ -114,6 +109,7 @@ NotesManager& NotesManager::getInstance(){
                 delete old;
             }
         }
+        settings.setValue("workspaceChanged", false);
     }
     return *instance;
 }

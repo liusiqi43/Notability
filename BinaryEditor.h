@@ -15,9 +15,6 @@ public:
     QLineEdit *getDescriptionWidget() const;
     void setDescriptionWidget(QLineEdit *value);
 
-//    Binary *getRessource() const;
-//    void setRessource(Binary *value);
-
 signals:
 
 public slots:

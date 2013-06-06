@@ -5,11 +5,10 @@
  * AudioNote
  */
 AudioNote::AudioNote(const QString& filePath)
-    :Binary(filePath)
-{}
+    :Binary(filePath) {type = audioNote;}
+
 AudioNote::AudioNote(const QString& filePath, const QString& ti, const QString& des, const QString& aPath)
-    :Binary(filePath, ti, des, aPath)
-{}
+    :Binary(filePath, ti, des, aPath) {type = audioNote;}
 
 //AudioNoteEditor* AudioNote::createEditor(){
 //    return new AudioNoteEditor(this);

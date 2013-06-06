@@ -70,6 +70,10 @@ Editor::Editor(Note *n, QWidget *parent) :
     editorBaseLayout->addWidget(titleWidget);
     editorBaseLayout->addWidget(buttonsWidget);
     editorBaseLayout->addWidget(contentWidget);
+    QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Expanding, QSizePolicy::DefaultType);
+    QWidget* bottomspacer = new QWidget();
+    bottomspacer->setSizePolicy(policy);
+    editorBaseLayout->addWidget(bottomspacer);
     editorBaseLayout->addWidget(line);
 
     this->setLayout(editorBaseLayout);
@@ -77,6 +81,9 @@ Editor::Editor(Note *n, QWidget *parent) :
     contentWidget->setLayout(contentLayout);
     buttonsWidget->setLayout(buttonsLayout);
 
+    QWidget* spacer = new QWidget();
+    spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    buttonsLayout->addWidget(spacer);
     buttonsLayout->addWidget(btnSave);
     buttonsLayout->addWidget(btnClose);
     buttonsLayout->addWidget(btnDelete);

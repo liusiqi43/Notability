@@ -79,6 +79,8 @@ void AudioNoteEditor::LOAD_AUDIO(){
 
 void AudioNoteEditor::PLAY_PAUSE_SONG()
 {
+    if(ressource->getMediaPath().isEmpty())
+        return;
 
     if(play)
     {

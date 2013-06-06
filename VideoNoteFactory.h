@@ -9,7 +9,6 @@ class VideoNoteFactory : public NoteFactory
 public:
     VideoNote* buildNewNote();
     VideoNote* buildNote(const QString &path);
-    VideoNote* buildNoteCopy(const VideoNote &note);
     QString getFolder();
     QString getExtension();
 };

@@ -52,12 +52,6 @@ AudioNote* AudioNoteFactory::buildNewNote()
 }
 
 
-AudioNote* AudioNoteFactory::buildNoteCopy(const AudioNote &note)
-{
-    return new AudioNote(generateNewFilePath(), note.getTitle(), note.getDescription(), note.getMediaPath());
-}
-
-
 QString AudioNoteFactory::getFolder()
 {
     return "AUD/";

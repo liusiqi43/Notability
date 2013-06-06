@@ -59,12 +59,6 @@ Article *ArticleFactory::buildNewNote()
 }
 
 
-Article* ArticleFactory::buildNoteCopy(const Article &note)
-{
-    return new Article(generateNewFilePath(), note.getTitle(), note.getText());
-}
-
-
 QString ArticleFactory::getFolder()
 {
     return "ART/";

@@ -9,7 +9,7 @@ class ImageNoteFactory : public NoteFactory
 public:
     ImageNote* buildNewNote();
     ImageNote* buildNote(const QString &path);
-    ImageNote* buildNoteCopy(const ImageNote &note);
+//    ImageNote* buildNoteCopy(const Note &note);
     QString getFolder();
     QString getExtension();
 };

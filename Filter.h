@@ -30,7 +30,7 @@ public:
     static void releaseInstance() {if(instance) delete instance; instance = 0; }
     bool contains(Tag *tag) {return disabledTags.contains(tag);}
     void addDisabledTag(Tag* tag) {
-        qDebug()<<"adding disabled tag: " << tag->getName();
+//        qDebug()<<"adding disabled tag: " << tag->getName();
         disabledTags << tag;
     }
     void removeDisabledTag(Tag* tag) {disabledTags.remove(tag);}

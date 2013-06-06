@@ -54,6 +54,7 @@ public:
 signals:
 
 public slots:
+    void CHANGE_NEW_WORKSPACE();
     void UI_INFORM_NOT_IMPLEMENTED();
     void UI_NEW_NOTE_EDITOR(const int type);
     void UI_TAB_CHANGE_HANDLER(int);

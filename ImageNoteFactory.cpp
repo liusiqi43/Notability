@@ -54,12 +54,6 @@ ImageNote* ImageNoteFactory::buildNewNote()
 }
 
 
-ImageNote* ImageNoteFactory::buildNoteCopy(const ImageNote &note)
-{
-    return new ImageNote(generateNewFilePath(), note.getTitle(), note.getDescription(), note.getMediaPath());
-}
-
-
 QString ImageNoteFactory::getFolder()
 {
     return "IMG/";

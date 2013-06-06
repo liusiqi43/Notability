@@ -6,10 +6,10 @@
  */
 
 Article::Article(const QString& path):
-    Note(path),text("") {}
+    Note(path),text("") {type = article;}
 
 Article::Article(const QString& path, const QString& ti, const QString& te):
-    Note(path, ti),text(te) {}
+    Note(path, ti),text(te) {type = article;}
 
 const QString& Article::getText() const { return text; }
 

@@ -9,7 +9,6 @@ class DocumentFactory : public NoteFactory
 public:
     Document* buildNewNote();
     Document* buildNote(const QString &path);
-    Document* buildNoteCopy(const Document &note);
     QString getFolder();
     QString getExtension();
 };

@@ -11,14 +11,14 @@ Document::Document(const QString &path)
     :Note(path, "New Document")
 {
     qDebug()<<"Created Document";
-    setDocument(true);
+    type = document;
 }
 
 Document::Document(const QString &path, const QString &ti)
     :Note(path, ti)
 {
     qDebug()<<"Created Document with title";
-    setDocument(true);
+    type = document;
 }
 
 Document::~Document(){

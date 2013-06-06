@@ -6,6 +6,7 @@
 
 #include "Editor.h"
 #include "NotesException.h"
+#include "NoteFactory.h"
 
 
 class Document;
@@ -25,9 +26,9 @@ class Note{
     QSet<Document*> inDocuments;
     bool modified;
     bool deleted;
-    bool document;
 
 public:
+    NoteType type;
     Note(const QString &path);
     Note(const QString &path, const QString& ti);
 
@@ -36,6 +37,8 @@ public:
     const QSet<Tag*>& getTags() const{
         return tags;
     }
+
+    void setTags(const QSet<Tag*> value) {this->setModified(true); this->tags = value;}
     void addTag(Tag *tag) {this->setModified(true); tags << tag;}
     void removeTag(Tag *tag) {this->setModified(true); tags.remove(tag);}
 
@@ -61,7 +64,6 @@ public:
     virtual QString exportNote(const ExportStrategy *es, unsigned int level = 0) = 0;
 
     bool isDocument() const;
-    void setDocument(bool value);
 
     Editor *getEditor() const;
     void setEditor(Editor *value);

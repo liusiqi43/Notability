@@ -27,6 +27,7 @@
 #include "Filter.h"
 #include "Binary.h"
 #include <QDebug>
+#include <QProcess>
 #include "ListWidgetItemCheckTag.h"
 
 MainWindow* MainWindow::instance = 0;
@@ -106,6 +107,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     menuFichier->addAction(actionQuit);
 
+    QAction *changeWorkSpaceAction = new QAction("Change workspace", this);
+    menuEdition->addAction(changeWorkSpaceAction);
+
     toolBar->addAction(actionNewArticle);
     toolBar->addAction(actionNewImageNote);
     toolBar->addAction(actionNewVideoNote);
@@ -154,6 +158,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(actionExportHTML, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
     QObject::connect(actionExportTeX, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
     QObject::connect(actionExportText, SIGNAL(triggeredWithId(const int)), this, SLOT(UI_EXPOR_TO_FILE(const int)));
+
+    QObject::connect(changeWorkSpaceAction, SIGNAL(triggered()), this, SLOT(CHANGE_NEW_WORKSPACE()));
+
     QObject::connect(ui->addTag, SIGNAL(clicked()), this, SLOT(ADD_TAG()));
     QObject::connect(ui->removeTag, SIGNAL(clicked()), this, SLOT(REMOVE_TAG()));
     QObject::connect(qApp, SIGNAL(aboutToQuit()), this, SLOT(BACKEND_CLOSING()));
@@ -359,8 +366,11 @@ void MainWindow::BACKEND_CLOSING()
         try{
             nm->saveNote(*nm->getRootDocument());
             QSettings settings;
-            settings.setValue("rootDocument", nm->getRootDocument()->getFilePath());
-            qDebug() << nm->getRootDocument()->getFilePath();
+            if(!settings.value("workspaceChanged").toBool()){
+                settings.setValue("rootDocument", nm->getRootDocument()->getFilePath());
+                settings.setValue(settings.value("workspace").toString(), nm->getRootDocument()->getFilePath());
+                settings.sync();
+            }
         }
         catch (NotesException e){
             QMessageBox::warning(this, "Saving error", e.getInfo());
@@ -411,6 +421,73 @@ void MainWindow::addRessources(Note* n)
 {
     ressources.append(n);
 
+}
+
+void MainWindow::CHANGE_NEW_WORKSPACE()
+{
+    QFileDialog *dialog = new QFileDialog(this, "Switch to new workspace");
+    dialog->setFileMode(QFileDialog::Directory);
+    dialog->show();
+    if (dialog->exec()){
+        QSettings settings;
+        QString fileNames = dialog->selectedFiles().first();
+        if(settings.contains(fileNames)){
+            // Need to restore old workspace.
+            settings.setValue("rootDocument", settings.value(fileNames));
+            QMessageBox::information(this, "Restarting application", "We have detected your old notes stored in the new workspace, we will restart your application and restore them for you... Behold!");
+            QProcess::startDetached(QApplication::applicationFilePath());
+            exit(12);
+        } else {
+            // Ask if I should copy old notes or start from scratch
+            QMessageBox msgBox;
+            msgBox.setText("Do you want to copy your notes to new workspace?");
+            msgBox.setInformativeText("Otherwise you will have a fresh new workspace. Either way, we will restart the application, your modifications will be saved.");
+            msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+            msgBox.setDefaultButton(QMessageBox::No);
+            int ret = msgBox.exec();
+
+
+            switch (ret)  {
+            case QMessageBox::Yes:{
+                settings.setValue("workspaceChanged", true);
+                settings.setValue("workspace", fileNames);
+                // New workspace, we copy all notes or start from scratch
+                Document * oldRoot = nm->getRootDocument();
+                Document * newRoot = dynamic_cast<Document*>(NotesManager::getInstance().factories->value(document)->buildNewNote());
+                newRoot->setTitle("~");
+
+                nm->setRootDocument(newRoot);
+                for(Document::DepthFirstIterator it = oldRoot->beginDFIterator(); !it.isDone(); ++it){
+                    nm->getNoteClone(**it);
+                }
+                settings.setValue("rootDocument", newRoot->getFilePath());
+                // Stock new workspace and the corresponding rootdoc path
+                settings.setValue(fileNames, newRoot->getFilePath());
+                settings.sync();
+                break;
+            }
+            case QMessageBox::No:{
+                settings.setValue("workspaceChanged", true);
+                settings.setValue("workspace", fileNames);
+                settings.setValue("rootDocument", QString());
+                settings.sync();
+                QProcess::startDetached(QApplication::applicationFilePath());
+                exit(12);
+                // Don't Save was clicked
+                break;
+            }
+            case QMessageBox::Cancel:
+                // Cancel was clicked
+                break;
+            default:
+                // should never be reached
+                break;
+            }
+
+
+
+        }
+    }
 }
 
 void MainWindow::FIRE_UP_TRASH_BIN_DIALOG()

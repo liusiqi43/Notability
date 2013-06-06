@@ -4,16 +4,6 @@
  * BinaryEditor
  */
 
-//Binary *BinaryEditor::getRessource() const
-//{
-//    return ressource;
-//}
-
-//void BinaryEditor::setRessource(Binary *value)
-//{
-//    ressource = value;
-//}
-
 QLineEdit *BinaryEditor::getDescriptionWidget() const
 {
     return descriptionWidget;
@@ -29,5 +19,6 @@ BinaryEditor::BinaryEditor(Binary *b, QWidget *parent)
 {
     descriptionWidget = new QLineEdit(ressource->getDescription());
 
+    QObject::connect(descriptionWidget, SIGNAL(textChanged(QString)), this, SLOT(UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR()));
     QObject::connect(this, SIGNAL(destroyed()), this, SLOT(CLOSING()));
 }

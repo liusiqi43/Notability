@@ -38,7 +38,7 @@ public:
     static NotesManager& getInstance();
     static void libererInstance();
     Note& getNote(const QString& filename);
-    Note& getNoteClone(const QString& filename);
+    Note& getNoteClone(const Note &note);
     Note& getNewNote(NoteType type);
     void saveNote(Note& a);
 

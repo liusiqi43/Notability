@@ -71,21 +71,6 @@ Document* DocumentFactory::buildNewNote()
     return new Document(generateNewFilePath());
 }
 
-
-Document* DocumentFactory::buildNoteCopy(const Document &note)
-{
-    Document *d = new Document(generateNewFilePath(), note.getTitle());
-    NotesManager *nm = &NotesManager::getInstance();
-
-    for(QList<Note*>::const_iterator it = note.begin(); it != note.end(); it++){
-        // TODO test si ca va marcher....il est cense de generer une nouvelle copie de Note avec filePath differente
-        Note * nCopy = &nm->getNoteClone((*it)->getFilePath());
-        d->addNote(nCopy);
-    }
-    return d;
-}
-
-
 QString DocumentFactory::getFolder()
 {
     return "DOC/";

@@ -52,12 +52,6 @@ VideoNote* VideoNoteFactory::buildNewNote()
 }
 
 
-VideoNote* VideoNoteFactory::buildNoteCopy(const VideoNote &note)
-{
-    return new VideoNote(generateNewFilePath(), note.getTitle(), note.getDescription(), note.getMediaPath());
-}
-
-
 QString VideoNoteFactory::getFolder()
 {
     return "VID/";

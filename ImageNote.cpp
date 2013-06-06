@@ -5,12 +5,10 @@
  * ImageNote
  */
 ImageNote::ImageNote(const QString& filepath)
-    :Binary(filepath)
-{}
+    :Binary(filepath) {type = imageNote;}
 
 ImageNote::ImageNote(const QString& filePath, const QString& ti, const QString& des, const QString& iPath)
-    :Binary(filePath, ti, des, iPath)
-{}
+    :Binary(filePath, ti, des, iPath) {type = imageNote;}
 
 ImageNoteEditor *ImageNote::createEditor()
 {

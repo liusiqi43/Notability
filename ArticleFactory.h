@@ -9,7 +9,7 @@ class ArticleFactory : public NoteFactory
 public:
     Article* buildNewNote();
     Article* buildNote(const QString &path);
-    Article* buildNoteCopy(const Article &note);
+//    Article* buildNoteCopy(const Article &note);
     QString getFolder();
     QString getExtension();
 };

@@ -9,7 +9,7 @@ class AudioNoteFactory : public NoteFactory
 public:
     AudioNote* buildNewNote();
     AudioNote* buildNote(const QString &path);
-    AudioNote* buildNoteCopy(const AudioNote &note);
+//    AudioNote* buildNoteCopy(const AudioNote &note);
     QString getFolder();
     QString getExtension();
 };

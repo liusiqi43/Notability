@@ -48,12 +48,7 @@ Editor *Note::createAndAttachEditor()
 
 bool Note::isDocument() const
 {
-    return document;
-}
-
-void Note::setDocument(bool value)
-{
-    this->document = value;
+    return type == document;
 }
 
 /**
@@ -61,15 +56,15 @@ void Note::setDocument(bool value)
  * @param path
  */
 Note::Note(const QString& path)
-    :title("New Note"), filePath(path), modified(true), deleted(false), document(false){}
 
+    :title("New Note"), filePath(path), modified(true), deleted(false){}
 /**
  * @brief Note::Note used to create from existing Note, modified=false
  * @param path
  * @param ti
  */
 Note::Note(const QString& path, const QString& ti)
-    :title(ti), filePath(path), modified(false), deleted(false), document(false){}
+    :title(ti), filePath(path), modified(false), deleted(false){}
 
 Note::~Note()
 {

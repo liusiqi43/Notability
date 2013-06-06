@@ -31,7 +31,7 @@ QString HtmlExport::exportNote(const ImageNote *note, unsigned int level) const
 
     str+= "<div style=\"margin-left:"+QString::number(margin)+"px\";>";
     str+="<h"+QString::number(titleSize+1)+">"+note->getTitle()+ \
-            "</h"+QString::number(titleSize+1)+"><p><img style=\"width: 100% margin:\" src=\""+note->getMediaPath()+"\"></p><p>"\
+            "</h"+QString::number(titleSize+1)+"><p><img style=\"width: 100% margin:\" src=\"file://"+note->getMediaPath()+"\"></p><p>"\
             +note->getDescription()+"</p></div>";
     return str;
 }

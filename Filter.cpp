@@ -29,7 +29,7 @@ FilterKit* FilterKit::getInstance(){
 
 bool TagFilter::shallBeFiltered(Note *item) const
 {
-    qDebug() << "DisabledTags size: " << disabledTags.size();
+//    qDebug() << "DisabledTags size: " << disabledTags.size();
     // filtrer les notes
     for(QSet<Tag*>::const_iterator it=disabledTags.begin(); it!=disabledTags.end(); it++)
     {
