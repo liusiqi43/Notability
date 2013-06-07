@@ -14,5 +14,6 @@ int main(int argc, char *argv[])
 
     MainWindow *editor = MainWindow::getInstance();
     editor->show();
+
     return a.exec();
 }

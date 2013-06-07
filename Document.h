@@ -34,20 +34,13 @@ public:
 
 
     class DepthFirstIterator{
-        bool finished;
-        Document* currentDoc;
-        QList<Document*> previousDocs;
-        QList<nListIt> previousDocIters;
-        nListIt currentDocIter;
-        Note* nextNote;
-
-        Note* getNextNote();
+        QList<Note*> fringe;
+        QSet<Note*> explored;
     public:
         // prefix
-        DepthFirstIterator & operator++();
-        Note* operator*();
-        bool isDone();
-        DepthFirstIterator(Document *);
+        bool hasNext() const;
+        Note *next();
+        DepthFirstIterator(Document * const);
 
     };
 

@@ -22,6 +22,9 @@ public:
     void setRessource(Tag *value) {ressource = value;}
 };
 
+/**
+ * @brief The AddTagToNoteDialog class, cette dialog
+ */
 class AddTagToNoteDialog : public QDialog
 {
     Q_OBJECT

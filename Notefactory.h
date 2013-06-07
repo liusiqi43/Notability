@@ -26,7 +26,7 @@ public:
     NoteFactory();
 
     Article * buildArticleCopy(const Article& note);
-    Document * buildDocumentCopy(const Document& note);
+    Document * buildDocumentCopy(const Document &note);
     ImageNote * buildImageNoteCopy(const ImageNote& note);
     AudioNote * buildAudioNoteCopy(const AudioNote& note);
     VideoNote * buildVideoNoteCopy(const VideoNote& note);

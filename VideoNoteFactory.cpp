@@ -42,6 +42,7 @@ VideoNote* VideoNoteFactory::buildNote(const QString &path)
         Trash::getInstance()->recycle(a);
     }
 
+    a->setModified(false);
     return a;
 }
 

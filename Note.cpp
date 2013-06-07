@@ -51,6 +51,22 @@ bool Note::isDocument() const
     return type == document;
 }
 
+nListIt Note::begin() const
+{
+    if(isDocument())
+        return dynamic_cast<const Document*>(this)->begin();
+    else
+        return 0;
+}
+
+nListIt Note::end() const
+{
+    if(isDocument())
+        return dynamic_cast<const Document*>(this)->end();
+    else
+        return 0;
+}
+
 /**
  * @brief Note::Note used to create new Note, modified = true
  * @param path

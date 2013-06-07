@@ -48,7 +48,7 @@ Article* ArticleFactory::buildNote(const QString &path)
         // Trash will take care of all unbinding staff
         Trash::getInstance()->recycle(a);
     }
-
+    a->setModified(false);
     return a;
 }
 

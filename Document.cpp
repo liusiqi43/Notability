@@ -67,9 +67,11 @@ void Document::addNote(Note* note) throw (NotesException)
 {
     // Document-document case, test if there is a circular inclusion
     if(note->isDocument()){
-        if(static_cast<Document*>(note)->find(this->getFilePath()))
+        if(static_cast<Document*>(note)->find(this->getFilePath())){
+            qDebug()<<"Circular" << this->getTitle();
             // circular inclusion!
             throw NotesException("Cowardly refused your request...If you want to add A into B, this means that B is already included in A! Think twice...");
+        }
     }
     this->notes << note;
     note->addToDocument(this);
@@ -106,59 +108,28 @@ Document::DepthFirstIterator& Document::beginDFIterator()
     return *it;
 }
 
-Document::DepthFirstIterator & Document::DepthFirstIterator::operator++()
+bool Document::DepthFirstIterator::hasNext() const
 {
-    nextNote=getNextNote();
-    return *this;
+    return !fringe.empty();
 }
 
-Note *Document::DepthFirstIterator::operator*()
-{
-    if(nextNote == 0)
-        return *currentDocIter;
-    else
-        return nextNote;
-}
-
-bool Document::DepthFirstIterator::isDone()
-{
-    return finished;
-}
-
-Note * Document::DepthFirstIterator::getNextNote(){
-    qDebug()<<"getting next note";
-    while(*currentDocIter!=currentDoc->last()){
-        if((*currentDocIter)->isDocument()){
-            previousDocs.push_back(static_cast<Document*>(*currentDocIter));
-            nListIt lastIter(currentDocIter);
-            previousDocIters.push_back(lastIter);
-            currentDocIter = static_cast<Document*>(*currentDocIter)->begin();
-        }
-        else {
-            ++currentDocIter;
-            return *currentDocIter;
+Note * Document::DepthFirstIterator::next(){
+    if(!hasNext())
+        throw NotesException("Tree ran out of elements");
+    Note *node = fringe.takeFirst();
+    if(node->isDocument()){
+        for (nListIt it = node->begin(); it!=node->end(); ++it){
+            if(!explored.contains(*it)){
+                fringe.push_back(*it);
+                explored << *it;
+            }
         }
     }
-
-    while(!previousDocs.isEmpty()){
-        currentDoc = previousDocs.first();
-        currentDocIter = previousDocIters.first();
-        previousDocs.pop_front();
-        previousDocIters.pop_front();
-
-        Note* note = getNextNote();
-        if(note!=0)
-            return note;
-    }
-
-    finished = true;
-    return 0;
+    return node;
 }
 
-Document::DepthFirstIterator::DepthFirstIterator(Document * doc)
+Document::DepthFirstIterator::DepthFirstIterator(Document * const doc)
 {
-    finished = false;
-    currentDoc = doc;
-    nextNote = 0;
-    currentDocIter = doc->begin();
+    if(doc)
+        fringe.push_back(doc);
 }

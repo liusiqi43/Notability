@@ -18,6 +18,7 @@ class NotesManager {
 private:
     // Used for fast access to a list of all opened documents
     QSet<Document *> DocumentsContainer;
+    QMultiMap<QString, QString> *mapper;
     Document *rootDocument;
 
     void addNote(Note* a);

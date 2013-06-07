@@ -13,6 +13,7 @@ class Document;
 class ExportStrategy;
 class Document;
 class Tag;
+typedef QList<Note *>::const_iterator nListIt;
 
 class Note{
     QString title;
@@ -64,6 +65,8 @@ public:
     virtual QString exportNote(const ExportStrategy *es, unsigned int level = 0) = 0;
 
     bool isDocument() const;
+    nListIt begin() const;
+    nListIt end() const;
 
     Editor *getEditor() const;
     void setEditor(Editor *value);

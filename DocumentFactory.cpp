@@ -61,7 +61,7 @@ Document* DocumentFactory::buildNote(const QString &path)
     }
     else
         d->setDeleted(false);
-
+    d->setModified(false);
     return d;
 }
 

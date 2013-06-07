@@ -42,6 +42,8 @@ AudioNote* AudioNoteFactory::buildNote(const QString &path)
         Trash::getInstance()->recycle(a);
     }
 
+    a->setModified(false);
+
     return a;
 }
 

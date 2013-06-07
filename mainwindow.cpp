@@ -409,34 +409,34 @@ void MainWindow::UI_TAB_CHANGE_HANDLER(int n){
 void MainWindow::BACKEND_CLOSING()
 {
     if(nm->getRootDocument()->isModified()){
-        //        QMessageBox msgBox;
-        //        msgBox.setText("Unsaved modifications");
-        //        msgBox.setInformativeText("You have unsaved modifications, do you want to save them?");
-        //        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-        //        msgBox.setDefaultButton(QMessageBox::No);
-        //        int ret = msgBox.exec();
+//        QMessageBox msgBox;
+//        msgBox.setText("Unsaved modifications");
+//        msgBox.setInformativeText("You have unsaved modifications, do you want to save them?");
+//        msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+//        msgBox.setDefaultButton(QMessageBox::No);
+//        int ret = msgBox.exec();
 
-        //        switch(ret){
-        //        case QMessageBox::Yes:{
-        try{
-            nm->saveNote(*nm->getRootDocument());
-            QSettings settings;
-            if(!settings.value("workspaceChanged").toBool()){
-                settings.setValue("rootDocument", nm->getRootDocument()->getFilePath());
-                settings.setValue(settings.value("workspace").toString(), nm->getRootDocument()->getFilePath());
-                settings.sync();
+//        switch(ret){
+//        case QMessageBox::Yes:{
+            try{
+                nm->saveNote(*nm->getRootDocument());
+                QSettings settings;
+                if(!settings.value("workspaceChanged").toBool()){
+                    settings.setValue("rootDocument", nm->getRootDocument()->getFilePath());
+                    settings.setValue(settings.value("workspace").toString(), nm->getRootDocument()->getFilePath());
+                    settings.sync();
+                }
             }
-        }
-        catch (NotesException e){
-            QMessageBox::warning(this, "Saving error", e.getInfo());
-        }
-        //            break;
-        //        }
-        //        case QMessageBox::No: {
-        //            break;
-        //        }
-        //        default:{}
-        //        }
+            catch (NotesException e){
+                QMessageBox::warning(this, "Saving error", e.getInfo());
+            }
+//            break;
+//        }
+//        case QMessageBox::No: {
+//            break;
+//        }
+//        default:{}
+//        }
     }
 }
 
@@ -519,15 +519,20 @@ void MainWindow::CHANGE_NEW_WORKSPACE()
                 newRoot->setTitle("~");
 
                 nm->setRootDocument(newRoot);
-                for(Document::DepthFirstIterator it = oldRoot->beginDFIterator(); !it.isDone(); ++it){
+                for(nListIt it = oldRoot->begin(); it!=oldRoot->end(); ++it){
+                    //                    if(!explored.contains(*it)){
                     qDebug() << "Copyinig" << (*it)->getTitle();
                     nm->getNoteClone(**it);
+                    //                        explored << *it;
+                    //                    }
+                    qDebug()<<"survived######";
                 }
                 settings.setValue("rootDocument", newRoot->getFilePath());
                 // Stock new workspace and the corresponding rootdoc path
                 settings.setValue(fileNames, newRoot->getFilePath());
                 settings.sync();
                 this->BACKEND_CLOSING();
+//                NotesManager::libererInstance();
                 QProcess::startDetached(QApplication::applicationFilePath());
                 exit(12);
                 break;
@@ -538,6 +543,7 @@ void MainWindow::CHANGE_NEW_WORKSPACE()
                 settings.setValue("rootDocument", QString());
                 settings.sync();
                 this->BACKEND_CLOSING();
+                NotesManager::libererInstance();
                 QProcess::startDetached(QApplication::applicationFilePath());
                 exit(12);
                 // Don't Save was clicked
@@ -570,7 +576,7 @@ void MainWindow::ADD_TAG()
 
 void MainWindow::REMOVE_TAG()
 {
-//    qDebug() << "Got current item to delete: " << ui->tagList->currentItem()->data(0).toString();
+    //    qDebug() << "Got current item to delete: " << ui->tagList->currentItem()->data(0).toString();
     if(ui->tagList->currentItem())
     {
         undoStack->push(new RemoveCurrentTagCmd(ui->tagList, dynamic_cast<ListWidgetItemCheckTag *>(ui->tagList->currentItem())));
@@ -596,6 +602,8 @@ void MainWindow::CHANGE_NAME_TAG_OR_STOCK_DISABLED_TAGS(QListWidgetItem* item)
         kit->setFilter(tag, f);
         updateSideBar();
 
-        undoStack->push(new EditCurrentTagCmd(dynamic_cast<ListWidgetItemCheckTag *>(item), ui->tagList, 0));
+        ListWidgetItemCheckTag* tagItem = dynamic_cast<ListWidgetItemCheckTag *>(item);
+        if(item->data(0).toString() != tagItem->getTag()->getName())
+            undoStack->push(new EditCurrentTagCmd(tagItem, ui->tagList, 0));
     }
 }

@@ -11,6 +11,7 @@
 #include <QApplication>
 #include <QSettings>
 #include <QDateTime>
+#include <QUuid>
 
 /***
  * NoteFactory
@@ -40,7 +41,6 @@ Document *NoteFactory::buildDocumentCopy(const Document &note)
     NotesManager *nm = &NotesManager::getInstance();
 
     for(QList<Note*>::const_iterator it = note.begin(); it != note.end(); it++){
-        // TODO test si ca va marcher....il est cense de generer une nouvelle copie de Note avec filePath differente
         Note * nCopy = &nm->getNoteClone((**it));
         d->addNote(nCopy);
     }
@@ -129,7 +129,15 @@ QString NoteFactory::getFullFolder()
 }
 
 QString NoteFactory::generateID(){
-    QDateTime t = QDateTime::currentDateTime();
-    return t.toString("yyyyMMddzzzssmmhh");
+    QSettings settings;
+    qint64 thisone;
+    if(!settings.value("nextUUid").isNull()){
+        thisone = settings.value("nextUUid").toInt();
+        settings.setValue("nextUUid", settings.value("nextUUid").toInt()+1);
+    } else {
+        thisone = QDateTime::currentDateTime().toMSecsSinceEpoch();
+        settings.setValue("nextUUid", thisone+1);
+    }
+    return QString::number(thisone);
 }
 

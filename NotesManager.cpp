@@ -64,15 +64,25 @@ Note& NotesManager::getNote(const QString& fileName){
     Note* n = f->buildNote(fileName);
     addNote(n);
     qDebug()<<"New NOTE:::::::::::::::::"<<n->getFilePath();
+    n->setModified(false);
     return *n;
 }
 
 Note &NotesManager::getNoteClone(const Note& note)
 {   
-    NoteFactory* f = NotesManager::factories->value(note.type);
-    Note * n = f->buildNoteCopy(note);
-    addNote(n);
-    return *n;
+//    if(!mapper)
+        // OldPath, NewPath mapper
+//        mapper = new QMultiMap<QString, QString>();
+
+    if(mapper->value(note.getFilePath()).isNull()){
+        NoteFactory* f = NotesManager::factories->value(note.type);
+        Note * n = f->buildNoteCopy(note);
+        addNote(n);
+        mapper->insert(note.getFilePath(), n->getFilePath());
+        return *n;
+    } else {
+        return *rootDocument->find(mapper->value(note.getFilePath()));
+    }
 }
 
 Note& NotesManager::getNewNote(NoteType type){
@@ -108,6 +118,7 @@ NotesManager& NotesManager::getInstance(){
             } else {
                 delete old;
             }
+            instance->getRootDocument()->setModified(false);
         }
         settings.setValue("workspaceChanged", false);
     }
@@ -119,7 +130,10 @@ void NotesManager::libererInstance(){
 }
 
 
-NotesManager::NotesManager(){
+NotesManager::NotesManager()
+    :mapper(0)
+{
+    mapper = new QMultiMap<QString, QString>();
     factories = NoteFactory::getFactories();
     strategies = ExportStrategy::getStrategies();
     rootDocument = static_cast<Document *>(factories->value(document)->buildNewNote());
@@ -128,16 +142,18 @@ NotesManager::NotesManager(){
 
 
 NotesManager::~NotesManager(){
-    for(nListIt it = begin(); it!= end(); it++) {
-        saveNote((**it));
-        delete *it;
-    }
+//    for(nListIt it = begin(); it!= end(); it++) {
+//        saveNote((**it));
+//        delete *it;
+//    }
+    delete mapper;
 }
 
 void NotesManager::saveDocument(Document& d){
 
     for(nListIt it = d.begin(); it!= d.end(); ++it){
-        saveNote(**it);
+        if(*it != &d)
+            saveNote(**it);
     }
 
     // Saving in reverse order. So that all path saved are valid
