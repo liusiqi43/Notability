@@ -122,8 +122,10 @@ void MainWindow::createActions(){
     actionQuit->setIcon(QIcon(":images/quit"));
 
     QAction *actionTrashBin = new QAction("&Trash", this);
+    actionTrashBin->setIcon(QIcon(":images/trash"));
 
     QAction *actionSaveAll = new QAction("&Save all", this);
+    actionSaveAll->setIcon(QIcon(":images/saveAll"));
 
     // subclassed QAction, this emets also the NoteType. So that we don't need different handling slot
     NoteTypeSignalAction *actionNewArticle = new NoteTypeSignalAction(article, "&Article", this);
@@ -175,7 +177,9 @@ void MainWindow::createActions(){
     toolBar->addAction(actionSaveAll);
     toolBar->addSeparator();
     toolBar->addAction(undoAction);
+    undoAction->setIcon(QIcon(":images/undo"));
     toolBar->addAction(redoAction);
+    redoAction->setIcon(QIcon(":images/redo"));
     toolBar->addAction(historyBtn);
     QWidget* spacer = new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);

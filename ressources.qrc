@@ -6,10 +6,10 @@
         <file alias="play">Icons/play.png</file>
         <file alias="restore">Icons/System Restore.png</file>
         <file alias="delete">Icons/Visualpharm-Icons8-Metro-Style-Editing-Delete.ico</file>
-        <file alias="music">Icons/music.png</file>
-        <file alias="image">Icons/image.png</file>
-        <file alias="article">Icons/article.png</file>
-        <file alias="document">Icons/document.png</file>
+        <file>Icons/music.png</file>
+        <file>Icons/image.png</file>
+        <file>Icons/article.png</file>
+        <file>Icons/document.png</file>
         <file alias="newArticle">Icons/newArticle.png</file>
         <file alias="newDocument">Icons/NewDocument.png</file>
         <file>Icons/attache.png</file>
@@ -21,9 +21,33 @@
         <file alias="tag">Icons/tag.png</file>
         <file>Icons/tag-.png</file>
         <file>Icons/tag+.png</file>
-        <file alias="video">Icons/video.png</file>
+        <file>Icons/video.png</file>
         <file>Icons/poube.png</file>
         <file alias="quit">Icons/quit.png</file>
         <file alias="notability">Icons/notability.png</file>
+        <file alias="video">Icons/video-icone-8610-32.png</file>
+        <file>Icons/beos-vide-trash-icone-6456-32.png</file>
+        <file>Icons/defaire-icone-7841-32.png</file>
+        <file alias="article">Icons/document-modifier-dossier-papier-icone-9434-32.png</file>
+        <file>Icons/dossier-rouge-icone-5492-32.png</file>
+        <file alias="image">Icons/images-photos-images-icone-7345-32.png</file>
+        <file>Icons/itunes-musique-icone-6476-32.png</file>
+        <file>Icons/modifier-annuler-icone-8188-32.png</file>
+        <file>Icons/modifier-dossier-papier-stylo-icone-5080-32.png</file>
+        <file>Icons/modifier-dossier-papier-stylo-icone-7923-32.png</file>
+        <file>Icons/supprimer-icone-5418-32.png</file>
+        <file>Icons/supprimer-par-poste-icone-6318-32.png</file>
+        <file alias="trash">Icons/vide-trash-icone-8487-32.png</file>
+        <file>Icons/4.png</file>
+        <file>Icons/5.png</file>
+        <file alias="supprimer">Icons/supp (2).png</file>
+        <file alias="document">Icons/dossier-ouvrez-icone-4560-32.png</file>
+        <file>Icons/la-musique-des-noeuds-des-sons-icone-5426-32.png</file>
+        <file alias="music">Icons/musique-icone-7447-32.png</file>
+        <file alias="undo">Icons/precedent-icone-5813-32.png</file>
+        <file>Icons/precedent-icone-5823-32.png</file>
+        <file>Icons/suivant-icone-7661-32.png</file>
+        <file alias="redo">Icons/suivant-icone-9262-32.png</file>
+        <file alias="saveAll">Icons/document-enregistrez-icone-7740-32.png</file>
     </qresource>
 </RCC>
