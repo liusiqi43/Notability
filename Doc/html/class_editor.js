@@ -1,0 +1,28 @@
+var class_editor =
+[
+    [ "Editor", "class_editor.html#a2e30ad917816a6b1f023460bac7ffddd", null ],
+    [ "ADD_TAG_TO_NOTE", "class_editor.html#aecaabc81c4e8414088cffd1fba4ed962", null ],
+    [ "BACKEND_SAVE", "class_editor.html#a5b255fef573f1c804019ea58b0a35b58", null ],
+    [ "BACKEND_SET", "class_editor.html#a081375df74bcabc9d5671faf4f64fb7c", null ],
+    [ "FIRE_UP_DOC_DIALOG", "class_editor.html#a11709e3767a95758926bfeac6b466b33", null ],
+    [ "getBtnClose", "class_editor.html#aba4f89d12bb106c09631f11a5c5a79cd", null ],
+    [ "getBtnSave", "class_editor.html#a18167da182b0a86f338d508240923ce8", null ],
+    [ "getBtnTag", "class_editor.html#a2862a258cbae0f7597292775b09f4977", null ],
+    [ "getRessource", "class_editor.html#aa76e275000e3bd487338484f5f7cc77e", null ],
+    [ "getTitleWidget", "class_editor.html#a1b3aa891ca7ccdf26fb2d37dbce0bcf2", null ],
+    [ "operator==", "class_editor.html#aed1b30f9b2011c45f7ac997ace4a43b0", null ],
+    [ "REMOVE_NOTE_TO_TRASH", "class_editor.html#ac453d5a5c1966076fc272ec0a097b18f", null ],
+    [ "retrieveDataFromDocDialog", "class_editor.html#a308e57b5ee6350add0bab469394fff8e", null ],
+    [ "retrieveDataFromTagDialog", "class_editor.html#a74bb993deeff8d74af33b374d4f365ee", null ],
+    [ "setBtnClose", "class_editor.html#ad233fdd8f96b4c3f4430dde9046d6690", null ],
+    [ "setBtnSave", "class_editor.html#a2a1f9c30ffd1de30615a57c756635b8e", null ],
+    [ "setBtnTag", "class_editor.html#a8d1ee8f45363ac57c4e25f026e6e4661", null ],
+    [ "setDocumentBtnText", "class_editor.html#a22518796249b65e6a6f02245086ac794", null ],
+    [ "setRessource", "class_editor.html#ab8f8755c826acda573a2b860e09bad9b", null ],
+    [ "setTitleWidget", "class_editor.html#a3d7fdcc96ea00845ab502e1c610a61f7", null ],
+    [ "setTitleWidgetText", "class_editor.html#a440e234dc539873303a49a1dc7b77ebc", null ],
+    [ "UI_ENABLE_SAVE_BUTTON_AND_UPDATE_SIDEBAR", "class_editor.html#a5c63fc734e4dae035bd4d2bf44cba4d8", null ],
+    [ "updateDocBtnWithRessource", "class_editor.html#a2659996c89fae79d873bb8c2b0cde432", null ],
+    [ "buttonsLayout", "class_editor.html#ae45af55e341d855ecb4c2c48417103ab", null ],
+    [ "contentLayout", "class_editor.html#accd030211f8af68d4ff7fc03ac55a9ea", null ]
+];

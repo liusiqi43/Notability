@@ -1,0 +1,102 @@
+\hypertarget{class_video_note_factory}{\section{Video\-Note\-Factory Class Reference}
+\label{class_video_note_factory}\index{Video\-Note\-Factory@{Video\-Note\-Factory}}
+}
+
+
+The \hyperlink{class_video_note_factory}{Video\-Note\-Factory} class Cette classe genere des notes de type \hyperlink{class_video_note}{Video\-Note} a partir d'un fichier ou a partir du zero.  
+
+
+
+
+{\ttfamily \#include $<$Video\-Note\-Factory.\-h$>$}
+
+Inheritance diagram for Video\-Note\-Factory\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_video_note_factory}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_video_note}{Video\-Note} $\ast$ \hyperlink{class_video_note_factory_a9781f7cf25fade4e28ee26e24b7343eb}{build\-New\-Note} ()
+\item 
+\hyperlink{class_video_note}{Video\-Note} $\ast$ \hyperlink{class_video_note_factory_ab19052d39774211beac50662a0da7ed9}{build\-Note} (const Q\-String \&path)
+\item 
+Q\-String \hyperlink{class_video_note_factory_af7e338d6e4e5530ace6bf3184115939c}{get\-Folder} ()
+\begin{DoxyCompactList}\small\item\em get\-Folder Cette methode virtuelle genere le bon repertoire pour les notes generes. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_video_note_factory_ae64d7752275a4c33786db2ea6934c4be}{get\-Extension} ()
+\begin{DoxyCompactList}\small\item\em get\-Extension Cette methode virtuelle genere le bon extension pour les . \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_video_note_factory}{Video\-Note\-Factory} class Cette classe genere des notes de type \hyperlink{class_video_note}{Video\-Note} a partir d'un fichier ou a partir du zero. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_video_note_factory_a9781f7cf25fade4e28ee26e24b7343eb}{\index{Video\-Note\-Factory@{Video\-Note\-Factory}!build\-New\-Note@{build\-New\-Note}}
+\index{build\-New\-Note@{build\-New\-Note}!VideoNoteFactory@{Video\-Note\-Factory}}
+\subsubsection[{build\-New\-Note}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Video\-Note} $\ast$ Video\-Note\-Factory\-::build\-New\-Note (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_video_note_factory_a9781f7cf25fade4e28ee26e24b7343eb}
+
+
+Implements \hyperlink{class_note_factory_a11a2ce27fca508cea830c6a81e9c565c}{Note\-Factory}.
+
+\hypertarget{class_video_note_factory_ab19052d39774211beac50662a0da7ed9}{\index{Video\-Note\-Factory@{Video\-Note\-Factory}!build\-Note@{build\-Note}}
+\index{build\-Note@{build\-Note}!VideoNoteFactory@{Video\-Note\-Factory}}
+\subsubsection[{build\-Note}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Video\-Note} $\ast$ Video\-Note\-Factory\-::build\-Note (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_video_note_factory_ab19052d39774211beac50662a0da7ed9}
+
+
+Implements \hyperlink{class_note_factory_aeb1f73ec8c4431b26c2c8e5a5cf9b61e}{Note\-Factory}.
+
+\hypertarget{class_video_note_factory_ae64d7752275a4c33786db2ea6934c4be}{\index{Video\-Note\-Factory@{Video\-Note\-Factory}!get\-Extension@{get\-Extension}}
+\index{get\-Extension@{get\-Extension}!VideoNoteFactory@{Video\-Note\-Factory}}
+\subsubsection[{get\-Extension}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Video\-Note\-Factory\-::get\-Extension (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_video_note_factory_ae64d7752275a4c33786db2ea6934c4be}
+
+
+get\-Extension Cette methode virtuelle genere le bon extension pour les . 
+
+\begin{DoxyReturn}{Returns}
+.vid. Cette extension sera utilise lors de l'ouverture du fichier
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000009}{Deprecated}]\{L'ouverture du fichier est supprime car on prefere cache cette fonctionalite pour deboggage. En fait, l'utilisateurs ne connais que les titres du notes, mais pas l'id du fichier.\} \end{DoxyRefDesc}
+
+
+Implements \hyperlink{class_note_factory_ae1d2bbb4cb15be1976957ccc0bca87a2}{Note\-Factory}.
+
+\hypertarget{class_video_note_factory_af7e338d6e4e5530ace6bf3184115939c}{\index{Video\-Note\-Factory@{Video\-Note\-Factory}!get\-Folder@{get\-Folder}}
+\index{get\-Folder@{get\-Folder}!VideoNoteFactory@{Video\-Note\-Factory}}
+\subsubsection[{get\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Video\-Note\-Factory\-::get\-Folder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_video_note_factory_af7e338d6e4e5530ace6bf3184115939c}
+
+
+get\-Folder Cette methode virtuelle genere le bon repertoire pour les notes generes. 
+
+\begin{DoxyReturn}{Returns}
+V\-I\-D/ dans ce cas la. Ceci est uniquement utile pour organiser les fichiers pour les humains 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_note_factory_a9d4c924038af855a7c4a51455b13ab83}{Note\-Factory}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_video_note_factory_8h}{Video\-Note\-Factory.\-h}\item 
+\hyperlink{_video_note_factory_8cpp}{Video\-Note\-Factory.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,187 @@
+\hypertarget{class_player_controls}{\section{Player\-Controls Class Reference}
+\label{class_player_controls}\index{Player\-Controls@{Player\-Controls}}
+}
+
+
+{\ttfamily \#include $<$playercontrols.\-h$>$}
+
+Inheritance diagram for Player\-Controls\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_player_controls}
+\end{center}
+\end{figure}
+\subsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_player_controls_a3f893f8f7a76a9923b7a00c3608a3a29}{set\-State} (Q\-Media\-Player\-::\-State \hyperlink{class_player_controls_a2c767433c197631836b4f757f3d5cceb}{state})
+\item 
+void \hyperlink{class_player_controls_a99fa40918c2bb0adb02a4c06bdf427a6}{set\-Volume} (int \hyperlink{class_player_controls_aa5b799627701db4d8c7d6165a43590be}{volume})
+\item 
+void \hyperlink{class_player_controls_ac2e2269194c68754031a8460c14c00b9}{set\-Muted} (bool muted)
+\item 
+void \hyperlink{class_player_controls_a193c465aa9d4eb3cbdf564f7701a5d46}{set\-Playback\-Rate} (float rate)
+\end{DoxyCompactItemize}
+\subsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_player_controls_a1983a779ec9fc6c00def119ac53b8663}{play} ()
+\item 
+void \hyperlink{class_player_controls_abeaa95aaebcd2dbe9e9cb8f651f7e779}{pause} ()
+\item 
+void \hyperlink{class_player_controls_a3e4833b52d2cb01ae032eff9a471dad7}{stop} ()
+\item 
+void \hyperlink{class_player_controls_a6d46fd13e437d9c178f8f93eac32a4bb}{next} ()
+\item 
+void \hyperlink{class_player_controls_a527a76e82b100d4b9f82c87ecd0afe1d}{previous} ()
+\item 
+void \hyperlink{class_player_controls_a94314700c550bb2b4b5bc83871010207}{change\-Volume} (int \hyperlink{class_player_controls_aa5b799627701db4d8c7d6165a43590be}{volume})
+\item 
+void \hyperlink{class_player_controls_a985422768fb2d9df32984b20627dbd6a}{change\-Muting} (bool muting)
+\item 
+void \hyperlink{class_player_controls_a6fc3ad3f0791da69589dbb7004a24e6b}{change\-Rate} (qreal rate)
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_player_controls_ab28990280e8e45114a73c11563a47b60}{Player\-Controls} (Q\-Widget $\ast$parent=0)
+\item 
+Q\-Media\-Player\-::\-State \hyperlink{class_player_controls_a2c767433c197631836b4f757f3d5cceb}{state} () const 
+\item 
+int \hyperlink{class_player_controls_aa5b799627701db4d8c7d6165a43590be}{volume} () const 
+\item 
+bool \hyperlink{class_player_controls_aeddcb0969ba69e9514ef1de5ffb821c5}{is\-Muted} () const 
+\item 
+qreal \hyperlink{class_player_controls_a05ee8765f5f811dfcc2e00c93435be38}{playback\-Rate} () const 
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_player_controls_ab28990280e8e45114a73c11563a47b60}{\index{Player\-Controls@{Player\-Controls}!Player\-Controls@{Player\-Controls}}
+\index{Player\-Controls@{Player\-Controls}!PlayerControls@{Player\-Controls}}
+\subsubsection[{Player\-Controls}]{\setlength{\rightskip}{0pt plus 5cm}Player\-Controls\-::\-Player\-Controls (
+\begin{DoxyParamCaption}
+\item[{Q\-Widget $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_player_controls_ab28990280e8e45114a73c11563a47b60}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_player_controls_a985422768fb2d9df32984b20627dbd6a}{\index{Player\-Controls@{Player\-Controls}!change\-Muting@{change\-Muting}}
+\index{change\-Muting@{change\-Muting}!PlayerControls@{Player\-Controls}}
+\subsubsection[{change\-Muting}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::change\-Muting (
+\begin{DoxyParamCaption}
+\item[{bool}]{muting}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_a985422768fb2d9df32984b20627dbd6a}
+\hypertarget{class_player_controls_a6fc3ad3f0791da69589dbb7004a24e6b}{\index{Player\-Controls@{Player\-Controls}!change\-Rate@{change\-Rate}}
+\index{change\-Rate@{change\-Rate}!PlayerControls@{Player\-Controls}}
+\subsubsection[{change\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::change\-Rate (
+\begin{DoxyParamCaption}
+\item[{qreal}]{rate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_a6fc3ad3f0791da69589dbb7004a24e6b}
+\hypertarget{class_player_controls_a94314700c550bb2b4b5bc83871010207}{\index{Player\-Controls@{Player\-Controls}!change\-Volume@{change\-Volume}}
+\index{change\-Volume@{change\-Volume}!PlayerControls@{Player\-Controls}}
+\subsubsection[{change\-Volume}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::change\-Volume (
+\begin{DoxyParamCaption}
+\item[{int}]{volume}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_a94314700c550bb2b4b5bc83871010207}
+\hypertarget{class_player_controls_aeddcb0969ba69e9514ef1de5ffb821c5}{\index{Player\-Controls@{Player\-Controls}!is\-Muted@{is\-Muted}}
+\index{is\-Muted@{is\-Muted}!PlayerControls@{Player\-Controls}}
+\subsubsection[{is\-Muted}]{\setlength{\rightskip}{0pt plus 5cm}bool Player\-Controls\-::is\-Muted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_player_controls_aeddcb0969ba69e9514ef1de5ffb821c5}
+\hypertarget{class_player_controls_a6d46fd13e437d9c178f8f93eac32a4bb}{\index{Player\-Controls@{Player\-Controls}!next@{next}}
+\index{next@{next}!PlayerControls@{Player\-Controls}}
+\subsubsection[{next}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::next (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_a6d46fd13e437d9c178f8f93eac32a4bb}
+\hypertarget{class_player_controls_abeaa95aaebcd2dbe9e9cb8f651f7e779}{\index{Player\-Controls@{Player\-Controls}!pause@{pause}}
+\index{pause@{pause}!PlayerControls@{Player\-Controls}}
+\subsubsection[{pause}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::pause (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_abeaa95aaebcd2dbe9e9cb8f651f7e779}
+\hypertarget{class_player_controls_a1983a779ec9fc6c00def119ac53b8663}{\index{Player\-Controls@{Player\-Controls}!play@{play}}
+\index{play@{play}!PlayerControls@{Player\-Controls}}
+\subsubsection[{play}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::play (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_a1983a779ec9fc6c00def119ac53b8663}
+\hypertarget{class_player_controls_a05ee8765f5f811dfcc2e00c93435be38}{\index{Player\-Controls@{Player\-Controls}!playback\-Rate@{playback\-Rate}}
+\index{playback\-Rate@{playback\-Rate}!PlayerControls@{Player\-Controls}}
+\subsubsection[{playback\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}qreal Player\-Controls\-::playback\-Rate (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_player_controls_a05ee8765f5f811dfcc2e00c93435be38}
+\hypertarget{class_player_controls_a527a76e82b100d4b9f82c87ecd0afe1d}{\index{Player\-Controls@{Player\-Controls}!previous@{previous}}
+\index{previous@{previous}!PlayerControls@{Player\-Controls}}
+\subsubsection[{previous}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::previous (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_a527a76e82b100d4b9f82c87ecd0afe1d}
+\hypertarget{class_player_controls_ac2e2269194c68754031a8460c14c00b9}{\index{Player\-Controls@{Player\-Controls}!set\-Muted@{set\-Muted}}
+\index{set\-Muted@{set\-Muted}!PlayerControls@{Player\-Controls}}
+\subsubsection[{set\-Muted}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::set\-Muted (
+\begin{DoxyParamCaption}
+\item[{bool}]{muted}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_player_controls_ac2e2269194c68754031a8460c14c00b9}
+\hypertarget{class_player_controls_a193c465aa9d4eb3cbdf564f7701a5d46}{\index{Player\-Controls@{Player\-Controls}!set\-Playback\-Rate@{set\-Playback\-Rate}}
+\index{set\-Playback\-Rate@{set\-Playback\-Rate}!PlayerControls@{Player\-Controls}}
+\subsubsection[{set\-Playback\-Rate}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::set\-Playback\-Rate (
+\begin{DoxyParamCaption}
+\item[{float}]{rate}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_player_controls_a193c465aa9d4eb3cbdf564f7701a5d46}
+\hypertarget{class_player_controls_a3f893f8f7a76a9923b7a00c3608a3a29}{\index{Player\-Controls@{Player\-Controls}!set\-State@{set\-State}}
+\index{set\-State@{set\-State}!PlayerControls@{Player\-Controls}}
+\subsubsection[{set\-State}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::set\-State (
+\begin{DoxyParamCaption}
+\item[{Q\-Media\-Player\-::\-State}]{state}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_player_controls_a3f893f8f7a76a9923b7a00c3608a3a29}
+\hypertarget{class_player_controls_a99fa40918c2bb0adb02a4c06bdf427a6}{\index{Player\-Controls@{Player\-Controls}!set\-Volume@{set\-Volume}}
+\index{set\-Volume@{set\-Volume}!PlayerControls@{Player\-Controls}}
+\subsubsection[{set\-Volume}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::set\-Volume (
+\begin{DoxyParamCaption}
+\item[{int}]{volume}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [slot]}}}\label{class_player_controls_a99fa40918c2bb0adb02a4c06bdf427a6}
+\hypertarget{class_player_controls_a2c767433c197631836b4f757f3d5cceb}{\index{Player\-Controls@{Player\-Controls}!state@{state}}
+\index{state@{state}!PlayerControls@{Player\-Controls}}
+\subsubsection[{state}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Media\-Player\-::\-State Player\-Controls\-::state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_player_controls_a2c767433c197631836b4f757f3d5cceb}
+\hypertarget{class_player_controls_a3e4833b52d2cb01ae032eff9a471dad7}{\index{Player\-Controls@{Player\-Controls}!stop@{stop}}
+\index{stop@{stop}!PlayerControls@{Player\-Controls}}
+\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void Player\-Controls\-::stop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [signal]}}}\label{class_player_controls_a3e4833b52d2cb01ae032eff9a471dad7}
+\hypertarget{class_player_controls_aa5b799627701db4d8c7d6165a43590be}{\index{Player\-Controls@{Player\-Controls}!volume@{volume}}
+\index{volume@{volume}!PlayerControls@{Player\-Controls}}
+\subsubsection[{volume}]{\setlength{\rightskip}{0pt plus 5cm}int Player\-Controls\-::volume (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_player_controls_aa5b799627701db4d8c7d6165a43590be}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+player/\hyperlink{playercontrols_8h}{playercontrols.\-h}\item 
+player/\hyperlink{playercontrols_8cpp}{playercontrols.\-cpp}\end{DoxyCompactItemize}

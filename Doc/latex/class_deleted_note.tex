@@ -1,0 +1,37 @@
+\hypertarget{class_deleted_note}{\section{Deleted\-Note Class Reference}
+\label{class_deleted_note}\index{Deleted\-Note@{Deleted\-Note}}
+}
+
+
+The \hyperlink{class_deleted_note}{Deleted\-Note} class Une classe qui englobe une note. Dans la corbeille, nous aurons ainsi un ensembles des Deleted\-Notes. La corbeille va recycle() une note et la transformaer en \hyperlink{class_deleted_note}{Deleted\-Note}, tout en gardant les relations entre une note et les documents qui lui contiennent Lors de la restauration d'une note. \hyperlink{class_deleted_note}{Deleted\-Note} sera transforme en \hyperlink{class_note}{Note} et en suite, retourne dans la liste des Notes. Les associations Docuemnt/\-Note sont egalement restaures. On fait une composition au lieu de heritage car on veut etre sur qu'un deleted\-Note ne soit pas traite comme les autres notes Toutes les methodes de cette classes sont privee, on declarer pour cela les classes trash et trash\-Dialog comme amie. Ceci permet d'assurer que seuls les objet de la classe \hyperlink{class_trash}{Trash} et \hyperlink{class_trash_dialog}{Trash\-Dialog} peuvent manipuler avec deleted\-Note.  
+
+
+
+
+{\ttfamily \#include $<$Trash.\-h$>$}
+
+\subsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{class_deleted_note_aa5b165af6155aa1d6b8c634a27eae73f}{Trash}
+\item 
+class \hyperlink{class_deleted_note_abd99e75afa232a2ca91c06161fc1e847}{Trash\-Dialog}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_deleted_note}{Deleted\-Note} class Une classe qui englobe une note. Dans la corbeille, nous aurons ainsi un ensembles des Deleted\-Notes. La corbeille va recycle() une note et la transformaer en \hyperlink{class_deleted_note}{Deleted\-Note}, tout en gardant les relations entre une note et les documents qui lui contiennent Lors de la restauration d'une note. \hyperlink{class_deleted_note}{Deleted\-Note} sera transforme en \hyperlink{class_note}{Note} et en suite, retourne dans la liste des Notes. Les associations Docuemnt/\-Note sont egalement restaures. On fait une composition au lieu de heritage car on veut etre sur qu'un deleted\-Note ne soit pas traite comme les autres notes Toutes les methodes de cette classes sont privee, on declarer pour cela les classes trash et trash\-Dialog comme amie. Ceci permet d'assurer que seuls les objet de la classe \hyperlink{class_trash}{Trash} et \hyperlink{class_trash_dialog}{Trash\-Dialog} peuvent manipuler avec deleted\-Note. 
+
+\subsection{Friends And Related Function Documentation}
+\hypertarget{class_deleted_note_aa5b165af6155aa1d6b8c634a27eae73f}{\index{Deleted\-Note@{Deleted\-Note}!Trash@{Trash}}
+\index{Trash@{Trash}!DeletedNote@{Deleted\-Note}}
+\subsubsection[{Trash}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf Trash}\hspace{0.3cm}{\ttfamily [friend]}}}\label{class_deleted_note_aa5b165af6155aa1d6b8c634a27eae73f}
+Ceci permet d'assurer que seuls les objet de la classe \hyperlink{class_trash}{Trash} et \hyperlink{class_trash_dialog}{Trash\-Dialog} peuvent manipuler avec deleted\-Note. \hypertarget{class_deleted_note_abd99e75afa232a2ca91c06161fc1e847}{\index{Deleted\-Note@{Deleted\-Note}!Trash\-Dialog@{Trash\-Dialog}}
+\index{Trash\-Dialog@{Trash\-Dialog}!DeletedNote@{Deleted\-Note}}
+\subsubsection[{Trash\-Dialog}]{\setlength{\rightskip}{0pt plus 5cm}friend class {\bf Trash\-Dialog}\hspace{0.3cm}{\ttfamily [friend]}}}\label{class_deleted_note_abd99e75afa232a2ca91c06161fc1e847}
+Ceci permet d'assurer que seuls les objet de la classe \hyperlink{class_trash}{Trash} et \hyperlink{class_trash_dialog}{Trash\-Dialog} peuvent manipuler avec deleted\-Note. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_trash_8h}{Trash.\-h}\item 
+\hyperlink{_trash_8cpp}{Trash.\-cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,123 @@
+\hypertarget{class_article}{\section{Article Class Reference}
+\label{class_article}\index{Article@{Article}}
+}
+
+
+The \hyperlink{class_article}{Article} class Cette classe hérite de \hyperlink{class_note}{Note}, qui contient un attribut text en plus.  
+
+
+
+
+{\ttfamily \#include $<$Article.\-h$>$}
+
+Inheritance diagram for Article\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_article}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_article_ae6df82ef9127b96f98537f40152b3527}{Article} (const Q\-String \&file\-Path)
+\item 
+\hyperlink{class_article_af1aa80a980a7c945904ba53b2adc9c6a}{Article} (const Q\-String \&path, const Q\-String \&ti, const Q\-String \&te)
+\item 
+const Q\-String \& \hyperlink{class_article_a2f7505b72f339bcbc2fa7c387ab681f4}{get\-Text} () const 
+\item 
+void \hyperlink{class_article_a7144942027b1761cfcbd21761dd5cee8}{set\-Text} (const Q\-String \&t)
+\item 
+\hyperlink{class_article_editor}{Article\-Editor} $\ast$ \hyperlink{class_article_a75e3d1ae4b9e426cb9cd9e81a4cf8319}{create\-Editor} ()
+\begin{DoxyCompactList}\small\item\em create\-Editor Méthode virtuelle qui est implémentée dans la classe fille. Cette méthode créer un  qui hérite à son tour de  \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_article_a7515405b3eb619d1a4bc28938036cf28}{export\-Note} (const \hyperlink{class_export_strategy}{Export\-Strategy} $\ast$es, unsigned int level=0)
+\begin{DoxyCompactList}\small\item\em export\-Note Cette methode retourne une representation de note selon le type de \hyperlink{class_export_strategy}{Export\-Strategy}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_article}{Article} class Cette classe hérite de \hyperlink{class_note}{Note}, qui contient un attribut text en plus. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_article_ae6df82ef9127b96f98537f40152b3527}{\index{Article@{Article}!Article@{Article}}
+\index{Article@{Article}!Article@{Article}}
+\subsubsection[{Article}]{\setlength{\rightskip}{0pt plus 5cm}Article\-::\-Article (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{class_article_ae6df82ef9127b96f98537f40152b3527}
+\hypertarget{class_article_af1aa80a980a7c945904ba53b2adc9c6a}{\index{Article@{Article}!Article@{Article}}
+\index{Article@{Article}!Article@{Article}}
+\subsubsection[{Article}]{\setlength{\rightskip}{0pt plus 5cm}Article\-::\-Article (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{path, }
+\item[{const Q\-String \&}]{ti, }
+\item[{const Q\-String \&}]{te}
+\end{DoxyParamCaption}
+)}}\label{class_article_af1aa80a980a7c945904ba53b2adc9c6a}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_article_a75e3d1ae4b9e426cb9cd9e81a4cf8319}{\index{Article@{Article}!create\-Editor@{create\-Editor}}
+\index{create\-Editor@{create\-Editor}!Article@{Article}}
+\subsubsection[{create\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Article\-Editor} $\ast$ Article\-::create\-Editor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_article_a75e3d1ae4b9e426cb9cd9e81a4cf8319}
+
+
+create\-Editor Méthode virtuelle qui est implémentée dans la classe fille. Cette méthode créer un  qui hérite à son tour de  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_note_a6fab406019fac776671ce73b541afa67}{Note}.
+
+\hypertarget{class_article_a7515405b3eb619d1a4bc28938036cf28}{\index{Article@{Article}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!Article@{Article}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Article\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Export\-Strategy} $\ast$}]{es, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_article_a7515405b3eb619d1a4bc28938036cf28}
+
+
+export\-Note Cette methode retourne une representation de note selon le type de \hyperlink{class_export_strategy}{Export\-Strategy}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em es} & Le type de  \\
+\hline
+{\em level} & le niveau d'indentation. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_note_aa0ba654b756800042d3022d0dcd21ef8}{Note}.
+
+\hypertarget{class_article_a2f7505b72f339bcbc2fa7c387ab681f4}{\index{Article@{Article}!get\-Text@{get\-Text}}
+\index{get\-Text@{get\-Text}!Article@{Article}}
+\subsubsection[{get\-Text}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-String \& Article\-::get\-Text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_article_a2f7505b72f339bcbc2fa7c387ab681f4}
+\hypertarget{class_article_a7144942027b1761cfcbd21761dd5cee8}{\index{Article@{Article}!set\-Text@{set\-Text}}
+\index{set\-Text@{set\-Text}!Article@{Article}}
+\subsubsection[{set\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void Article\-::set\-Text (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{t}
+\end{DoxyParamCaption}
+)}}\label{class_article_a7144942027b1761cfcbd21761dd5cee8}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_article_8h}{Article.\-h}\item 
+\hyperlink{_article_8cpp}{Article.\-cpp}\end{DoxyCompactItemize}

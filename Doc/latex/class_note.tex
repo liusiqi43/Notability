@@ -1,0 +1,460 @@
+\hypertarget{class_note}{\section{Note Class Reference}
+\label{class_note}\index{Note@{Note}}
+}
+
+
+The \hyperlink{class_note}{Note} class La classe de base pour tous les Notes.  
+
+
+
+
+{\ttfamily \#include $<$Note.\-h$>$}
+
+Inheritance diagram for Note\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_note}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_note_adfec8c3dca48958989e1024b9ca4a513}{Note} (const Q\-String \&path)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_note_adfec8c3dca48958989e1024b9ca4a513}{Note\-::\-Note} used to create new \hyperlink{class_note}{Note}, modified = true. \end{DoxyCompactList}\item 
+\hyperlink{class_note_a6ef5e4ecfa2570c504c57185b6081234}{Note} (const Q\-String \&path, const Q\-String \&ti)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_note_adfec8c3dca48958989e1024b9ca4a513}{Note\-::\-Note} used to create from existing \hyperlink{class_note}{Note}, modified=false. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_note_ade484273015c82e7fa59a028de0d8818}{$\sim$\-Note} ()
+\item 
+const Q\-Set$<$ \hyperlink{class_tag}{Tag} $\ast$ $>$ \& \hyperlink{class_note_ae5e065fdfce0d5c0ddbe63cce34059cb}{get\-Tags} () const 
+\item 
+void \hyperlink{class_note_ab62a4e0f47fac2b7a12ed76248996655}{set\-Tags} (const Q\-Set$<$ \hyperlink{class_tag}{Tag} $\ast$ $>$ value)
+\item 
+void \hyperlink{class_note_a6b023c0a13be0aa01a61a515fee15043}{add\-Tag} (\hyperlink{class_tag}{Tag} $\ast$\hyperlink{_filter_8h_a7ef0ab496f57e183b484e62e2053c94fa9daab2aa897c0d2d4500bed734b0d780}{tag})
+\item 
+void \hyperlink{class_note_ae165ceaf8ed5819aededc6842816de24}{remove\-Tag} (\hyperlink{class_tag}{Tag} $\ast$\hyperlink{_filter_8h_a7ef0ab496f57e183b484e62e2053c94fa9daab2aa897c0d2d4500bed734b0d780}{tag})
+\item 
+virtual void \hyperlink{class_note_aacfdc58fbd7b0ee3e50cf00771b5fec1}{add\-Note} (\hyperlink{class_note}{Note} $\ast$)
+\begin{DoxyCompactList}\small\item\em add\-Note Purement pour facilier a hirarchiser les Notes dans nm.\-Et puis ca sert a visualiser cette hirarchie dans Q\-Tree\-View. \end{DoxyCompactList}\item 
+bool \hyperlink{class_note_a6e477898ff4b6ac3c14abf80d6d8ba41}{operator==} (const \hyperlink{class_note}{Note} \&other)
+\begin{DoxyCompactList}\small\item\em operator == Les notes sont identifie a partir de leurs chemin. \end{DoxyCompactList}\item 
+const Q\-String \& \hyperlink{class_note_ac5891af072f8e8d990909a65c0702244}{get\-Title} () const 
+\item 
+void \hyperlink{class_note_a7a9ca310664f058b56ccc33005688e25}{set\-Title} (const Q\-String \&t)
+\item 
+const Q\-String \& \hyperlink{class_note_a41b62e8cf9f5d07753850eb7821f1e2c}{get\-File\-Path} () const 
+\item 
+void \hyperlink{class_note_a59d6698a57f3a5fedff8aed7efe13524}{set\-File\-Path} (const Q\-String \&p)
+\item 
+void \hyperlink{class_note_a96987169db4b02ff6b82696cb7bdaa11}{set\-Modified} (bool b)
+\item 
+bool \hyperlink{class_note_abe3ea587b0371292768ce5b6cccfc796}{is\-Modified} () const 
+\item 
+void \hyperlink{class_note_a7c8886e32496439d9c19a5848a085d73}{set\-Deleted} (bool b)
+\item 
+bool \hyperlink{class_note_a6a86277323d886247480eca23be9df22}{is\-Deleted} () const 
+\item 
+\hyperlink{class_editor}{Editor} $\ast$ \hyperlink{class_note_a5d4e5449f72f48c9385c195415fa5843}{create\-And\-Attach\-Editor} ()
+\begin{DoxyCompactList}\small\item\em create\-And\-Attach\-Editor Methode template qui fait appel aux \hyperlink{class_note_a6fab406019fac776671ce73b541afa67}{create\-Editor()} des classes filles et puis associe l'editeur construite a note lui meme. \end{DoxyCompactList}\item 
+virtual \hyperlink{class_editor}{Editor} $\ast$ \hyperlink{class_note_a6fab406019fac776671ce73b541afa67}{create\-Editor} ()=0
+\begin{DoxyCompactList}\small\item\em create\-Editor Methode virtuelle pure definie dans les classes filles \end{DoxyCompactList}\item 
+virtual Q\-String \hyperlink{class_note_aa0ba654b756800042d3022d0dcd21ef8}{export\-Note} (const \hyperlink{class_export_strategy}{Export\-Strategy} $\ast$es, unsigned int level=0)=0
+\begin{DoxyCompactList}\small\item\em create\-Editor Methode virtuelle pure definie dans les classes filles \end{DoxyCompactList}\item 
+bool \hyperlink{class_note_a543b160dbe2bcb3c746cb9679ad1eb64}{is\-Document} () const 
+\begin{DoxyCompactList}\small\item\em is\-Document \end{DoxyCompactList}\item 
+\hyperlink{_document_8h_adfa7415447032dfb0c19676b86692b8e}{n\-List\-It} \hyperlink{class_note_a3db96c7ec649e4e4a4225462ffb40d6e}{begin} () const 
+\begin{DoxyCompactList}\small\item\em begin retourne 0 si \hyperlink{class_note}{Note} n'est pas du type \hyperlink{class_document}{Document}. Retourne un iterator sur le premier \hyperlink{class_note}{Note} contenue dans note s'il est un document \end{DoxyCompactList}\item 
+\hyperlink{_document_8h_adfa7415447032dfb0c19676b86692b8e}{n\-List\-It} \hyperlink{class_note_a0c116937ded5b540a444be8ad737ee39}{end} () const 
+\begin{DoxyCompactList}\small\item\em begin retourne 0 si \hyperlink{class_note}{Note} n'est pas du type \hyperlink{class_document}{Document}. Retourne un iterator sur l'apres dernier \hyperlink{class_note}{Note} contenue dans note s'il est un document \end{DoxyCompactList}\item 
+\hyperlink{class_editor}{Editor} $\ast$ \hyperlink{class_note_a442d12ee613944bcc57ae29cf2d27213}{get\-Editor} () const 
+\item 
+void \hyperlink{class_note_a263068eb42d923b133c181fee6bb4c7d}{set\-Editor} (\hyperlink{class_editor}{Editor} $\ast$value)
+\item 
+void \hyperlink{class_note_afa6dd579b094a73deada5e2d2fe1673b}{add\-To\-Document} (\hyperlink{class_document}{Document} $\ast$doc)
+\item 
+void \hyperlink{class_note_a397a19923fcfc9f84cc834cbfd14bfe5}{remove\-From\-Document} (\hyperlink{class_document}{Document} $\ast$doc)
+\item 
+bool \hyperlink{class_note_a6a4f412f9be69e950de550e4de11ba06}{belongs} (\hyperlink{class_document}{Document} $\ast$doc)
+\item 
+Q\-Set$<$ \hyperlink{class_document}{Document} $\ast$ $>$\-::const\-\_\-iterator \hyperlink{class_note_a982785ef9c5b78e5ae6812ff85a108f9}{begin\-In\-Doc} ()
+\begin{DoxyCompactList}\small\item\em begin\-In\-Doc \end{DoxyCompactList}\item 
+Q\-Set$<$ \hyperlink{class_document}{Document} $\ast$ $>$\-::const\-\_\-iterator \hyperlink{class_note_a0e0b2d09fc690baec310fbcfc3422885}{end\-In\-Doc} ()
+\begin{DoxyCompactList}\small\item\em begin\-In\-Doc \end{DoxyCompactList}\item 
+Q\-Set$<$ \hyperlink{class_document}{Document} $\ast$ $>$ \hyperlink{class_note_a09e423efaa6e54da37e90802e52c9451}{get\-In\-Documents} () const 
+\item 
+void \hyperlink{class_note_a81b070504439450cef1cb77f7764ac00}{set\-In\-Documents} (const Q\-Set$<$ \hyperlink{class_document}{Document} $\ast$ $>$ \&value)
+\item 
+void \hyperlink{class_note_ae15164ca076da26222600fcaac8d6a1e}{reset\-In\-Documents} ()
+\begin{DoxyCompactList}\small\item\em reset\-In\-Documents Methode raccourci utilise principalement pour disassocie le note et les documents qui englobe cette note. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_note_factory_8h_a0e0de7dc7864c9c2e738e017dce974be}{Note\-Type} \hyperlink{class_note_a9584b201896d061ec72f48cf64dccd90}{type}
+\begin{DoxyCompactList}\small\item\em type Ce type est determine au moment de la construction de \hyperlink{class_note}{Note}. Ceci nous permet d'eviter les exceptions non necessaire lors de la duplication des notes (cf. \hyperlink{class_note_factory}{Note\-Factory}, build\-Note\-Copy etc...) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_note}{Note} class La classe de base pour tous les Notes. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_note_adfec8c3dca48958989e1024b9ca4a513}{\index{Note@{Note}!Note@{Note}}
+\index{Note@{Note}!Note@{Note}}
+\subsubsection[{Note}]{\setlength{\rightskip}{0pt plus 5cm}Note\-::\-Note (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{path}
+\end{DoxyParamCaption}
+)}}\label{class_note_adfec8c3dca48958989e1024b9ca4a513}
+
+
+\hyperlink{class_note_adfec8c3dca48958989e1024b9ca4a513}{Note\-::\-Note} used to create new \hyperlink{class_note}{Note}, modified = true. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_note_a6ef5e4ecfa2570c504c57185b6081234}{\index{Note@{Note}!Note@{Note}}
+\index{Note@{Note}!Note@{Note}}
+\subsubsection[{Note}]{\setlength{\rightskip}{0pt plus 5cm}Note\-::\-Note (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{path, }
+\item[{const Q\-String \&}]{ti}
+\end{DoxyParamCaption}
+)}}\label{class_note_a6ef5e4ecfa2570c504c57185b6081234}
+
+
+\hyperlink{class_note_adfec8c3dca48958989e1024b9ca4a513}{Note\-::\-Note} used to create from existing \hyperlink{class_note}{Note}, modified=false. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & \\
+\hline
+{\em ti} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_note_ade484273015c82e7fa59a028de0d8818}{\index{Note@{Note}!$\sim$\-Note@{$\sim$\-Note}}
+\index{$\sim$\-Note@{$\sim$\-Note}!Note@{Note}}
+\subsubsection[{$\sim$\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Note\-::$\sim$\-Note (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_note_ade484273015c82e7fa59a028de0d8818}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_note_aacfdc58fbd7b0ee3e50cf00771b5fec1}{\index{Note@{Note}!add\-Note@{add\-Note}}
+\index{add\-Note@{add\-Note}!Note@{Note}}
+\subsubsection[{add\-Note}]{\setlength{\rightskip}{0pt plus 5cm}virtual void Note\-::add\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_note_aacfdc58fbd7b0ee3e50cf00771b5fec1}
+
+
+add\-Note Purement pour facilier a hirarchiser les Notes dans nm.\-Et puis ca sert a visualiser cette hirarchie dans Q\-Tree\-View. 
+
+
+
+Reimplemented in \hyperlink{class_document_a995087b3ef739c69ca93bfc6290627ed}{Document}.
+
+\hypertarget{class_note_a6b023c0a13be0aa01a61a515fee15043}{\index{Note@{Note}!add\-Tag@{add\-Tag}}
+\index{add\-Tag@{add\-Tag}!Note@{Note}}
+\subsubsection[{add\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::add\-Tag (
+\begin{DoxyParamCaption}
+\item[{{\bf Tag} $\ast$}]{tag}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_note_a6b023c0a13be0aa01a61a515fee15043}
+\hypertarget{class_note_afa6dd579b094a73deada5e2d2fe1673b}{\index{Note@{Note}!add\-To\-Document@{add\-To\-Document}}
+\index{add\-To\-Document@{add\-To\-Document}!Note@{Note}}
+\subsubsection[{add\-To\-Document}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::add\-To\-Document (
+\begin{DoxyParamCaption}
+\item[{{\bf Document} $\ast$}]{doc}
+\end{DoxyParamCaption}
+)}}\label{class_note_afa6dd579b094a73deada5e2d2fe1673b}
+\hypertarget{class_note_a3db96c7ec649e4e4a4225462ffb40d6e}{\index{Note@{Note}!begin@{begin}}
+\index{begin@{begin}!Note@{Note}}
+\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\-List\-It} Note\-::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_a3db96c7ec649e4e4a4225462ffb40d6e}
+
+
+begin retourne 0 si \hyperlink{class_note}{Note} n'est pas du type \hyperlink{class_document}{Document}. Retourne un iterator sur le premier \hyperlink{class_note}{Note} contenue dans note s'il est un document 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_note_a982785ef9c5b78e5ae6812ff85a108f9}{\index{Note@{Note}!begin\-In\-Doc@{begin\-In\-Doc}}
+\index{begin\-In\-Doc@{begin\-In\-Doc}!Note@{Note}}
+\subsubsection[{begin\-In\-Doc}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Set$<${\bf Document} $\ast$$>$\-::const\-\_\-iterator Note\-::begin\-In\-Doc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_note_a982785ef9c5b78e5ae6812ff85a108f9}
+
+
+begin\-In\-Doc 
+
+\begin{DoxyReturn}{Returns}
+Retourner un iterateur sur le premier element dans la liste des document ou se trouve ce note. 
+\end{DoxyReturn}
+\hypertarget{class_note_a6a4f412f9be69e950de550e4de11ba06}{\index{Note@{Note}!belongs@{belongs}}
+\index{belongs@{belongs}!Note@{Note}}
+\subsubsection[{belongs}]{\setlength{\rightskip}{0pt plus 5cm}bool Note\-::belongs (
+\begin{DoxyParamCaption}
+\item[{{\bf Document} $\ast$}]{doc}
+\end{DoxyParamCaption}
+)}}\label{class_note_a6a4f412f9be69e950de550e4de11ba06}
+\hypertarget{class_note_a5d4e5449f72f48c9385c195415fa5843}{\index{Note@{Note}!create\-And\-Attach\-Editor@{create\-And\-Attach\-Editor}}
+\index{create\-And\-Attach\-Editor@{create\-And\-Attach\-Editor}!Note@{Note}}
+\subsubsection[{create\-And\-Attach\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Editor} $\ast$ Note\-::create\-And\-Attach\-Editor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_note_a5d4e5449f72f48c9385c195415fa5843}
+
+
+create\-And\-Attach\-Editor Methode template qui fait appel aux \hyperlink{class_note_a6fab406019fac776671ce73b541afa67}{create\-Editor()} des classes filles et puis associe l'editeur construite a note lui meme. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_note_a6fab406019fac776671ce73b541afa67}{\index{Note@{Note}!create\-Editor@{create\-Editor}}
+\index{create\-Editor@{create\-Editor}!Note@{Note}}
+\subsubsection[{create\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}virtual {\bf Editor}$\ast$ Note\-::create\-Editor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_note_a6fab406019fac776671ce73b541afa67}
+
+
+create\-Editor Methode virtuelle pure definie dans les classes filles 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_document_adef0577eba2c367b4e4b8ca322a15e88}{Document}, \hyperlink{class_article_a75e3d1ae4b9e426cb9cd9e81a4cf8319}{Article}, \hyperlink{class_audio_note_a925cd568ca8d630bd943ad4182ef6ca8}{Audio\-Note}, \hyperlink{class_image_note_a06def8412672f996f5e964b861442a63}{Image\-Note}, and \hyperlink{class_video_note_ac88a41945a78c6b89e3f40540da53a54}{Video\-Note}.
+
+\hypertarget{class_note_a0c116937ded5b540a444be8ad737ee39}{\index{Note@{Note}!end@{end}}
+\index{end@{end}!Note@{Note}}
+\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\-List\-It} Note\-::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_a0c116937ded5b540a444be8ad737ee39}
+
+
+begin retourne 0 si \hyperlink{class_note}{Note} n'est pas du type \hyperlink{class_document}{Document}. Retourne un iterator sur l'apres dernier \hyperlink{class_note}{Note} contenue dans note s'il est un document 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_note_a0e0b2d09fc690baec310fbcfc3422885}{\index{Note@{Note}!end\-In\-Doc@{end\-In\-Doc}}
+\index{end\-In\-Doc@{end\-In\-Doc}!Note@{Note}}
+\subsubsection[{end\-In\-Doc}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Set$<${\bf Document} $\ast$$>$\-::const\-\_\-iterator Note\-::end\-In\-Doc (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_note_a0e0b2d09fc690baec310fbcfc3422885}
+
+
+begin\-In\-Doc 
+
+\begin{DoxyReturn}{Returns}
+Retourner un iterateur sur apres dernier element dans la liste des document ou se trouve ce note. 
+\end{DoxyReturn}
+\hypertarget{class_note_aa0ba654b756800042d3022d0dcd21ef8}{\index{Note@{Note}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!Note@{Note}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}virtual Q\-String Note\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Export\-Strategy} $\ast$}]{es, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [pure virtual]}}}\label{class_note_aa0ba654b756800042d3022d0dcd21ef8}
+
+
+create\-Editor Methode virtuelle pure definie dans les classes filles 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \hyperlink{class_document_aa86a140e1a2841e983fd542230cbae2f}{Document}, \hyperlink{class_article_a7515405b3eb619d1a4bc28938036cf28}{Article}, \hyperlink{class_audio_note_ad69445a8975ae93d9889bb021f18f8e1}{Audio\-Note}, \hyperlink{class_image_note_a64507436f2cb2ff24ece73baa552b7bb}{Image\-Note}, and \hyperlink{class_video_note_adacf574a5c60de47b2056df1ae160880}{Video\-Note}.
+
+\hypertarget{class_note_a442d12ee613944bcc57ae29cf2d27213}{\index{Note@{Note}!get\-Editor@{get\-Editor}}
+\index{get\-Editor@{get\-Editor}!Note@{Note}}
+\subsubsection[{get\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Editor} $\ast$ Note\-::get\-Editor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_a442d12ee613944bcc57ae29cf2d27213}
+\hypertarget{class_note_a41b62e8cf9f5d07753850eb7821f1e2c}{\index{Note@{Note}!get\-File\-Path@{get\-File\-Path}}
+\index{get\-File\-Path@{get\-File\-Path}!Note@{Note}}
+\subsubsection[{get\-File\-Path}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-String \& Note\-::get\-File\-Path (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_a41b62e8cf9f5d07753850eb7821f1e2c}
+\hypertarget{class_note_a09e423efaa6e54da37e90802e52c9451}{\index{Note@{Note}!get\-In\-Documents@{get\-In\-Documents}}
+\index{get\-In\-Documents@{get\-In\-Documents}!Note@{Note}}
+\subsubsection[{get\-In\-Documents}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Set$<$ {\bf Document} $\ast$ $>$ Note\-::get\-In\-Documents (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_a09e423efaa6e54da37e90802e52c9451}
+\hypertarget{class_note_ae5e065fdfce0d5c0ddbe63cce34059cb}{\index{Note@{Note}!get\-Tags@{get\-Tags}}
+\index{get\-Tags@{get\-Tags}!Note@{Note}}
+\subsubsection[{get\-Tags}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-Set$<${\bf Tag}$\ast$$>$\& Note\-::get\-Tags (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_note_ae5e065fdfce0d5c0ddbe63cce34059cb}
+\hypertarget{class_note_ac5891af072f8e8d990909a65c0702244}{\index{Note@{Note}!get\-Title@{get\-Title}}
+\index{get\-Title@{get\-Title}!Note@{Note}}
+\subsubsection[{get\-Title}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-String \& Note\-::get\-Title (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_ac5891af072f8e8d990909a65c0702244}
+\hypertarget{class_note_a6a86277323d886247480eca23be9df22}{\index{Note@{Note}!is\-Deleted@{is\-Deleted}}
+\index{is\-Deleted@{is\-Deleted}!Note@{Note}}
+\subsubsection[{is\-Deleted}]{\setlength{\rightskip}{0pt plus 5cm}bool Note\-::is\-Deleted (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_a6a86277323d886247480eca23be9df22}
+\hypertarget{class_note_a543b160dbe2bcb3c746cb9679ad1eb64}{\index{Note@{Note}!is\-Document@{is\-Document}}
+\index{is\-Document@{is\-Document}!Note@{Note}}
+\subsubsection[{is\-Document}]{\setlength{\rightskip}{0pt plus 5cm}bool Note\-::is\-Document (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_a543b160dbe2bcb3c746cb9679ad1eb64}
+
+
+is\-Document 
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000005}{Deprecated}]\{ Methode prevu pour distinguer les documents. Distinguer le type du note par rapport a son type dans le futur\} \end{DoxyRefDesc}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_note_abe3ea587b0371292768ce5b6cccfc796}{\index{Note@{Note}!is\-Modified@{is\-Modified}}
+\index{is\-Modified@{is\-Modified}!Note@{Note}}
+\subsubsection[{is\-Modified}]{\setlength{\rightskip}{0pt plus 5cm}bool Note\-::is\-Modified (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_note_abe3ea587b0371292768ce5b6cccfc796}
+\hypertarget{class_note_a6e477898ff4b6ac3c14abf80d6d8ba41}{\index{Note@{Note}!operator==@{operator==}}
+\index{operator==@{operator==}!Note@{Note}}
+\subsubsection[{operator==}]{\setlength{\rightskip}{0pt plus 5cm}bool Note\-::operator== (
+\begin{DoxyParamCaption}
+\item[{const {\bf Note} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{class_note_a6e477898ff4b6ac3c14abf80d6d8ba41}
+
+
+operator == Les notes sont identifie a partir de leurs chemin. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em other} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_note_a397a19923fcfc9f84cc834cbfd14bfe5}{\index{Note@{Note}!remove\-From\-Document@{remove\-From\-Document}}
+\index{remove\-From\-Document@{remove\-From\-Document}!Note@{Note}}
+\subsubsection[{remove\-From\-Document}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::remove\-From\-Document (
+\begin{DoxyParamCaption}
+\item[{{\bf Document} $\ast$}]{doc}
+\end{DoxyParamCaption}
+)}}\label{class_note_a397a19923fcfc9f84cc834cbfd14bfe5}
+\hypertarget{class_note_ae165ceaf8ed5819aededc6842816de24}{\index{Note@{Note}!remove\-Tag@{remove\-Tag}}
+\index{remove\-Tag@{remove\-Tag}!Note@{Note}}
+\subsubsection[{remove\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::remove\-Tag (
+\begin{DoxyParamCaption}
+\item[{{\bf Tag} $\ast$}]{tag}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_note_ae165ceaf8ed5819aededc6842816de24}
+\hypertarget{class_note_ae15164ca076da26222600fcaac8d6a1e}{\index{Note@{Note}!reset\-In\-Documents@{reset\-In\-Documents}}
+\index{reset\-In\-Documents@{reset\-In\-Documents}!Note@{Note}}
+\subsubsection[{reset\-In\-Documents}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::reset\-In\-Documents (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_note_ae15164ca076da26222600fcaac8d6a1e}
+
+
+reset\-In\-Documents Methode raccourci utilise principalement pour disassocie le note et les documents qui englobe cette note. 
+
+\hypertarget{class_note_a7c8886e32496439d9c19a5848a085d73}{\index{Note@{Note}!set\-Deleted@{set\-Deleted}}
+\index{set\-Deleted@{set\-Deleted}!Note@{Note}}
+\subsubsection[{set\-Deleted}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::set\-Deleted (
+\begin{DoxyParamCaption}
+\item[{bool}]{b}
+\end{DoxyParamCaption}
+)}}\label{class_note_a7c8886e32496439d9c19a5848a085d73}
+\hypertarget{class_note_a263068eb42d923b133c181fee6bb4c7d}{\index{Note@{Note}!set\-Editor@{set\-Editor}}
+\index{set\-Editor@{set\-Editor}!Note@{Note}}
+\subsubsection[{set\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::set\-Editor (
+\begin{DoxyParamCaption}
+\item[{{\bf Editor} $\ast$}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_note_a263068eb42d923b133c181fee6bb4c7d}
+\hypertarget{class_note_a59d6698a57f3a5fedff8aed7efe13524}{\index{Note@{Note}!set\-File\-Path@{set\-File\-Path}}
+\index{set\-File\-Path@{set\-File\-Path}!Note@{Note}}
+\subsubsection[{set\-File\-Path}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::set\-File\-Path (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{p}
+\end{DoxyParamCaption}
+)}}\label{class_note_a59d6698a57f3a5fedff8aed7efe13524}
+\hypertarget{class_note_a81b070504439450cef1cb77f7764ac00}{\index{Note@{Note}!set\-In\-Documents@{set\-In\-Documents}}
+\index{set\-In\-Documents@{set\-In\-Documents}!Note@{Note}}
+\subsubsection[{set\-In\-Documents}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::set\-In\-Documents (
+\begin{DoxyParamCaption}
+\item[{const Q\-Set$<$ {\bf Document} $\ast$ $>$ \&}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_note_a81b070504439450cef1cb77f7764ac00}
+\hypertarget{class_note_a96987169db4b02ff6b82696cb7bdaa11}{\index{Note@{Note}!set\-Modified@{set\-Modified}}
+\index{set\-Modified@{set\-Modified}!Note@{Note}}
+\subsubsection[{set\-Modified}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::set\-Modified (
+\begin{DoxyParamCaption}
+\item[{bool}]{b}
+\end{DoxyParamCaption}
+)}}\label{class_note_a96987169db4b02ff6b82696cb7bdaa11}
+\hypertarget{class_note_ab62a4e0f47fac2b7a12ed76248996655}{\index{Note@{Note}!set\-Tags@{set\-Tags}}
+\index{set\-Tags@{set\-Tags}!Note@{Note}}
+\subsubsection[{set\-Tags}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::set\-Tags (
+\begin{DoxyParamCaption}
+\item[{const Q\-Set$<$ {\bf Tag} $\ast$ $>$}]{value}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_note_ab62a4e0f47fac2b7a12ed76248996655}
+\hypertarget{class_note_a7a9ca310664f058b56ccc33005688e25}{\index{Note@{Note}!set\-Title@{set\-Title}}
+\index{set\-Title@{set\-Title}!Note@{Note}}
+\subsubsection[{set\-Title}]{\setlength{\rightskip}{0pt plus 5cm}void Note\-::set\-Title (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{t}
+\end{DoxyParamCaption}
+)}}\label{class_note_a7a9ca310664f058b56ccc33005688e25}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_note_a9584b201896d061ec72f48cf64dccd90}{\index{Note@{Note}!type@{type}}
+\index{type@{type}!Note@{Note}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Note\-Type} Note\-::type}}\label{class_note_a9584b201896d061ec72f48cf64dccd90}
+
+
+type Ce type est determine au moment de la construction de \hyperlink{class_note}{Note}. Ceci nous permet d'eviter les exceptions non necessaire lors de la duplication des notes (cf. \hyperlink{class_note_factory}{Note\-Factory}, build\-Note\-Copy etc...) 
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_note_8h}{Note.\-h}\item 
+\hyperlink{_note_8cpp}{Note.\-cpp}\end{DoxyCompactItemize}

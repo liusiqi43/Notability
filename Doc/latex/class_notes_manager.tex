@@ -1,0 +1,196 @@
+\hypertarget{class_notes_manager}{\section{Notes\-Manager Class Reference}
+\label{class_notes_manager}\index{Notes\-Manager@{Notes\-Manager}}
+}
+
+
+{\ttfamily \#include $<$Notes\-Manager.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_notes_manager_abb8b2f60468d389083efe4370af45708}{remove\-Note} (\hyperlink{class_note}{Note} $\ast$a)
+\begin{DoxyCompactList}\small\item\em remove\-Note Ceci va enleve  depuis le . Cette suppression est mutuelle. cf  \end{DoxyCompactList}\item 
+\hyperlink{class_note}{Note} \& \hyperlink{class_notes_manager_ae3cdea7be3b8deb08e6ecc995fd4d9fc}{get\-Note} (const Q\-String \&filename)
+\item 
+\hyperlink{class_note}{Note} \& \hyperlink{class_notes_manager_a31279a2483bb3d527fa5ca13e1dfb9e5}{get\-Note\-Clone} (const \hyperlink{class_note}{Note} \&note)
+\item 
+\hyperlink{class_note}{Note} \& \hyperlink{class_notes_manager_ae2156fb457d664a8f449d3c1f8594916}{get\-New\-Note} (\hyperlink{_note_factory_8h_a0e0de7dc7864c9c2e738e017dce974be}{Note\-Type} type)
+\item 
+void \hyperlink{class_notes_manager_a440078f6e2f8ee9c09c8e9f966803b6e}{save\-Note} (\hyperlink{class_note}{Note} \&a)
+\item 
+\hyperlink{_document_8h_adfa7415447032dfb0c19676b86692b8e}{n\-List\-It} \hyperlink{class_notes_manager_a5b3cdc21163d3668645f5a90ba45428d}{begin} ()
+\item 
+\hyperlink{_document_8h_adfa7415447032dfb0c19676b86692b8e}{n\-List\-It} \hyperlink{class_notes_manager_a27d6b2ed68cea9e4ca7ab9c670dc35ed}{end} ()
+\item 
+\hyperlink{_notes_manager_8h_a6979f3cb5cacc239c7b1683577be1eb6}{d\-Set\-It} \hyperlink{class_notes_manager_ab2bbb0bc84ce2493b274eaceec6c1092}{begin\-Document\-Container} ()
+\begin{DoxyCompactList}\small\item\em begin\-Document\-Container \end{DoxyCompactList}\item 
+\hyperlink{_notes_manager_8h_a6979f3cb5cacc239c7b1683577be1eb6}{d\-Set\-It} \hyperlink{class_notes_manager_a858397ffd5a1ed3c6c80c44c08ca4601}{end\-Document\-Container} ()
+\item 
+\hyperlink{class_document}{Document} $\ast$ \hyperlink{class_notes_manager_aa8a214956e988b24605c9bf6fcec4960}{get\-Root\-Document} () const 
+\item 
+void \hyperlink{class_notes_manager_a118b3a8e58bd06c8571b799c40acd1c7}{set\-Root\-Document} (\hyperlink{class_document}{Document} $\ast$value)
+\begin{DoxyCompactList}\small\item\em set\-Root\-Document Cette methode est principalement utilise lors du changement de l'espace de travail. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_notes_manager}{Notes\-Manager} \& \hyperlink{class_notes_manager_a7311347da4088a6622955e46d53e7599}{get\-Instance} ()
+\begin{DoxyCompactList}\small\item\em get\-Instance \hyperlink{class_notes_manager}{Notes\-Manager} est un singleton \end{DoxyCompactList}\item 
+static void \hyperlink{class_notes_manager_abd12bae3c990a408e9ef55aa0d93b675}{liberer\-Instance} ()
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Q\-Map$<$ \hyperlink{_export_strategy_8h_a6bd23bde1932319c9832c0129a94b307}{Export\-Type}, \\*
+\hyperlink{class_export_strategy}{Export\-Strategy} $\ast$ $>$ $\ast$ \hyperlink{class_notes_manager_a76009ca9ef3ceaf21dfb51fbe796b7ff}{strategies}
+\begin{DoxyCompactList}\small\item\em strategies Un Map de tous les export\-Strategies disponibles \end{DoxyCompactList}\item 
+Q\-Map$<$ \hyperlink{_note_factory_8h_a0e0de7dc7864c9c2e738e017dce974be}{Note\-Type}, \hyperlink{class_note_factory}{Note\-Factory} $\ast$ $>$ $\ast$ \hyperlink{class_notes_manager_acc3391f8fb05d1dd36bce98620915574}{factories}
+\begin{DoxyCompactList}\small\item\em factories Un Map de tous les Notes\-Factory disponibles \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_notes_manager_a5b3cdc21163d3668645f5a90ba45428d}{\index{Notes\-Manager@{Notes\-Manager}!begin@{begin}}
+\index{begin@{begin}!NotesManager@{Notes\-Manager}}
+\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\-List\-It} Notes\-Manager\-::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_notes_manager_a5b3cdc21163d3668645f5a90ba45428d}
+\hypertarget{class_notes_manager_ab2bbb0bc84ce2493b274eaceec6c1092}{\index{Notes\-Manager@{Notes\-Manager}!begin\-Document\-Container@{begin\-Document\-Container}}
+\index{begin\-Document\-Container@{begin\-Document\-Container}!NotesManager@{Notes\-Manager}}
+\subsubsection[{begin\-Document\-Container}]{\setlength{\rightskip}{0pt plus 5cm}{\bf d\-Set\-It} Notes\-Manager\-::begin\-Document\-Container (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_notes_manager_ab2bbb0bc84ce2493b274eaceec6c1092}
+
+
+begin\-Document\-Container 
+
+\begin{DoxyReturn}{Returns}
+un iterator sur le premier \hyperlink{class_document}{Document} qui est charge dans le programme. Utile pour recuperer tous les documents disponbiles. 
+\end{DoxyReturn}
+\hypertarget{class_notes_manager_a27d6b2ed68cea9e4ca7ab9c670dc35ed}{\index{Notes\-Manager@{Notes\-Manager}!end@{end}}
+\index{end@{end}!NotesManager@{Notes\-Manager}}
+\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}{\bf n\-List\-It} Notes\-Manager\-::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_notes_manager_a27d6b2ed68cea9e4ca7ab9c670dc35ed}
+\hypertarget{class_notes_manager_a858397ffd5a1ed3c6c80c44c08ca4601}{\index{Notes\-Manager@{Notes\-Manager}!end\-Document\-Container@{end\-Document\-Container}}
+\index{end\-Document\-Container@{end\-Document\-Container}!NotesManager@{Notes\-Manager}}
+\subsubsection[{end\-Document\-Container}]{\setlength{\rightskip}{0pt plus 5cm}{\bf d\-Set\-It} Notes\-Manager\-::end\-Document\-Container (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_notes_manager_a858397ffd5a1ed3c6c80c44c08ca4601}
+\hypertarget{class_notes_manager_a7311347da4088a6622955e46d53e7599}{\index{Notes\-Manager@{Notes\-Manager}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!NotesManager@{Notes\-Manager}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Notes\-Manager} \& Notes\-Manager\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_notes_manager_a7311347da4088a6622955e46d53e7599}
+
+
+get\-Instance \hyperlink{class_notes_manager}{Notes\-Manager} est un singleton 
+
+\begin{DoxyReturn}{Returns}
+unique instance de \hyperlink{class_notes_manager}{Notes\-Manager}. 
+\end{DoxyReturn}
+\hypertarget{class_notes_manager_ae2156fb457d664a8f449d3c1f8594916}{\index{Notes\-Manager@{Notes\-Manager}!get\-New\-Note@{get\-New\-Note}}
+\index{get\-New\-Note@{get\-New\-Note}!NotesManager@{Notes\-Manager}}
+\subsubsection[{get\-New\-Note}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Note} \& Notes\-Manager\-::get\-New\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note\-Type}}]{type}
+\end{DoxyParamCaption}
+)}}\label{class_notes_manager_ae2156fb457d664a8f449d3c1f8594916}
+\hypertarget{class_notes_manager_ae3cdea7be3b8deb08e6ecc995fd4d9fc}{\index{Notes\-Manager@{Notes\-Manager}!get\-Note@{get\-Note}}
+\index{get\-Note@{get\-Note}!NotesManager@{Notes\-Manager}}
+\subsubsection[{get\-Note}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Note} \& Notes\-Manager\-::get\-Note (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{filename}
+\end{DoxyParamCaption}
+)}}\label{class_notes_manager_ae3cdea7be3b8deb08e6ecc995fd4d9fc}
+\hypertarget{class_notes_manager_a31279a2483bb3d527fa5ca13e1dfb9e5}{\index{Notes\-Manager@{Notes\-Manager}!get\-Note\-Clone@{get\-Note\-Clone}}
+\index{get\-Note\-Clone@{get\-Note\-Clone}!NotesManager@{Notes\-Manager}}
+\subsubsection[{get\-Note\-Clone}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Note} \& Notes\-Manager\-::get\-Note\-Clone (
+\begin{DoxyParamCaption}
+\item[{const {\bf Note} \&}]{note}
+\end{DoxyParamCaption}
+)}}\label{class_notes_manager_a31279a2483bb3d527fa5ca13e1dfb9e5}
+\hypertarget{class_notes_manager_aa8a214956e988b24605c9bf6fcec4960}{\index{Notes\-Manager@{Notes\-Manager}!get\-Root\-Document@{get\-Root\-Document}}
+\index{get\-Root\-Document@{get\-Root\-Document}!NotesManager@{Notes\-Manager}}
+\subsubsection[{get\-Root\-Document}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Document} $\ast$ Notes\-Manager\-::get\-Root\-Document (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_notes_manager_aa8a214956e988b24605c9bf6fcec4960}
+\hypertarget{class_notes_manager_abd12bae3c990a408e9ef55aa0d93b675}{\index{Notes\-Manager@{Notes\-Manager}!liberer\-Instance@{liberer\-Instance}}
+\index{liberer\-Instance@{liberer\-Instance}!NotesManager@{Notes\-Manager}}
+\subsubsection[{liberer\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}void Notes\-Manager\-::liberer\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_notes_manager_abd12bae3c990a408e9ef55aa0d93b675}
+\hypertarget{class_notes_manager_abb8b2f60468d389083efe4370af45708}{\index{Notes\-Manager@{Notes\-Manager}!remove\-Note@{remove\-Note}}
+\index{remove\-Note@{remove\-Note}!NotesManager@{Notes\-Manager}}
+\subsubsection[{remove\-Note}]{\setlength{\rightskip}{0pt plus 5cm}void Notes\-Manager\-::remove\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} $\ast$}]{a}
+\end{DoxyParamCaption}
+)}}\label{class_notes_manager_abb8b2f60468d389083efe4370af45708}
+
+
+remove\-Note Ceci va enleve  depuis le . Cette suppression est mutuelle. cf  
+
+
+\begin{DoxyParams}{Parameters}
+{\em a} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_notes_manager_a440078f6e2f8ee9c09c8e9f966803b6e}{\index{Notes\-Manager@{Notes\-Manager}!save\-Note@{save\-Note}}
+\index{save\-Note@{save\-Note}!NotesManager@{Notes\-Manager}}
+\subsubsection[{save\-Note}]{\setlength{\rightskip}{0pt plus 5cm}void Notes\-Manager\-::save\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} \&}]{a}
+\end{DoxyParamCaption}
+)}}\label{class_notes_manager_a440078f6e2f8ee9c09c8e9f966803b6e}
+\hypertarget{class_notes_manager_a118b3a8e58bd06c8571b799c40acd1c7}{\index{Notes\-Manager@{Notes\-Manager}!set\-Root\-Document@{set\-Root\-Document}}
+\index{set\-Root\-Document@{set\-Root\-Document}!NotesManager@{Notes\-Manager}}
+\subsubsection[{set\-Root\-Document}]{\setlength{\rightskip}{0pt plus 5cm}void Notes\-Manager\-::set\-Root\-Document (
+\begin{DoxyParamCaption}
+\item[{{\bf Document} $\ast$}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_notes_manager_a118b3a8e58bd06c8571b799c40acd1c7}
+
+
+set\-Root\-Document Cette methode est principalement utilise lors du changement de l'espace de travail. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{class_notes_manager_acc3391f8fb05d1dd36bce98620915574}{\index{Notes\-Manager@{Notes\-Manager}!factories@{factories}}
+\index{factories@{factories}!NotesManager@{Notes\-Manager}}
+\subsubsection[{factories}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Map$<${\bf Note\-Type}, {\bf Note\-Factory}$\ast$$>$$\ast$ Notes\-Manager\-::factories}}\label{class_notes_manager_acc3391f8fb05d1dd36bce98620915574}
+
+
+factories Un Map de tous les Notes\-Factory disponibles 
+
+\hypertarget{class_notes_manager_a76009ca9ef3ceaf21dfb51fbe796b7ff}{\index{Notes\-Manager@{Notes\-Manager}!strategies@{strategies}}
+\index{strategies@{strategies}!NotesManager@{Notes\-Manager}}
+\subsubsection[{strategies}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Map$<${\bf Export\-Type}, {\bf Export\-Strategy}$\ast$$>$$\ast$ Notes\-Manager\-::strategies}}\label{class_notes_manager_a76009ca9ef3ceaf21dfb51fbe796b7ff}
+
+
+strategies Un Map de tous les export\-Strategies disponibles 
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_notes_manager_8h}{Notes\-Manager.\-h}\item 
+\hyperlink{_notes_manager_8cpp}{Notes\-Manager.\-cpp}\end{DoxyCompactItemize}

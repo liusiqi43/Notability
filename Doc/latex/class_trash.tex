@@ -1,0 +1,120 @@
+\hypertarget{class_trash}{\section{Trash Class Reference}
+\label{class_trash}\index{Trash@{Trash}}
+}
+
+
+The \hyperlink{class_trash}{Trash} class Cette classe \mbox{[}singlton\mbox{]} propose trois fonctionalite\-: \hyperlink{class_trash_ac1c39fd789dde908deda27b9bda7882a}{recycle()}, restoire(), et \hyperlink{class_trash_a8e82eefa25891f59c40fd2a66b105694}{remove()}.  
+
+
+
+
+{\ttfamily \#include $<$Trash.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_trash_ac1c39fd789dde908deda27b9bda7882a}{recycle} (\hyperlink{class_note}{Note} $\ast$n)
+\begin{DoxyCompactList}\small\item\em dissasocie note n avec tous les documents. Mettre deleted a true. ensuite envelopper cette \hyperlink{class_note}{Note} dans une deleted\-Note. \end{DoxyCompactList}\item 
+void \hyperlink{class_trash_ad50ecc0402956a0289fd064026699cf8}{restore} (\hyperlink{class_deleted_note}{Deleted\-Note} $\ast$n)
+\begin{DoxyCompactList}\small\item\em restore On restaurer une deleted\-Note n. On restaure egalement les relations entre n et les Documents qui le contenaient avant la suppresions. a condition que ces documents existent toujours. \end{DoxyCompactList}\item 
+void \hyperlink{class_trash_a8e82eefa25891f59c40fd2a66b105694}{remove} (\hyperlink{class_deleted_note}{Deleted\-Note} $\ast$n)
+\begin{DoxyCompactList}\small\item\em remove supprmer definitivement la note n. Suppression du fichier. \end{DoxyCompactList}\item 
+\hyperlink{_trash_8h_abfa09246a693cbd2e785f18f8fdd86d5}{note\-Set\-It} \hyperlink{class_trash_ac47fc715f6a53ea167de2d95926bf192}{begin} ()
+\item 
+\hyperlink{_trash_8h_abfa09246a693cbd2e785f18f8fdd86d5}{note\-Set\-It} \hyperlink{class_trash_a7e9504a532d21c2b9d6840e4647568d8}{end} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_trash}{Trash} $\ast$ \hyperlink{class_trash_a02258d7327ee01ad8e7947a3df664296}{get\-Instance} ()
+\item 
+static void \hyperlink{class_trash_a299431f9d1b722bf4218d501e2b9ddbd}{release\-Instance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_trash}{Trash} class Cette classe \mbox{[}singlton\mbox{]} propose trois fonctionalite\-: \hyperlink{class_trash_ac1c39fd789dde908deda27b9bda7882a}{recycle()}, restoire(), et \hyperlink{class_trash_a8e82eefa25891f59c40fd2a66b105694}{remove()}. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_trash_ac47fc715f6a53ea167de2d95926bf192}{\index{Trash@{Trash}!begin@{begin}}
+\index{begin@{begin}!Trash@{Trash}}
+\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf note\-Set\-It} Trash\-::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_trash_ac47fc715f6a53ea167de2d95926bf192}
+\hypertarget{class_trash_a7e9504a532d21c2b9d6840e4647568d8}{\index{Trash@{Trash}!end@{end}}
+\index{end@{end}!Trash@{Trash}}
+\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}{\bf note\-Set\-It} Trash\-::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_trash_a7e9504a532d21c2b9d6840e4647568d8}
+\hypertarget{class_trash_a02258d7327ee01ad8e7947a3df664296}{\index{Trash@{Trash}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!Trash@{Trash}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Trash} $\ast$ Trash\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_trash_a02258d7327ee01ad8e7947a3df664296}
+\hypertarget{class_trash_ac1c39fd789dde908deda27b9bda7882a}{\index{Trash@{Trash}!recycle@{recycle}}
+\index{recycle@{recycle}!Trash@{Trash}}
+\subsubsection[{recycle}]{\setlength{\rightskip}{0pt plus 5cm}void Trash\-::recycle (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}}\label{class_trash_ac1c39fd789dde908deda27b9bda7882a}
+
+
+dissasocie note n avec tous les documents. Mettre deleted a true. ensuite envelopper cette \hyperlink{class_note}{Note} dans une deleted\-Note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_trash_a299431f9d1b722bf4218d501e2b9ddbd}{\index{Trash@{Trash}!release\-Instance@{release\-Instance}}
+\index{release\-Instance@{release\-Instance}!Trash@{Trash}}
+\subsubsection[{release\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}void Trash\-::release\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_trash_a299431f9d1b722bf4218d501e2b9ddbd}
+\hypertarget{class_trash_a8e82eefa25891f59c40fd2a66b105694}{\index{Trash@{Trash}!remove@{remove}}
+\index{remove@{remove}!Trash@{Trash}}
+\subsubsection[{remove}]{\setlength{\rightskip}{0pt plus 5cm}void Trash\-::remove (
+\begin{DoxyParamCaption}
+\item[{{\bf Deleted\-Note} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}}\label{class_trash_a8e82eefa25891f59c40fd2a66b105694}
+
+
+remove supprmer definitivement la note n. Suppression du fichier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_trash_ad50ecc0402956a0289fd064026699cf8}{\index{Trash@{Trash}!restore@{restore}}
+\index{restore@{restore}!Trash@{Trash}}
+\subsubsection[{restore}]{\setlength{\rightskip}{0pt plus 5cm}void Trash\-::restore (
+\begin{DoxyParamCaption}
+\item[{{\bf Deleted\-Note} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}}\label{class_trash_ad50ecc0402956a0289fd064026699cf8}
+
+
+restore On restaurer une deleted\-Note n. On restaure egalement les relations entre n et les Documents qui le contenaient avant la suppresions. a condition que ces documents existent toujours. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_trash_8h}{Trash.\-h}\item 
+\hyperlink{_trash_8cpp}{Trash.\-cpp}\end{DoxyCompactItemize}

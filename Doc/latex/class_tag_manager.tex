@@ -1,0 +1,221 @@
+\hypertarget{class_tag_manager}{\section{Tag\-Manager Class Reference}
+\label{class_tag_manager}\index{Tag\-Manager@{Tag\-Manager}}
+}
+
+
+The \hyperlink{class_tag_manager}{Tag\-Manager} class Cette classe sert comme intermediare entre les notes et les tags. \mbox{[}Singleton\mbox{]}.  
+
+
+
+
+{\ttfamily \#include $<$Tag\-Manager.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{class_tag_manager_ac672877a5e9fda8398817b437350c35b}{add\-Tag} (\hyperlink{class_tag}{Tag} $\ast$t)
+\item 
+Q\-Set$<$ \hyperlink{class_tag}{Tag} $\ast$ $>$ \hyperlink{class_tag_manager_a6db221882f6ee6bc22abdb6e1785b344}{get\-Tags} ()
+\item 
+void \hyperlink{class_tag_manager_aa9236f4afa653ebca603d07849719a63}{remove\-Tag} (\hyperlink{class_tag}{Tag} $\ast$t)
+\begin{DoxyCompactList}\small\item\em remove\-Tag Disassocie mutuellement le tag t et tous les notes associes a ce tag. \end{DoxyCompactList}\item 
+const Q\-Set$<$ \hyperlink{class_tag}{Tag} $\ast$ $>$ \& \hyperlink{class_tag_manager_a51d43e2a6f57c6bb5bab47aac9d415d0}{get\-Tagfor\-Note} (\hyperlink{class_note}{Note} $\ast$note)
+\begin{DoxyCompactList}\small\item\em get\-Tagfor\-Note recuperer tous les tags qui sont attache a note. \end{DoxyCompactList}\item 
+Q\-Set$<$ \hyperlink{class_note}{Note} $\ast$ $>$ \& \hyperlink{class_tag_manager_a9cf10a6c96770c5442f2f2ed68b175c9}{get\-Notesfor\-Tag} (\hyperlink{class_tag}{Tag} $\ast$\hyperlink{_filter_8h_a7ef0ab496f57e183b484e62e2053c94fa9daab2aa897c0d2d4500bed734b0d780}{tag})
+\begin{DoxyCompactList}\small\item\em get\-Notefor\-Tag recuperer tous les notes qui sont attache a tag. \end{DoxyCompactList}\item 
+void \hyperlink{class_tag_manager_a26a2ec5ee401470689d7cbfaf08c4429}{add\-Tag\-To\-Note} (\hyperlink{class_tag}{Tag} $\ast$\hyperlink{_filter_8h_a7ef0ab496f57e183b484e62e2053c94fa9daab2aa897c0d2d4500bed734b0d780}{tag}, \hyperlink{class_note}{Note} $\ast$note)
+\begin{DoxyCompactList}\small\item\em add\-Tag\-To\-Note Ajouter mutuellement l'association entre un tag et une note. \end{DoxyCompactList}\item 
+void \hyperlink{class_tag_manager_ab496a3ce6dddf0a551924a8791c921cb}{remove\-Tag\-For\-Note} (\hyperlink{class_tag}{Tag} $\ast$\hyperlink{_filter_8h_a7ef0ab496f57e183b484e62e2053c94fa9daab2aa897c0d2d4500bed734b0d780}{tag}, \hyperlink{class_note}{Note} $\ast$note)
+\begin{DoxyCompactList}\small\item\em remove\-Tag\-For\-Note elever mutuellement l'association entre un tag et une note \end{DoxyCompactList}\item 
+\hyperlink{class_tag}{Tag} $\ast$ \hyperlink{class_tag_manager_a61dbcb332f1ec7a582319da34e07af4e}{get\-Tag} (const Q\-String \&newtag)
+\begin{DoxyCompactList}\small\item\em get\-Tag recuperer un tag a partir de sont nom newtag \end{DoxyCompactList}\item 
+\hyperlink{_tag_manager_8h_aa1b35760a57fe696ca30f36805d822e7}{tag\-Set\-It} \hyperlink{class_tag_manager_a47aab41cb57de33c1ec857c9b6235690}{begin} ()
+\begin{DoxyCompactList}\small\item\em begin l'adaptation de Q\-Set$<$\-Tag$\ast$$>$ \end{DoxyCompactList}\item 
+\hyperlink{_tag_manager_8h_aa1b35760a57fe696ca30f36805d822e7}{tag\-Set\-It} \hyperlink{class_tag_manager_ae4f51bba8ed7827b0769797653b3092f}{end} ()
+\begin{DoxyCompactList}\small\item\em end l'adaptation de Q\-Set$<$\-Tag$\ast$$>$ \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_tag_manager}{Tag\-Manager} \& \hyperlink{class_tag_manager_ac510ba35bdfa2dce44f575ddcb3aa282}{get\-Instance} ()
+\item 
+static void \hyperlink{class_tag_manager_ada20145e1667ed0e767ee67dcd6a919c}{libere\-Instance} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_tag_manager}{Tag\-Manager} class Cette classe sert comme intermediare entre les notes et les tags. \mbox{[}Singleton\mbox{]}. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_tag_manager_ac672877a5e9fda8398817b437350c35b}{\index{Tag\-Manager@{Tag\-Manager}!add\-Tag@{add\-Tag}}
+\index{add\-Tag@{add\-Tag}!TagManager@{Tag\-Manager}}
+\subsubsection[{add\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-Manager\-::add\-Tag (
+\begin{DoxyParamCaption}
+\item[{{\bf Tag} $\ast$}]{t}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tag_manager_ac672877a5e9fda8398817b437350c35b}
+\hypertarget{class_tag_manager_a26a2ec5ee401470689d7cbfaf08c4429}{\index{Tag\-Manager@{Tag\-Manager}!add\-Tag\-To\-Note@{add\-Tag\-To\-Note}}
+\index{add\-Tag\-To\-Note@{add\-Tag\-To\-Note}!TagManager@{Tag\-Manager}}
+\subsubsection[{add\-Tag\-To\-Note}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-Manager\-::add\-Tag\-To\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Tag} $\ast$}]{tag, }
+\item[{{\bf Note} $\ast$}]{note}
+\end{DoxyParamCaption}
+)}}\label{class_tag_manager_a26a2ec5ee401470689d7cbfaf08c4429}
+
+
+add\-Tag\-To\-Note Ajouter mutuellement l'association entre un tag et une note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tag} & \\
+\hline
+{\em note} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_tag_manager_a47aab41cb57de33c1ec857c9b6235690}{\index{Tag\-Manager@{Tag\-Manager}!begin@{begin}}
+\index{begin@{begin}!TagManager@{Tag\-Manager}}
+\subsubsection[{begin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tag\-Set\-It} Tag\-Manager\-::begin (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tag_manager_a47aab41cb57de33c1ec857c9b6235690}
+
+
+begin l'adaptation de Q\-Set$<$\-Tag$\ast$$>$ 
+
+\begin{DoxyReturn}{Returns}
+retourne un iterateur sur le premier \hyperlink{class_tag}{Tag} existant. 
+\end{DoxyReturn}
+\hypertarget{class_tag_manager_ae4f51bba8ed7827b0769797653b3092f}{\index{Tag\-Manager@{Tag\-Manager}!end@{end}}
+\index{end@{end}!TagManager@{Tag\-Manager}}
+\subsubsection[{end}]{\setlength{\rightskip}{0pt plus 5cm}{\bf tag\-Set\-It} Tag\-Manager\-::end (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tag_manager_ae4f51bba8ed7827b0769797653b3092f}
+
+
+end l'adaptation de Q\-Set$<$\-Tag$\ast$$>$ 
+
+\begin{DoxyReturn}{Returns}
+retourne un iterateur sur l'apres dernier \hyperlink{class_tag}{Tag} existant. 
+\end{DoxyReturn}
+\hypertarget{class_tag_manager_ac510ba35bdfa2dce44f575ddcb3aa282}{\index{Tag\-Manager@{Tag\-Manager}!get\-Instance@{get\-Instance}}
+\index{get\-Instance@{get\-Instance}!TagManager@{Tag\-Manager}}
+\subsubsection[{get\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Tag\-Manager} \& Tag\-Manager\-::get\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_tag_manager_ac510ba35bdfa2dce44f575ddcb3aa282}
+\hypertarget{class_tag_manager_a9cf10a6c96770c5442f2f2ed68b175c9}{\index{Tag\-Manager@{Tag\-Manager}!get\-Notesfor\-Tag@{get\-Notesfor\-Tag}}
+\index{get\-Notesfor\-Tag@{get\-Notesfor\-Tag}!TagManager@{Tag\-Manager}}
+\subsubsection[{get\-Notesfor\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Set$<$ {\bf Note} $\ast$ $>$ \& Tag\-Manager\-::get\-Notesfor\-Tag (
+\begin{DoxyParamCaption}
+\item[{{\bf Tag} $\ast$}]{tag}
+\end{DoxyParamCaption}
+)}}\label{class_tag_manager_a9cf10a6c96770c5442f2f2ed68b175c9}
+
+
+get\-Notefor\-Tag recuperer tous les notes qui sont attache a tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tag} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Un ensemble des notes associe a tag. 
+\end{DoxyReturn}
+\hypertarget{class_tag_manager_a61dbcb332f1ec7a582319da34e07af4e}{\index{Tag\-Manager@{Tag\-Manager}!get\-Tag@{get\-Tag}}
+\index{get\-Tag@{get\-Tag}!TagManager@{Tag\-Manager}}
+\subsubsection[{get\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Tag} $\ast$ Tag\-Manager\-::get\-Tag (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{newtag}
+\end{DoxyParamCaption}
+)}}\label{class_tag_manager_a61dbcb332f1ec7a582319da34e07af4e}
+
+
+get\-Tag recuperer un tag a partir de sont nom newtag 
+
+
+\begin{DoxyParams}{Parameters}
+{\em newtag} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+retourne un pointeur sur un tag existant qui porte le meme nom ou bien en creer un s'il n'existe pas encore. 
+\end{DoxyReturn}
+\hypertarget{class_tag_manager_a51d43e2a6f57c6bb5bab47aac9d415d0}{\index{Tag\-Manager@{Tag\-Manager}!get\-Tagfor\-Note@{get\-Tagfor\-Note}}
+\index{get\-Tagfor\-Note@{get\-Tagfor\-Note}!TagManager@{Tag\-Manager}}
+\subsubsection[{get\-Tagfor\-Note}]{\setlength{\rightskip}{0pt plus 5cm}const Q\-Set$<$ {\bf Tag} $\ast$ $>$ \& Tag\-Manager\-::get\-Tagfor\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} $\ast$}]{note}
+\end{DoxyParamCaption}
+)}}\label{class_tag_manager_a51d43e2a6f57c6bb5bab47aac9d415d0}
+
+
+get\-Tagfor\-Note recuperer tous les tags qui sont attache a note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em note} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Un ensemble des tags associe a note. 
+\end{DoxyReturn}
+\hypertarget{class_tag_manager_a6db221882f6ee6bc22abdb6e1785b344}{\index{Tag\-Manager@{Tag\-Manager}!get\-Tags@{get\-Tags}}
+\index{get\-Tags@{get\-Tags}!TagManager@{Tag\-Manager}}
+\subsubsection[{get\-Tags}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Set$<$ {\bf Tag} $\ast$ $>$ Tag\-Manager\-::get\-Tags (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_tag_manager_a6db221882f6ee6bc22abdb6e1785b344}
+\hypertarget{class_tag_manager_ada20145e1667ed0e767ee67dcd6a919c}{\index{Tag\-Manager@{Tag\-Manager}!libere\-Instance@{libere\-Instance}}
+\index{libere\-Instance@{libere\-Instance}!TagManager@{Tag\-Manager}}
+\subsubsection[{libere\-Instance}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-Manager\-::libere\-Instance (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{class_tag_manager_ada20145e1667ed0e767ee67dcd6a919c}
+\hypertarget{class_tag_manager_aa9236f4afa653ebca603d07849719a63}{\index{Tag\-Manager@{Tag\-Manager}!remove\-Tag@{remove\-Tag}}
+\index{remove\-Tag@{remove\-Tag}!TagManager@{Tag\-Manager}}
+\subsubsection[{remove\-Tag}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-Manager\-::remove\-Tag (
+\begin{DoxyParamCaption}
+\item[{{\bf Tag} $\ast$}]{t}
+\end{DoxyParamCaption}
+)}}\label{class_tag_manager_aa9236f4afa653ebca603d07849719a63}
+
+
+remove\-Tag Disassocie mutuellement le tag t et tous les notes associes a ce tag. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_tag_manager_ab496a3ce6dddf0a551924a8791c921cb}{\index{Tag\-Manager@{Tag\-Manager}!remove\-Tag\-For\-Note@{remove\-Tag\-For\-Note}}
+\index{remove\-Tag\-For\-Note@{remove\-Tag\-For\-Note}!TagManager@{Tag\-Manager}}
+\subsubsection[{remove\-Tag\-For\-Note}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-Manager\-::remove\-Tag\-For\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Tag} $\ast$}]{tag, }
+\item[{{\bf Note} $\ast$}]{note}
+\end{DoxyParamCaption}
+)}}\label{class_tag_manager_ab496a3ce6dddf0a551924a8791c921cb}
+
+
+remove\-Tag\-For\-Note elever mutuellement l'association entre un tag et une note 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tag} & \\
+\hline
+{\em note} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_tag_manager_8h}{Tag\-Manager.\-h}\item 
+\hyperlink{_tag_manager_8cpp}{Tag\-Manager.\-cpp}\end{DoxyCompactItemize}

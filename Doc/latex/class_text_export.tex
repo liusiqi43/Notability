@@ -1,0 +1,142 @@
+\hypertarget{class_text_export}{\section{Text\-Export Class Reference}
+\label{class_text_export}\index{Text\-Export@{Text\-Export}}
+}
+
+
+The \hyperlink{class_text_export}{Text\-Export} class Exporter une note en plain text.  
+
+
+
+
+{\ttfamily \#include $<$Text\-Export.\-h$>$}
+
+Inheritance diagram for Text\-Export\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_text_export}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_text_export_aa18336d68c8b12866be83e5e0e2e6737}{Text\-Export} ()
+\item 
+Q\-String \hyperlink{class_text_export_a1fc1534c98477ae9bb07a6763e760f88}{header} () const 
+\item 
+Q\-String \hyperlink{class_text_export_af508443d5f02d032653e6a496c62ba96}{footer} () const 
+\item 
+Q\-String \hyperlink{class_text_export_afac4f9b7bab1151701541c5fcecf0c8a}{export\-Note} (const \hyperlink{class_image_note}{Image\-Note} $\ast$note, unsigned int level=0) const 
+\item 
+Q\-String \hyperlink{class_text_export_ae750e0187771a24a47bf2ad6c27f1975}{export\-Note} (const \hyperlink{class_article}{Article} $\ast$note, unsigned int level=0) const 
+\item 
+Q\-String \hyperlink{class_text_export_ac89822384b5acdc4bbf76e5f78ad1cc9}{export\-Note} (const \hyperlink{class_audio_note}{Audio\-Note} $\ast$note, unsigned int level=0) const 
+\item 
+Q\-String \hyperlink{class_text_export_ad924a2a1fd9fb2fcea7ac36d18f443bb}{export\-Note} (const \hyperlink{class_video_note}{Video\-Note} $\ast$note, unsigned int level=0) const 
+\item 
+Q\-String \hyperlink{class_text_export_a394c75275ef9731ea02a877e99ed7f23}{export\-Note} (const \hyperlink{class_document}{Document} $\ast$doc, unsigned int level=0) const 
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_text_export}{Text\-Export} class Exporter une note en plain text. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_text_export_aa18336d68c8b12866be83e5e0e2e6737}{\index{Text\-Export@{Text\-Export}!Text\-Export@{Text\-Export}}
+\index{Text\-Export@{Text\-Export}!TextExport@{Text\-Export}}
+\subsubsection[{Text\-Export}]{\setlength{\rightskip}{0pt plus 5cm}Text\-Export\-::\-Text\-Export (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_text_export_aa18336d68c8b12866be83e5e0e2e6737}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_text_export_afac4f9b7bab1151701541c5fcecf0c8a}{\index{Text\-Export@{Text\-Export}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!TextExport@{Text\-Export}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Text\-Export\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Image\-Note} $\ast$}]{note, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_export_afac4f9b7bab1151701541c5fcecf0c8a}
+
+
+Implements \hyperlink{class_export_strategy_ab1e0f0289ee569bda5ddf581c294a0e3}{Export\-Strategy}.
+
+\hypertarget{class_text_export_ae750e0187771a24a47bf2ad6c27f1975}{\index{Text\-Export@{Text\-Export}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!TextExport@{Text\-Export}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Text\-Export\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Article} $\ast$}]{note, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_export_ae750e0187771a24a47bf2ad6c27f1975}
+
+
+Implements \hyperlink{class_export_strategy_ac4620b38512cada7869aa2a18d29cc05}{Export\-Strategy}.
+
+\hypertarget{class_text_export_ac89822384b5acdc4bbf76e5f78ad1cc9}{\index{Text\-Export@{Text\-Export}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!TextExport@{Text\-Export}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Text\-Export\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Audio\-Note} $\ast$}]{note, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_export_ac89822384b5acdc4bbf76e5f78ad1cc9}
+
+
+Implements \hyperlink{class_export_strategy_ab6935beb7adfde2a6435ab912732aba8}{Export\-Strategy}.
+
+\hypertarget{class_text_export_ad924a2a1fd9fb2fcea7ac36d18f443bb}{\index{Text\-Export@{Text\-Export}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!TextExport@{Text\-Export}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Text\-Export\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Video\-Note} $\ast$}]{note, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_export_ad924a2a1fd9fb2fcea7ac36d18f443bb}
+
+
+Implements \hyperlink{class_export_strategy_ac1d6a027448434eb99198e7f8370c8ad}{Export\-Strategy}.
+
+\hypertarget{class_text_export_a394c75275ef9731ea02a877e99ed7f23}{\index{Text\-Export@{Text\-Export}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!TextExport@{Text\-Export}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Text\-Export\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Document} $\ast$}]{doc, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_export_a394c75275ef9731ea02a877e99ed7f23}
+
+
+Implements \hyperlink{class_export_strategy_a2b4271cd27136240eb11102d8f2ee3c7}{Export\-Strategy}.
+
+\hypertarget{class_text_export_af508443d5f02d032653e6a496c62ba96}{\index{Text\-Export@{Text\-Export}!footer@{footer}}
+\index{footer@{footer}!TextExport@{Text\-Export}}
+\subsubsection[{footer}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Text\-Export\-::footer (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_export_af508443d5f02d032653e6a496c62ba96}
+
+
+Implements \hyperlink{class_export_strategy_aa7640ca5f382c7264697e594cd1288ff}{Export\-Strategy}.
+
+\hypertarget{class_text_export_a1fc1534c98477ae9bb07a6763e760f88}{\index{Text\-Export@{Text\-Export}!header@{header}}
+\index{header@{header}!TextExport@{Text\-Export}}
+\subsubsection[{header}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Text\-Export\-::header (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_text_export_a1fc1534c98477ae9bb07a6763e760f88}
+
+
+Implements \hyperlink{class_export_strategy_a8f24eb340762e0c1b1faaefb32087468}{Export\-Strategy}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_text_export_8h}{Text\-Export.\-h}\item 
+\hyperlink{_text_export_8cpp}{Text\-Export.\-cpp}\end{DoxyCompactItemize}

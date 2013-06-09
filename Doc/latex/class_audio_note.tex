@@ -1,0 +1,99 @@
+\hypertarget{class_audio_note}{\section{Audio\-Note Class Reference}
+\label{class_audio_note}\index{Audio\-Note@{Audio\-Note}}
+}
+
+
+The \hyperlink{class_audio_note}{Audio\-Note} class Cette classe herite de la Class \hyperlink{class_binary}{Binary}, qui represente une note qui contient de la musique.  
+
+
+
+
+{\ttfamily \#include $<$Audio\-Note.\-h$>$}
+
+Inheritance diagram for Audio\-Note\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_audio_note}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_audio_note_aeb940f8bc193ca47ffb17fa7555d6821}{Audio\-Note} (const Q\-String \&file\-Path)
+\item 
+\hyperlink{class_audio_note_ae571e3b6f7fdc688a1c65e4ea4e7141c}{Audio\-Note} (const Q\-String \&file\-Path, const Q\-String \&ti, const Q\-String \&des, const Q\-String \&a\-Path)
+\item 
+\hyperlink{class_audio_note_editor}{Audio\-Note\-Editor} $\ast$ \hyperlink{class_audio_note_a925cd568ca8d630bd943ad4182ef6ca8}{create\-Editor} ()
+\begin{DoxyCompactList}\small\item\em create\-Editor Creation d'un audio\-Note\-Editor pour lui meme \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_audio_note_ad69445a8975ae93d9889bb021f18f8e1}{export\-Note} (const \hyperlink{class_export_strategy}{Export\-Strategy} $\ast$es, unsigned int level=0)
+\begin{DoxyCompactList}\small\item\em create\-Editor Methode virtuelle pure definie dans les classes filles \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_audio_note}{Audio\-Note} class Cette classe herite de la Class \hyperlink{class_binary}{Binary}, qui represente une note qui contient de la musique. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_audio_note_aeb940f8bc193ca47ffb17fa7555d6821}{\index{Audio\-Note@{Audio\-Note}!Audio\-Note@{Audio\-Note}}
+\index{Audio\-Note@{Audio\-Note}!AudioNote@{Audio\-Note}}
+\subsubsection[{Audio\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Audio\-Note\-::\-Audio\-Note (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{file\-Path}
+\end{DoxyParamCaption}
+)}}\label{class_audio_note_aeb940f8bc193ca47ffb17fa7555d6821}
+\hypertarget{class_audio_note_ae571e3b6f7fdc688a1c65e4ea4e7141c}{\index{Audio\-Note@{Audio\-Note}!Audio\-Note@{Audio\-Note}}
+\index{Audio\-Note@{Audio\-Note}!AudioNote@{Audio\-Note}}
+\subsubsection[{Audio\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Audio\-Note\-::\-Audio\-Note (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{file\-Path, }
+\item[{const Q\-String \&}]{ti, }
+\item[{const Q\-String \&}]{des, }
+\item[{const Q\-String \&}]{a\-Path}
+\end{DoxyParamCaption}
+)}}\label{class_audio_note_ae571e3b6f7fdc688a1c65e4ea4e7141c}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_audio_note_a925cd568ca8d630bd943ad4182ef6ca8}{\index{Audio\-Note@{Audio\-Note}!create\-Editor@{create\-Editor}}
+\index{create\-Editor@{create\-Editor}!AudioNote@{Audio\-Note}}
+\subsubsection[{create\-Editor}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Audio\-Note\-Editor}$\ast$ Audio\-Note\-::create\-Editor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}}\label{class_audio_note_a925cd568ca8d630bd943ad4182ef6ca8}
+
+
+create\-Editor Creation d'un audio\-Note\-Editor pour lui meme 
+
+\begin{DoxyReturn}{Returns}
+un audio\-Note\-Editor qui est rempli avec le contenu de cette note courant 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_note_a6fab406019fac776671ce73b541afa67}{Note}.
+
+\hypertarget{class_audio_note_ad69445a8975ae93d9889bb021f18f8e1}{\index{Audio\-Note@{Audio\-Note}!export\-Note@{export\-Note}}
+\index{export\-Note@{export\-Note}!AudioNote@{Audio\-Note}}
+\subsubsection[{export\-Note}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Audio\-Note\-::export\-Note (
+\begin{DoxyParamCaption}
+\item[{const {\bf Export\-Strategy} $\ast$}]{es, }
+\item[{unsigned int}]{level = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_audio_note_ad69445a8975ae93d9889bb021f18f8e1}
+
+
+create\-Editor Methode virtuelle pure definie dans les classes filles 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_note_aa0ba654b756800042d3022d0dcd21ef8}{Note}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_audio_note_8h}{Audio\-Note.\-h}\item 
+\hyperlink{_audio_note_8cpp}{Audio\-Note.\-cpp}\end{DoxyCompactItemize}

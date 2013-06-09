@@ -1,0 +1,102 @@
+\hypertarget{class_audio_note_factory}{\section{Audio\-Note\-Factory Class Reference}
+\label{class_audio_note_factory}\index{Audio\-Note\-Factory@{Audio\-Note\-Factory}}
+}
+
+
+The \hyperlink{class_audio_note_factory}{Audio\-Note\-Factory} class Cette classe genere les  a partir d'un fichier existant ou genere un nouveau fichier.  
+
+
+
+
+{\ttfamily \#include $<$Audio\-Note\-Factory.\-h$>$}
+
+Inheritance diagram for Audio\-Note\-Factory\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_audio_note_factory}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_audio_note}{Audio\-Note} $\ast$ \hyperlink{class_audio_note_factory_a1fc66fa57aaffff2a952dc18223135d2}{build\-New\-Note} ()
+\item 
+\hyperlink{class_audio_note}{Audio\-Note} $\ast$ \hyperlink{class_audio_note_factory_ab76e371b423655a9e09eb9319f20ab7e}{build\-Note} (const Q\-String \&path)
+\item 
+Q\-String \hyperlink{class_audio_note_factory_a90c0669aa411ea0d37a4a806028d13ff}{get\-Folder} ()
+\begin{DoxyCompactList}\small\item\em get\-Folder Cette methode virtuelle genere le bon repertoire pour les notes generes. \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_audio_note_factory_ad8d31f7a05a62979ff24b5bfa97ad686}{get\-Extension} ()
+\begin{DoxyCompactList}\small\item\em get\-Extension Cette methode virtuelle genere le bon extension pour les . \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_audio_note_factory}{Audio\-Note\-Factory} class Cette classe genere les  a partir d'un fichier existant ou genere un nouveau fichier. 
+
+\subsection{Member Function Documentation}
+\hypertarget{class_audio_note_factory_a1fc66fa57aaffff2a952dc18223135d2}{\index{Audio\-Note\-Factory@{Audio\-Note\-Factory}!build\-New\-Note@{build\-New\-Note}}
+\index{build\-New\-Note@{build\-New\-Note}!AudioNoteFactory@{Audio\-Note\-Factory}}
+\subsubsection[{build\-New\-Note}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Audio\-Note} $\ast$ Audio\-Note\-Factory\-::build\-New\-Note (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_audio_note_factory_a1fc66fa57aaffff2a952dc18223135d2}
+
+
+Implements \hyperlink{class_note_factory_a11a2ce27fca508cea830c6a81e9c565c}{Note\-Factory}.
+
+\hypertarget{class_audio_note_factory_ab76e371b423655a9e09eb9319f20ab7e}{\index{Audio\-Note\-Factory@{Audio\-Note\-Factory}!build\-Note@{build\-Note}}
+\index{build\-Note@{build\-Note}!AudioNoteFactory@{Audio\-Note\-Factory}}
+\subsubsection[{build\-Note}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Audio\-Note} $\ast$ Audio\-Note\-Factory\-::build\-Note (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{path}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_audio_note_factory_ab76e371b423655a9e09eb9319f20ab7e}
+
+
+Implements \hyperlink{class_note_factory_aeb1f73ec8c4431b26c2c8e5a5cf9b61e}{Note\-Factory}.
+
+\hypertarget{class_audio_note_factory_ad8d31f7a05a62979ff24b5bfa97ad686}{\index{Audio\-Note\-Factory@{Audio\-Note\-Factory}!get\-Extension@{get\-Extension}}
+\index{get\-Extension@{get\-Extension}!AudioNoteFactory@{Audio\-Note\-Factory}}
+\subsubsection[{get\-Extension}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Audio\-Note\-Factory\-::get\-Extension (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_audio_note_factory_ad8d31f7a05a62979ff24b5bfa97ad686}
+
+
+get\-Extension Cette methode virtuelle genere le bon extension pour les . 
+
+\begin{DoxyReturn}{Returns}
+.aud. Cette extension sera utilise lors de l'ouverture du fichier
+\end{DoxyReturn}
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000002}{Deprecated}]\{L'ouverture du fichier est supprime car on prefere cache cette fonctionalite pour deboggage. En fait, l'utilisateurs ne connais que les titres du notes, mais pas l'id du fichier.\} \end{DoxyRefDesc}
+
+
+Implements \hyperlink{class_note_factory_ae1d2bbb4cb15be1976957ccc0bca87a2}{Note\-Factory}.
+
+\hypertarget{class_audio_note_factory_a90c0669aa411ea0d37a4a806028d13ff}{\index{Audio\-Note\-Factory@{Audio\-Note\-Factory}!get\-Folder@{get\-Folder}}
+\index{get\-Folder@{get\-Folder}!AudioNoteFactory@{Audio\-Note\-Factory}}
+\subsubsection[{get\-Folder}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Audio\-Note\-Factory\-::get\-Folder (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{class_audio_note_factory_a90c0669aa411ea0d37a4a806028d13ff}
+
+
+get\-Folder Cette methode virtuelle genere le bon repertoire pour les notes generes. 
+
+\begin{DoxyReturn}{Returns}
+A\-U\-D/ dans ce cas la. Ceci est uniquement utile pour organiser les fichiers pour les humains 
+\end{DoxyReturn}
+
+
+Implements \hyperlink{class_note_factory_a9d4c924038af855a7c4a51455b13ab83}{Note\-Factory}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_audio_note_factory_8h}{Audio\-Note\-Factory.\-h}\item 
+\hyperlink{_audio_note_factory_8cpp}{Audio\-Note\-Factory.\-cpp}\end{DoxyCompactItemize}

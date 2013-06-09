@@ -1,0 +1,65 @@
+\hypertarget{class_edit_current_tag_cmd}{\section{Edit\-Current\-Tag\-Cmd Class Reference}
+\label{class_edit_current_tag_cmd}\index{Edit\-Current\-Tag\-Cmd@{Edit\-Current\-Tag\-Cmd}}
+}
+
+
+The \hyperlink{class_edit_current_tag_cmd}{Edit\-Current\-Tag\-Cmd} class sous classe de Q\-Undo\-Command. Le principe est de donner la definition de l'action et son inverse. A chaque fois, on push l'action sur un  pour pouvoir ensuite revenir arriere en appelant la methode undo definit ici. On definit set\-Text() dans la constructeur pour donner une represetation texteulle du command, qui sera affiche dans l'historique. Nous n'avons pas eu le temps de remplacer toutes les actions par les undoablecommands. Ici, on a realise un ensembles des actions concernant la manipulation des Tags. On pourrait envisager de l'impementer pour toutes les autres actions dans le futur.  
+
+
+
+
+{\ttfamily \#include $<$Undoable\-Actions.\-h$>$}
+
+Inheritance diagram for Edit\-Current\-Tag\-Cmd\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_edit_current_tag_cmd}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_edit_current_tag_cmd_af70d069e440f0d749717642b44a4427f}{Edit\-Current\-Tag\-Cmd} (\hyperlink{class_list_widget_item_check_tag}{List\-Widget\-Item\-Check\-Tag} $\ast$i, Q\-List\-Widget $\ast$l, Q\-Undo\-Command $\ast$parent=0)
+\item 
+void \hyperlink{class_edit_current_tag_cmd_a3a798057294de3a9ff1edebf520b688f}{undo} ()
+\item 
+void \hyperlink{class_edit_current_tag_cmd_a032f07a7b8f6881087cc38f93dd88456}{redo} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_edit_current_tag_cmd}{Edit\-Current\-Tag\-Cmd} class sous classe de Q\-Undo\-Command. Le principe est de donner la definition de l'action et son inverse. A chaque fois, on push l'action sur un  pour pouvoir ensuite revenir arriere en appelant la methode undo definit ici. On definit set\-Text() dans la constructeur pour donner une represetation texteulle du command, qui sera affiche dans l'historique. Nous n'avons pas eu le temps de remplacer toutes les actions par les undoablecommands. Ici, on a realise un ensembles des actions concernant la manipulation des Tags. On pourrait envisager de l'impementer pour toutes les autres actions dans le futur. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_edit_current_tag_cmd_af70d069e440f0d749717642b44a4427f}{\index{Edit\-Current\-Tag\-Cmd@{Edit\-Current\-Tag\-Cmd}!Edit\-Current\-Tag\-Cmd@{Edit\-Current\-Tag\-Cmd}}
+\index{Edit\-Current\-Tag\-Cmd@{Edit\-Current\-Tag\-Cmd}!EditCurrentTagCmd@{Edit\-Current\-Tag\-Cmd}}
+\subsubsection[{Edit\-Current\-Tag\-Cmd}]{\setlength{\rightskip}{0pt plus 5cm}Edit\-Current\-Tag\-Cmd\-::\-Edit\-Current\-Tag\-Cmd (
+\begin{DoxyParamCaption}
+\item[{{\bf List\-Widget\-Item\-Check\-Tag} $\ast$}]{i, }
+\item[{Q\-List\-Widget $\ast$}]{l, }
+\item[{Q\-Undo\-Command $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_edit_current_tag_cmd_af70d069e440f0d749717642b44a4427f}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_edit_current_tag_cmd_a032f07a7b8f6881087cc38f93dd88456}{\index{Edit\-Current\-Tag\-Cmd@{Edit\-Current\-Tag\-Cmd}!redo@{redo}}
+\index{redo@{redo}!EditCurrentTagCmd@{Edit\-Current\-Tag\-Cmd}}
+\subsubsection[{redo}]{\setlength{\rightskip}{0pt plus 5cm}void Edit\-Current\-Tag\-Cmd\-::redo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_edit_current_tag_cmd_a032f07a7b8f6881087cc38f93dd88456}
+\hypertarget{class_edit_current_tag_cmd_a3a798057294de3a9ff1edebf520b688f}{\index{Edit\-Current\-Tag\-Cmd@{Edit\-Current\-Tag\-Cmd}!undo@{undo}}
+\index{undo@{undo}!EditCurrentTagCmd@{Edit\-Current\-Tag\-Cmd}}
+\subsubsection[{undo}]{\setlength{\rightskip}{0pt plus 5cm}void Edit\-Current\-Tag\-Cmd\-::undo (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_edit_current_tag_cmd_a3a798057294de3a9ff1edebf520b688f}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_undoable_actions_8h}{Undoable\-Actions.\-h}\item 
+\hyperlink{_undoable_actions_8cpp}{Undoable\-Actions.\-cpp}\end{DoxyCompactItemize}

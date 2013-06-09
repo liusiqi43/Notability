@@ -1,0 +1,229 @@
+\hypertarget{class_tree_item}{\section{Tree\-Item Class Reference}
+\label{class_tree_item}\index{Tree\-Item@{Tree\-Item}}
+}
+
+
+The \hyperlink{class_tree_item}{Tree\-Item} class Cette classe est une implementation du model M\-V\-C propose par Qt M\-V\-C framework. Il s'agit d'un implementation personalisee de \hyperlink{class_tree_item}{Tree\-Item}. Cette classes sert a faciliter la gestion du Tree\-View. Chaque \hyperlink{class_tree_item}{Tree\-Item} comporte zero ou plusieurs childrens, qui sont a leurs tour potentiellement le parent des children. Ceci permet donc de former un arbre.  
+
+
+
+
+{\ttfamily \#include $<$Tree\-Item.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_tree_item_a1e3a29cf1a0d6ff0bbc2d2ef41723a13}{Tree\-Item} (const Q\-Vector$<$ Q\-Variant $>$ \&\hyperlink{class_tree_item_a16641e42c78f004d47a66f3b2c39341f}{data}, \hyperlink{class_tree_item}{Tree\-Item} $\ast$\hyperlink{class_tree_item_a392ec493dfab91ee474d7ff83e2c0211}{parent}=0)
+\item 
+\hyperlink{class_tree_item_a859429185d908c3e54861bbbfb185425}{$\sim$\-Tree\-Item} ()
+\item 
+\hyperlink{class_tree_item}{Tree\-Item} $\ast$ \hyperlink{class_tree_item_a993f98a911be40cc1466e105b4657bbe}{child} (int number)
+\item 
+int \hyperlink{class_tree_item_a55ffe6dd27750e479034b93e753f87af}{child\-Count} () const 
+\item 
+int \hyperlink{class_tree_item_a31c3fb89ad8e19ae696a310a1f843a8e}{column\-Count} () const 
+\item 
+Q\-Variant \hyperlink{class_tree_item_a16641e42c78f004d47a66f3b2c39341f}{data} (int column) const 
+\begin{DoxyCompactList}\small\item\em data Ici on utilise qu'un seul colomn, qui est le titre du note. \end{DoxyCompactList}\item 
+bool \hyperlink{class_tree_item_ad6b6da67cc03e79c714419f93f5005c6}{insert\-Children} (int position, int count, int columns)
+\item 
+bool \hyperlink{class_tree_item_aaed6e9bcd68a8e78876ab72fd000b7c8}{insert\-Columns} (int position, int columns)
+\item 
+\hyperlink{class_tree_item}{Tree\-Item} $\ast$ \hyperlink{class_tree_item_a392ec493dfab91ee474d7ff83e2c0211}{parent} ()
+\item 
+bool \hyperlink{class_tree_item_aa9861c44a34b210bde61527b9b5018f3}{remove\-Children} (int position, int count)
+\item 
+bool \hyperlink{class_tree_item_a71aa8096b2c4361906f6225134c65f78}{remove\-Columns} (int position, int columns)
+\item 
+int \hyperlink{class_tree_item_afadec3be086a04920b270c51e23b765b}{child\-Number} () const 
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_tree_item_afadec3be086a04920b270c51e23b765b}{Tree\-Item\-::child\-Number}\-: return current Node's index in its parent. \end{DoxyCompactList}\item 
+bool \hyperlink{class_tree_item_aa648c47b828f4679b6be989d480432de}{set\-Data} (int column, const Q\-Variant \&value, \hyperlink{class_note}{Note} $\ast$underlying\-Note)
+\item 
+void \hyperlink{class_tree_item_ade9049b23b5ebe1bbede8f404e17f515}{update\-Underlying\-Note\-Title} (const Q\-Variant \&)
+\begin{DoxyCompactList}\small\item\em update\-Underlying\-Note\-Title A chaque \hyperlink{class_tree_item}{Tree\-Item} on lui associe une \hyperlink{class_note}{Note}. Ceci permet de mettre a jour le titre du note a partir du Tree\-View \end{DoxyCompactList}\item 
+\hyperlink{class_note}{Note} $\ast$ \hyperlink{class_tree_item_a506e8c5257843f55fb54ebd141de1491}{get\-Item\-Id} () const 
+\item 
+void \hyperlink{class_tree_item_a38d961a2dc1dd59bb2a245e0d8da32aa}{set\-Item\-Id} (\hyperlink{class_note}{Note} $\ast$value)
+\begin{DoxyCompactList}\small\item\em set\-Item\-Id chaque Item est characterise par son \hyperlink{class_note}{Note} associe. Pour la raison historique, on l'appelle I\-D \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_tree_item}{Tree\-Item} class Cette classe est une implementation du model M\-V\-C propose par Qt M\-V\-C framework. Il s'agit d'un implementation personalisee de \hyperlink{class_tree_item}{Tree\-Item}. Cette classes sert a faciliter la gestion du Tree\-View. Chaque \hyperlink{class_tree_item}{Tree\-Item} comporte zero ou plusieurs childrens, qui sont a leurs tour potentiellement le parent des children. Ceci permet donc de former un arbre. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\hyperlink{todo__todo000002}{Todo}]\{Utilisation d'un iterator profondeur d'abord va largement facilter le code, on pourrait s'en servir pour la reecriture du programme.\} \end{DoxyRefDesc}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_tree_item_a1e3a29cf1a0d6ff0bbc2d2ef41723a13}{\index{Tree\-Item@{Tree\-Item}!Tree\-Item@{Tree\-Item}}
+\index{Tree\-Item@{Tree\-Item}!TreeItem@{Tree\-Item}}
+\subsubsection[{Tree\-Item}]{\setlength{\rightskip}{0pt plus 5cm}Tree\-Item\-::\-Tree\-Item (
+\begin{DoxyParamCaption}
+\item[{const Q\-Vector$<$ Q\-Variant $>$ \&}]{data, }
+\item[{{\bf Tree\-Item} $\ast$}]{parent = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_a1e3a29cf1a0d6ff0bbc2d2ef41723a13}
+\hypertarget{class_tree_item_a859429185d908c3e54861bbbfb185425}{\index{Tree\-Item@{Tree\-Item}!$\sim$\-Tree\-Item@{$\sim$\-Tree\-Item}}
+\index{$\sim$\-Tree\-Item@{$\sim$\-Tree\-Item}!TreeItem@{Tree\-Item}}
+\subsubsection[{$\sim$\-Tree\-Item}]{\setlength{\rightskip}{0pt plus 5cm}Tree\-Item\-::$\sim$\-Tree\-Item (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_a859429185d908c3e54861bbbfb185425}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_tree_item_a993f98a911be40cc1466e105b4657bbe}{\index{Tree\-Item@{Tree\-Item}!child@{child}}
+\index{child@{child}!TreeItem@{Tree\-Item}}
+\subsubsection[{child}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Tree\-Item} $\ast$ Tree\-Item\-::child (
+\begin{DoxyParamCaption}
+\item[{int}]{number}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_a993f98a911be40cc1466e105b4657bbe}
+\hypertarget{class_tree_item_a55ffe6dd27750e479034b93e753f87af}{\index{Tree\-Item@{Tree\-Item}!child\-Count@{child\-Count}}
+\index{child\-Count@{child\-Count}!TreeItem@{Tree\-Item}}
+\subsubsection[{child\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int Tree\-Item\-::child\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_tree_item_a55ffe6dd27750e479034b93e753f87af}
+\hypertarget{class_tree_item_afadec3be086a04920b270c51e23b765b}{\index{Tree\-Item@{Tree\-Item}!child\-Number@{child\-Number}}
+\index{child\-Number@{child\-Number}!TreeItem@{Tree\-Item}}
+\subsubsection[{child\-Number}]{\setlength{\rightskip}{0pt plus 5cm}int Tree\-Item\-::child\-Number (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_tree_item_afadec3be086a04920b270c51e23b765b}
+
+
+\hyperlink{class_tree_item_afadec3be086a04920b270c51e23b765b}{Tree\-Item\-::child\-Number}\-: return current Node's index in its parent. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_tree_item_a31c3fb89ad8e19ae696a310a1f843a8e}{\index{Tree\-Item@{Tree\-Item}!column\-Count@{column\-Count}}
+\index{column\-Count@{column\-Count}!TreeItem@{Tree\-Item}}
+\subsubsection[{column\-Count}]{\setlength{\rightskip}{0pt plus 5cm}int Tree\-Item\-::column\-Count (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_tree_item_a31c3fb89ad8e19ae696a310a1f843a8e}
+\hypertarget{class_tree_item_a16641e42c78f004d47a66f3b2c39341f}{\index{Tree\-Item@{Tree\-Item}!data@{data}}
+\index{data@{data}!TreeItem@{Tree\-Item}}
+\subsubsection[{data}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Variant Tree\-Item\-::data (
+\begin{DoxyParamCaption}
+\item[{int}]{column}
+\end{DoxyParamCaption}
+) const}}\label{class_tree_item_a16641e42c78f004d47a66f3b2c39341f}
+
+
+data Ici on utilise qu'un seul colomn, qui est le titre du note. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em column} & egale a 0 dans ce cas la. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_tree_item_a506e8c5257843f55fb54ebd141de1491}{\index{Tree\-Item@{Tree\-Item}!get\-Item\-Id@{get\-Item\-Id}}
+\index{get\-Item\-Id@{get\-Item\-Id}!TreeItem@{Tree\-Item}}
+\subsubsection[{get\-Item\-Id}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Note} $\ast$ Tree\-Item\-::get\-Item\-Id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_tree_item_a506e8c5257843f55fb54ebd141de1491}
+\hypertarget{class_tree_item_ad6b6da67cc03e79c714419f93f5005c6}{\index{Tree\-Item@{Tree\-Item}!insert\-Children@{insert\-Children}}
+\index{insert\-Children@{insert\-Children}!TreeItem@{Tree\-Item}}
+\subsubsection[{insert\-Children}]{\setlength{\rightskip}{0pt plus 5cm}bool Tree\-Item\-::insert\-Children (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{int}]{count, }
+\item[{int}]{columns}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_ad6b6da67cc03e79c714419f93f5005c6}
+\hypertarget{class_tree_item_aaed6e9bcd68a8e78876ab72fd000b7c8}{\index{Tree\-Item@{Tree\-Item}!insert\-Columns@{insert\-Columns}}
+\index{insert\-Columns@{insert\-Columns}!TreeItem@{Tree\-Item}}
+\subsubsection[{insert\-Columns}]{\setlength{\rightskip}{0pt plus 5cm}bool Tree\-Item\-::insert\-Columns (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{int}]{columns}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_aaed6e9bcd68a8e78876ab72fd000b7c8}
+\hypertarget{class_tree_item_a392ec493dfab91ee474d7ff83e2c0211}{\index{Tree\-Item@{Tree\-Item}!parent@{parent}}
+\index{parent@{parent}!TreeItem@{Tree\-Item}}
+\subsubsection[{parent}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Tree\-Item} $\ast$ Tree\-Item\-::parent (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_a392ec493dfab91ee474d7ff83e2c0211}
+\hypertarget{class_tree_item_aa9861c44a34b210bde61527b9b5018f3}{\index{Tree\-Item@{Tree\-Item}!remove\-Children@{remove\-Children}}
+\index{remove\-Children@{remove\-Children}!TreeItem@{Tree\-Item}}
+\subsubsection[{remove\-Children}]{\setlength{\rightskip}{0pt plus 5cm}bool Tree\-Item\-::remove\-Children (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{int}]{count}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_aa9861c44a34b210bde61527b9b5018f3}
+\hypertarget{class_tree_item_a71aa8096b2c4361906f6225134c65f78}{\index{Tree\-Item@{Tree\-Item}!remove\-Columns@{remove\-Columns}}
+\index{remove\-Columns@{remove\-Columns}!TreeItem@{Tree\-Item}}
+\subsubsection[{remove\-Columns}]{\setlength{\rightskip}{0pt plus 5cm}bool Tree\-Item\-::remove\-Columns (
+\begin{DoxyParamCaption}
+\item[{int}]{position, }
+\item[{int}]{columns}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_a71aa8096b2c4361906f6225134c65f78}
+\hypertarget{class_tree_item_aa648c47b828f4679b6be989d480432de}{\index{Tree\-Item@{Tree\-Item}!set\-Data@{set\-Data}}
+\index{set\-Data@{set\-Data}!TreeItem@{Tree\-Item}}
+\subsubsection[{set\-Data}]{\setlength{\rightskip}{0pt plus 5cm}bool Tree\-Item\-::set\-Data (
+\begin{DoxyParamCaption}
+\item[{int}]{column, }
+\item[{const Q\-Variant \&}]{value, }
+\item[{{\bf Note} $\ast$}]{underlying\-Note}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_aa648c47b828f4679b6be989d480432de}
+\hypertarget{class_tree_item_a38d961a2dc1dd59bb2a245e0d8da32aa}{\index{Tree\-Item@{Tree\-Item}!set\-Item\-Id@{set\-Item\-Id}}
+\index{set\-Item\-Id@{set\-Item\-Id}!TreeItem@{Tree\-Item}}
+\subsubsection[{set\-Item\-Id}]{\setlength{\rightskip}{0pt plus 5cm}void Tree\-Item\-::set\-Item\-Id (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} $\ast$}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_a38d961a2dc1dd59bb2a245e0d8da32aa}
+
+
+set\-Item\-Id chaque Item est characterise par son \hyperlink{class_note}{Note} associe. Pour la raison historique, on l'appelle I\-D 
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_tree_item_ade9049b23b5ebe1bbede8f404e17f515}{\index{Tree\-Item@{Tree\-Item}!update\-Underlying\-Note\-Title@{update\-Underlying\-Note\-Title}}
+\index{update\-Underlying\-Note\-Title@{update\-Underlying\-Note\-Title}!TreeItem@{Tree\-Item}}
+\subsubsection[{update\-Underlying\-Note\-Title}]{\setlength{\rightskip}{0pt plus 5cm}void Tree\-Item\-::update\-Underlying\-Note\-Title (
+\begin{DoxyParamCaption}
+\item[{const Q\-Variant \&}]{new\-Title}
+\end{DoxyParamCaption}
+)}}\label{class_tree_item_ade9049b23b5ebe1bbede8f404e17f515}
+
+
+update\-Underlying\-Note\-Title A chaque \hyperlink{class_tree_item}{Tree\-Item} on lui associe une \hyperlink{class_note}{Note}. Ceci permet de mettre a jour le titre du note a partir du Tree\-View 
+
+\hyperlink{class_tree_item_ade9049b23b5ebe1bbede8f404e17f515}{Tree\-Item\-::update\-Underlying\-Note\-Title}\-: deprecated. Edit in document editor instead of editing in Tree\-View, which may cause confusion to user when he double click on \hyperlink{class_tree_item}{Tree\-Item}.
+
+\begin{DoxyRefDesc}{Deprecated}
+\item[\hyperlink{deprecated__deprecated000006}{Deprecated}]\{cette methode n'est plus utilise car l'interface pour editer le titre est egalement double-\/click. Ceci va creer des confusion pour l'utilisateurs\} \end{DoxyRefDesc}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\-Title} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_tree_item_8h}{Tree\-Item.\-h}\item 
+\hyperlink{_tree_item_8cpp}{Tree\-Item.\-cpp}\end{DoxyCompactItemize}

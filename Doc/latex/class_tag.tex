@@ -1,0 +1,124 @@
+\hypertarget{class_tag}{\section{Tag Class Reference}
+\label{class_tag}\index{Tag@{Tag}}
+}
+
+
+The \hyperlink{class_tag}{Tag} class un \hyperlink{class_tag}{Tag} est compose d'un nom et un Ensemble des notes associe. Les tags sont identifie par son noms, il est donc interdit d'avoir deux tags du meme nom.  
+
+
+
+
+{\ttfamily \#include $<$Tag.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_tag_a6e193d6733a9b58601f1431bce98878f}{Tag} (const \hyperlink{class_tag}{Tag} \&other)
+\item 
+\hyperlink{class_tag_acf02cf8c2c12fd7db3c853ec75f6d5da}{Tag} (const Q\-String \&n)
+\item 
+Q\-Set$<$ \hyperlink{class_note}{Note} $\ast$ $>$ \& \hyperlink{class_tag_af1f12b374b472a04819f474b841be420}{get\-Assocs} ()
+\item 
+void \hyperlink{class_tag_a4cd05092b9987525ad7a7899ee7a8979}{add\-Note} (\hyperlink{class_note}{Note} $\ast$n)
+\begin{DoxyCompactList}\small\item\em add\-Note associe la \hyperlink{class_note}{Note} n a ce tag \end{DoxyCompactList}\item 
+void \hyperlink{class_tag_a60d93267494889c1db6cbeff156419c8}{remove\-Note} (\hyperlink{class_note}{Note} $\ast$n)
+\begin{DoxyCompactList}\small\item\em remove\-Note disassocie la \hyperlink{class_note}{Note} n a ce \hyperlink{class_tag}{Tag}; \end{DoxyCompactList}\item 
+void \hyperlink{class_tag_a9ce786eb87a1abe35bf8cd72f1d4ec21}{reset} ()
+\begin{DoxyCompactList}\small\item\em reset enlever toutes les notes associes \end{DoxyCompactList}\item 
+Q\-String \hyperlink{class_tag_a9458f47f8f40bdc90788c7f7b7793b8a}{get\-Name} () const 
+\item 
+void \hyperlink{class_tag_aa7392a4cfa2465bedebca2d4bf57cf66}{set\-Name} (const Q\-String \&value)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The \hyperlink{class_tag}{Tag} class un \hyperlink{class_tag}{Tag} est compose d'un nom et un Ensemble des notes associe. Les tags sont identifie par son noms, il est donc interdit d'avoir deux tags du meme nom. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_tag_a6e193d6733a9b58601f1431bce98878f}{\index{Tag@{Tag}!Tag@{Tag}}
+\index{Tag@{Tag}!Tag@{Tag}}
+\subsubsection[{Tag}]{\setlength{\rightskip}{0pt plus 5cm}Tag\-::\-Tag (
+\begin{DoxyParamCaption}
+\item[{const {\bf Tag} \&}]{other}
+\end{DoxyParamCaption}
+)}}\label{class_tag_a6e193d6733a9b58601f1431bce98878f}
+\hypertarget{class_tag_acf02cf8c2c12fd7db3c853ec75f6d5da}{\index{Tag@{Tag}!Tag@{Tag}}
+\index{Tag@{Tag}!Tag@{Tag}}
+\subsubsection[{Tag}]{\setlength{\rightskip}{0pt plus 5cm}Tag\-::\-Tag (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{n}
+\end{DoxyParamCaption}
+)}}\label{class_tag_acf02cf8c2c12fd7db3c853ec75f6d5da}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_tag_a4cd05092b9987525ad7a7899ee7a8979}{\index{Tag@{Tag}!add\-Note@{add\-Note}}
+\index{add\-Note@{add\-Note}!Tag@{Tag}}
+\subsubsection[{add\-Note}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-::add\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}}\label{class_tag_a4cd05092b9987525ad7a7899ee7a8979}
+
+
+add\-Note associe la \hyperlink{class_note}{Note} n a ce tag 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_tag_af1f12b374b472a04819f474b841be420}{\index{Tag@{Tag}!get\-Assocs@{get\-Assocs}}
+\index{get\-Assocs@{get\-Assocs}!Tag@{Tag}}
+\subsubsection[{get\-Assocs}]{\setlength{\rightskip}{0pt plus 5cm}Q\-Set$<${\bf Note}$\ast$$>$\& Tag\-::get\-Assocs (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tag_af1f12b374b472a04819f474b841be420}
+\hypertarget{class_tag_a9458f47f8f40bdc90788c7f7b7793b8a}{\index{Tag@{Tag}!get\-Name@{get\-Name}}
+\index{get\-Name@{get\-Name}!Tag@{Tag}}
+\subsubsection[{get\-Name}]{\setlength{\rightskip}{0pt plus 5cm}Q\-String Tag\-::get\-Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) const}}\label{class_tag_a9458f47f8f40bdc90788c7f7b7793b8a}
+\hypertarget{class_tag_a60d93267494889c1db6cbeff156419c8}{\index{Tag@{Tag}!remove\-Note@{remove\-Note}}
+\index{remove\-Note@{remove\-Note}!Tag@{Tag}}
+\subsubsection[{remove\-Note}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-::remove\-Note (
+\begin{DoxyParamCaption}
+\item[{{\bf Note} $\ast$}]{n}
+\end{DoxyParamCaption}
+)}}\label{class_tag_a60d93267494889c1db6cbeff156419c8}
+
+
+remove\-Note disassocie la \hyperlink{class_note}{Note} n a ce \hyperlink{class_tag}{Tag}; 
+
+
+\begin{DoxyParams}{Parameters}
+{\em n} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{class_tag_a9ce786eb87a1abe35bf8cd72f1d4ec21}{\index{Tag@{Tag}!reset@{reset}}
+\index{reset@{reset}!Tag@{Tag}}
+\subsubsection[{reset}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-::reset (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{class_tag_a9ce786eb87a1abe35bf8cd72f1d4ec21}
+
+
+reset enlever toutes les notes associes 
+
+\hypertarget{class_tag_aa7392a4cfa2465bedebca2d4bf57cf66}{\index{Tag@{Tag}!set\-Name@{set\-Name}}
+\index{set\-Name@{set\-Name}!Tag@{Tag}}
+\subsubsection[{set\-Name}]{\setlength{\rightskip}{0pt plus 5cm}void Tag\-::set\-Name (
+\begin{DoxyParamCaption}
+\item[{const Q\-String \&}]{value}
+\end{DoxyParamCaption}
+)}}\label{class_tag_aa7392a4cfa2465bedebca2d4bf57cf66}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_tag_8h}{Tag.\-h}\item 
+\hyperlink{_tag_8cpp}{Tag.\-cpp}\end{DoxyCompactItemize}
