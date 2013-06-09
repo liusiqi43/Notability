@@ -2,6 +2,7 @@
 #include "Note.h"
 
 TagFilter *TagFilter::instance = 0;
+SearchFilter* SearchFilter::instance = 0;
 
 bool SearchFilter::shallBeFiltered(Note *item) const
 {

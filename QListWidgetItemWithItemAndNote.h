@@ -6,7 +6,10 @@
 
 class DeletedNote;
 
-class QListWidgetItemWithNote : public QListWidgetItem, public QObject
+/*!
+ * \brief The QListWidgetItemWithNote class Adaptation de QListWidgetItem, qui associe un widget avec un \link<DeletedNote>
+ */
+class QListWidgetItemWithNote : public QListWidgetItem
 {
     DeletedNote *n;
 public:

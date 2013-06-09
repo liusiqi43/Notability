@@ -12,6 +12,9 @@ namespace Ui {
 class AddToDocDialog;
 }
 
+/*!
+ * \brief The QListWidgetItemWithpDocument class Cette classe hérite de la classe \link <QListWidgetItem> qui fournit un accesseur au \link <Document> associé.
+ */
 class QListWidgetItemWithpDocument : public QListWidgetItem{
     Document* ressource;
 public:
@@ -22,6 +25,9 @@ public:
     void setRessource(Document *value);
 };
 
+/*!
+ * \brief The AddToDocDialog class Cette classe permet de récupérer les documents activés après sa fermeture.
+ */
 class AddToDocDialog : public QDialog
 {
     Q_OBJECT

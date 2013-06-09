@@ -90,7 +90,6 @@ HEADERS += \
     TreeItem.h \
     TreeModel.h \
     viewer.h \
-    CheckComboBox.h \
     AddToDocDialog.h \
     ListWidgetItemCheckTag.h \
     player/videowidget.h \

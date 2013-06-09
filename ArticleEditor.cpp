@@ -15,6 +15,7 @@ ArticleEditor::ArticleEditor(Article *art, QWidget *parent) :
     Editor(art, parent), ressource(art)
 {
     textWidget = new QPlainTextEdit(ressource->getText());
+    textWidget->setMinimumHeight(300);
 
     contentLayout->addWidget(new QLabel("Text:"));
     contentLayout->addWidget(textWidget);

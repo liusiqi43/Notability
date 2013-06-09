@@ -17,7 +17,6 @@
 #include "TagManager.h"
 #include "Tag.h"
 
-#include "CheckComboBox.h"
 #include "AddToDocDialog.h"
 #include "AddTagToNoteDialog.h"
 #include "Trash.h"
@@ -214,7 +213,7 @@ void Editor::setRessource(Note *value)
     ressource = value;
 }
 
-bool Editor::operator ==(const Editor &rhs)
+bool Editor::operator==(const Editor &rhs)
 {
     return this->getRessource()->getFilePath() == rhs.getRessource()->getFilePath();
 }

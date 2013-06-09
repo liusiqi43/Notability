@@ -4,6 +4,9 @@
 #include "Binary.h"
 #include "ImageNoteEditor.h"
 
+/*!
+ * \brief The ImageNote class Une note multimedia qui permet d'afficher une image.
+ */
 class ImageNote: public Binary{
 public:
     ImageNote(const QString& filepath);

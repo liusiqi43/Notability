@@ -8,6 +8,11 @@
 #include <QObject>
 #include "Trash.h"
 
+/*!
+ * \brief TrashDialog::TrashDialog On utilise ici un QListWidgetItem avec un widget personalise.
+ * On limite la longueur du titre a 35 caracteres egalement.
+ * \param parent
+ */
 TrashDialog::TrashDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TrashDialog)
@@ -15,7 +20,6 @@ TrashDialog::TrashDialog(QWidget *parent) :
     Trash *trash = Trash::getInstance();
 
     ui->setupUi(this);
-
 
     for (noteSetIt it = trash->begin(); it!=trash->end(); ++it) {
 

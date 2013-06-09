@@ -35,6 +35,9 @@ namespace Ui {
 class MainWindow;
 }
 
+/*!
+ * \brief The MainWindow class Widget Central qui comporte un sideBar qui affiche une hierarchie des Notes, une liste des tags, les menus, et les Editeurs et Viewers.
+ */
 class MainWindow : public QMainWindow
 {
 
@@ -77,9 +80,21 @@ public slots:
     void createUndoView();
 
 private:
+    /*!
+     * \brief LoadExportToViewerPage Methode qui unifie le chargement des Exportation dans les Viewer.
+     * Pour un export HTML par exemple. Le note contenus dans \link<list> sera exporte en html et en suite charge dans un HTML viewer.
+     * Si viewer = 0, on utilise cette methode pour generer les fichiers directement. Ceci permet de ne pas dupliquer le code pour exporter les notes.
+     * \param type le type de Exportation
+     * \param list list des notes a exporter.
+     * \param viewerPage viewerPage ou on va afficher le resultat
+     * \param viewer viewer qui prend en charge de l'affichage du contenu
+     */
     void LoadExportToViewerPage(ExportType type, QList<Note*>& list, QWidget* viewerPage = 0, Viewer* viewer = 0);
     void createActions();
     void layingOutStuff();
+    /*!
+     * \brief preparingUndoableCommands Cette fonction preparer les UndoableCommands. Et une liste des undoable historique.
+     */
     void preparingUndoableCommands();
 
     Ui::MainWindow *ui;
@@ -103,16 +118,20 @@ private:
     TexViewer * tv;
     TextViewer * textv;
 
-    // On peut utilise qu'une seule ressource
     QList<Note*> ressources;
     QSet<Tag*> tags;
     QSet<Tag*> tagsDisabled;
 
+    /*!
+     * \brief sideBarModel Selon le framework MVC du Qt, nous avons develope un model pour le TreeView qui permet d'affichier une hierarechie des Notes.
+     */
     TreeModel* sideBarModel;
-
 
     QAction * undoAction, *redoAction;
     QAction *historyBtn;
+    /*!
+     * \brief undoStack Une pile des undoables commands. Cette stack va stocker toutes les actions effectue concernant la manipulation des tags. cf. \link<UndoableActions.h>
+     */
     QUndoStack *undoStack;
     QUndoView *undoView;
 

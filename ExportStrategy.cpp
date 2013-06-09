@@ -15,6 +15,11 @@ ExportStrategy::ExportStrategy()
     tm = &TagManager::getInstance();
 }
 
+/*!
+ * \brief ExportStrategy::TagsToString Convertir un QSet de tags en String, separer par |||
+ * \param set l'ensemble a convertir.
+ * \return
+ */
 QString ExportStrategy::TagsToString(const QSet<Tag*>& set) const{
     QString str;
     for(QSet<Tag*>::const_iterator it = set.begin(); it!=set.end(); ++it){
@@ -25,6 +30,10 @@ QString ExportStrategy::TagsToString(const QSet<Tag*>& set) const{
     return str;
 }
 
+/*!
+ * \brief ExportStrategy::getStrategy retourner tous les \link<ExportStrategy> disponibles
+ * \return un QMap de <ExportType, ExportStrategy>.
+ */
 QMap<ExportType, ExportStrategy*>* ExportStrategy::getStrategies()
 {
     QMap<ExportType, ExportStrategy*> *strategies = new QMap<ExportType, ExportStrategy*>();

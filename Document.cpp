@@ -36,11 +36,6 @@ nListIt Document::end() const{
     return notes.end();
 }
 
-Note* & Document::last()
-{
-    return notes.last();
-}
-
 // A shallow test of containing
 bool Document::contains(Note *n) const
 {

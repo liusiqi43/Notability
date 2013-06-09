@@ -12,6 +12,9 @@ namespace Ui {
 class AddTagToNoteDialog;
 }
 
+/*!
+ * \brief The QListWidgetItemWithpTag class Cette classe hérite de la classe \link <QListWidgetItem> qui fournit un accesseur au \link <Tag> associé.
+ */
 class QListWidgetItemWithpTag : public QListWidgetItem{
     Tag *ressource;
 public:
@@ -22,8 +25,8 @@ public:
     void setRessource(Tag *value) {ressource = value;}
 };
 
-/**
- * @brief The AddTagToNoteDialog class, cette dialog
+/*!
+ * \brief The AddTagToNoteDialog class Cette classe permet de récupérer les tags activés après sa fermeture.
  */
 class AddTagToNoteDialog : public QDialog
 {

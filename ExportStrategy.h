@@ -5,7 +5,6 @@
 #include <QMap>
 #include "Tag.h"
 
-//#include "Article.h"
 class ImageNote;
 class Article;
 class Document;
@@ -18,6 +17,9 @@ enum ExportType {html=1, text, saveText, tex, unkownType};
 class ExportStrategy
 {
 protected:
+    /*!
+     * \brief tm TagManager est utilise dans tous les SaveTextExport car on doit sauvegarder les tags associes.
+     */
     TagManager * tm;
 public:
     static QMap<ExportType, ExportStrategy*>* getStrategies();

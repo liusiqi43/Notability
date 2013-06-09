@@ -3,6 +3,9 @@
 
 #include "ExportStrategy.h"
 
+/*!
+ * \brief The HtmlExport class Exporter les differentes types de notes en html.
+ */
 class HtmlExport: public ExportStrategy
 {
 public:

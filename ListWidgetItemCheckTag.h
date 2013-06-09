@@ -4,6 +4,9 @@
 
 class Tag;
 
+/*!
+ * \brief The ListWidgetItemCheckTag class Adaptation d'un QListWidgetItem qui permet d'associe un Tag a un ListWidgetItem
+ */
 class ListWidgetItemCheckTag : public QListWidgetItem
 {
     Tag* tag;

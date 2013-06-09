@@ -32,8 +32,7 @@ NoteType DetectType(const QString& fileName){
 }
 
 void NotesManager::addNote(Note* a){
-    // QSet will deduplicate automatically, as we have an ID attribute in Note.
-    // If Note does not have an ID attribute, we can only use QSet<Note> as it will compares its address and hash.
+
     rootDocument->addNote(a);
 
     if(a->isDocument())

@@ -10,6 +10,9 @@ namespace Ui {
 class TrashDialog;
 }
 
+/*!
+ * \brief The TrashDialog class La dialog qui permet de restaurer ou supprimer definitivement les notes.
+ */
 class TrashDialog : public QDialog
 {
     Q_OBJECT

@@ -4,7 +4,9 @@
 #include "Binary.h"
 #include "VideoNoteEditor.h"
 
-
+/*!
+ * \brief The VideoNote class Une note qui contient des video.
+ */
 class VideoNote: public Binary{
 public:
     VideoNote(const QString& filePath);

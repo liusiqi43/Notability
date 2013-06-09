@@ -3,6 +3,9 @@
 
 #include "ExportStrategy.h"
 
+/*!
+ * \brief The SaveTextExport class Exporter les Notes dans un format adapte pour enreigistrer les notes.
+ */
 class SaveTextExport: public ExportStrategy
 {
 public:

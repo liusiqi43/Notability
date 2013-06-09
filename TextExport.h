@@ -3,6 +3,9 @@
 
 #include "ExportStrategy.h"
 
+/*!
+ * \brief The TextExport class Exporter une note en plain text.
+ */
 class TextExport: public ExportStrategy
 {
 public:

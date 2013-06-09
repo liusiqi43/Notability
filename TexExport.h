@@ -3,6 +3,9 @@
 
 #include "ExportStrategy.h"
 
+/*!
+ * \brief The TexExport class Exporter une Note en format TeX.
+ */
 class TexExport: public ExportStrategy
 {
 public:

@@ -116,7 +116,6 @@ void EditCurrentTagCmd::redo()
     }
     else{
         QMessageBox::warning(MainWindow::getInstance(), "Duplicate tag", "There is already a tag named "+newName);
-        return;
         ListWidgetItemCheckTag *item = 0;
         for(int i=0; i<list->count(); i++){
             item = dynamic_cast<ListWidgetItemCheckTag*>(list->item(i));
@@ -127,8 +126,8 @@ void EditCurrentTagCmd::redo()
         if(item){
             bool oldState = list->blockSignals(true);
             item->setData(0, oldName);
-            list->blockSignals(oldState);
             tag->setName(oldName);
+            list->blockSignals(oldState);
         }
     }
 }

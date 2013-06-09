@@ -6,6 +6,9 @@
 #include <QVBoxLayout>
 #include "viewer.h"
 
+/*!
+ * \brief The TextViewer class Afficheur pour la representation textuelle d'une note
+ */
 class TextViewer: public Viewer
 {
     Q_OBJECT

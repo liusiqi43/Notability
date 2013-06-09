@@ -467,7 +467,8 @@ void MainWindow::createTagList()
 void MainWindow::updateSideBarWithNewSearchFilter(QString str)
 {
     FilterKit* kit = FilterKit::getInstance();
-    SearchFilter* filter = new SearchFilter(str);
+    SearchFilter* filter = SearchFilter::getInstance();
+    filter->setEnabledTitleContaining(str);
     kit->setFilter(search, filter);
     updateSideBar();
 }
