@@ -87,7 +87,7 @@ public:
 
     /*!
      * \brief Editor Cet constructeur definit la configuration globale du Editor
-     * Elle definit les relations entre \link<editorBaseLayout> \link <contentLayout> et \link <buttonsLayout>
+     * Elle definit les relations entre \link<editorBaseLayout> \link<contentLayout> et \link<buttonsLayout>
      * Elle definit egalement les actions communes pours toutes les sous classes editeurs.
      * \param n Le note a partir de quel on va generer ce editeur
      * \param parent
@@ -101,7 +101,7 @@ public:
     void setRessource(Note *value);
 
     /*!
-     * \brief operator == permet de comparer les deux editeurs avec comme reference le chemin de \link <ressource>
+     * \brief operator == permet de comparer les deux editeurs avec comme reference le chemin de \link<ressource>
      * \param rhs right hand side
      * \return retourne True si les deux editeurs comporte le meme ressources, false sinon
      */
@@ -150,7 +150,10 @@ public slots:
      * \brief REMOVE_NOTE_TO_TRASH deplace le note associe a cet Editor dans la corbeille. Si cet Editor s'agit d'un DocumetEditor, alors tous les sous editeurs seront ferme mais seule le document sera deplace vers la corbeille.
      */
     void REMOVE_NOTE_TO_TRASH();
-
+    /*!
+     * \brief CLOSE_NOTE_EDITOR Fermer l'editor actuel
+     */
+    void CLOSE_NOTE_EDITOR();
 
 };
 

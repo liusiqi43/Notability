@@ -94,6 +94,7 @@ Editor::Editor(Note *n, QWidget *parent) :
     QObject::connect(documentBtn, SIGNAL(clicked()),this, SLOT(FIRE_UP_DOC_DIALOG()));
     QObject::connect(btnTag, SIGNAL(clicked()), this, SLOT(ADD_TAG_TO_NOTE()));
     QObject::connect(btnDelete, SIGNAL(clicked()), this, SLOT(REMOVE_NOTE_TO_TRASH()));
+    QObject::connect(btnClose, SIGNAL(clicked()), this, SLOT(CLOSE_NOTE_EDITOR()));
 }
 
 void Editor::ADD_TAG_TO_NOTE()
@@ -265,6 +266,20 @@ void Editor::REMOVE_NOTE_TO_TRASH()
         binEditor->CLOSING();
     ressource->setEditor(0);
     Trash::getInstance()->recycle(ressource);
+    MainWindow::getInstance()->removeRessource(ressource);
+    ressource = 0;
+    this->close();
+}
+
+void Editor::CLOSE_NOTE_EDITOR()
+{
+    BinaryEditor * binEditor = 0;
+    try{
+        binEditor = dynamic_cast<BinaryEditor *>(this);
+    } catch (std::bad_cast e){}
+    if(binEditor)
+        binEditor->CLOSING();
+    ressource->setEditor(0);
     MainWindow::getInstance()->removeRessource(ressource);
     ressource = 0;
     this->close();

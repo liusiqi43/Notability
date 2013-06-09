@@ -30,7 +30,7 @@ public slots:
     void STOP_SONG();
     /*!
      * \brief SET_VALUE Pour represente l'avancement de la musique
-     * \param val l'avancement recupere depuis \link <player>
+     * \param val l'avancement recupere depuis \link<player>
      */
     void SET_VALUE(qint64 val);
 

@@ -13,7 +13,7 @@ class AddToDocDialog;
 }
 
 /*!
- * \brief The QListWidgetItemWithpDocument class Cette classe hérite de la classe \link <QListWidgetItem> qui fournit un accesseur au \link <Document> associé.
+ * \brief The QListWidgetItemWithpDocument class Cette classe hérite de la classe \link<QListWidgetItem> qui fournit un accesseur au \link<Document> associé.
  */
 class QListWidgetItemWithpDocument : public QListWidgetItem{
     Document* ressource;

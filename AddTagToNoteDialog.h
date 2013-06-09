@@ -13,7 +13,7 @@ class AddTagToNoteDialog;
 }
 
 /*!
- * \brief The QListWidgetItemWithpTag class Cette classe hérite de la classe \link <QListWidgetItem> qui fournit un accesseur au \link <Tag> associé.
+ * \brief The QListWidgetItemWithpTag class Cette classe hérite de la classe \link<QListWidgetItem> qui fournit un accesseur au \link<Tag> associé.
  */
 class QListWidgetItemWithpTag : public QListWidgetItem{
     Tag *ressource;

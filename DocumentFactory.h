@@ -20,7 +20,7 @@ public:
     QString getFolder();
 
     /*!
-     * \brief getExtension Cette methode virtuelle genere le bon extension pour les \link <Document>.
+     * \brief getExtension Cette methode virtuelle genere le bon extension pour les \link<Document>.
      * \return .doc. Cette extension sera utilise lors de l'ouverture du fichier \deprecated {L'ouverture du fichier est supprime car on prefere cache cette fonctionalite pour deboggage. En fait, l'utilisateurs ne connais que les titres du notes, mais pas l'id du fichier.}
      */
     QString getExtension();

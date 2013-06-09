@@ -39,7 +39,7 @@ class TagFilter : public Filter
     QSet<Tag *> disabledTags;
 
     /*!
-     * \brief TagFilter Ce Filtre est un singleton car tout au long du programme on instancie un et un seul Filtre de tags. Au cours du programme on mettre a jour \link <disabledTags> seulement.
+     * \brief TagFilter Ce Filtre est un singleton car tout au long du programme on instancie un et un seul Filtre de tags. Au cours du programme on mettre a jour \link<disabledTags> seulement.
      */
     TagFilter():Filter(){}
     TagFilter(const TagFilter&);

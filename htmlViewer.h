@@ -5,6 +5,7 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QWebView>
+#include <QPlainTextEdit>
 #include "viewer.h"
 
 /*!
@@ -23,9 +24,11 @@ public:
 signals:
     
 public slots:
+    void SWITCH_BETWEEN_TV_AND_WV(bool checked);
 private:
     QVBoxLayout *layout;
     QWebView *wv;
+    QPlainTextEdit *tv;
 };
 
 #endif // HTMLVIEWER_H

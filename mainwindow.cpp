@@ -222,6 +222,8 @@ MainWindow::MainWindow(QWidget *parent) :
     layingOutStuff();
     preparingUndoableCommands();
     createActions();
+    menuEdition->addAction(undoAction);
+    menuEdition->addAction(redoAction);
 
     updateSideBar();
     createTagList();

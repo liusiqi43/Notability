@@ -43,7 +43,7 @@ public:
     /*!
      * \brief addNote Ajouter un Note dans un document.
      * Si cette Note est a son tour un document, nous allons tester s'il existe une inclusion circulaire entre les deux documents. Ce qui est absolument ilogique
-     * Si tout va bien, le note sera ajoute dans le \link<notes> et ce document sera aussi ajoute dans le \link <inDocuments> du note.
+     * Si tout va bien, le note sera ajoute dans le \link<notes> et ce document sera aussi ajoute dans le \link<inDocuments> du note.
      * \param note
      */
     void addNote(Note *note) throw (NotesException);
