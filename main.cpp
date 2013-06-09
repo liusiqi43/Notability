@@ -34,6 +34,9 @@
  *-ajouter un correcteur orthographique
  *-modifier la typographie
  *-avoir une reconnaissance vocale
+ *
+ * \section UML
+ * \image html ../UMLf.png
  */
 
 int main(int argc, char *argv[])

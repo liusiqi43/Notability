@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['notability_20projet_20lo21',['Notability Projet LO21',['../index.html',1,'']]],
+  ['notability_20projet_20lo21_20_2d_20_5bsiqi_20liu_5d_20_26_20_5bmarion_20depuydt_5d',['Notability Projet LO21 - [Siqi Liu] &amp; [Marion Depuydt]',['../index.html',1,'']]],
   ['next',['next',['../class_document_1_1_depth_first_iterator.html#aeebdd420c34e4f72a14855c88c87048f',1,'Document::DepthFirstIterator::next()'],['../class_player_controls.html#a6d46fd13e437d9c178f8f93eac32a4bb',1,'PlayerControls::next()']]],
   ['nlistit',['nListIt',['../_document_8h.html#adfa7415447032dfb0c19676b86692b8e',1,'nListIt():&#160;Document.h'],['../_note_8h.html#adfa7415447032dfb0c19676b86692b8e',1,'nListIt():&#160;Note.h'],['../_notes_manager_8h.html#adfa7415447032dfb0c19676b86692b8e',1,'nListIt():&#160;NotesManager.h']]],
   ['note',['Note',['../class_note.html',1,'Note'],['../class_note.html#adfec8c3dca48958989e1024b9ca4a513',1,'Note::Note(const QString &amp;path)'],['../class_note.html#a6ef5e4ecfa2570c504c57185b6081234',1,'Note::Note(const QString &amp;path, const QString &amp;ti)']]],
