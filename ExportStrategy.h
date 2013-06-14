@@ -26,7 +26,7 @@ public:
 
     ExportStrategy();
 
-    QString TagsToString(const QSet<Tag *> &set) const;
+    static QString TagsToString(const QSet<Tag *> &set);
 
     virtual QString exportNote(const ImageNote *note, unsigned int level = 0) const = 0;
     virtual QString exportNote(const Article *note, unsigned int level = 0) const = 0;

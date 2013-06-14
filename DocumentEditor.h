@@ -2,6 +2,7 @@
 #define DOCUMENTEDITOR_H
 
 #include "Editor.h"
+#include <QToolBar>
 class Document;
 
 /*!
@@ -10,6 +11,7 @@ class Document;
 class DocumentEditor : public Editor
 {
     Q_OBJECT
+    QToolBar * toolBar;
 public:
     /*!
      * \brief DocumentEditor Cette methode creer et appele la methode createAndAttachEditor() de toutes les notes directement ou indirectement aggregees
@@ -22,6 +24,7 @@ signals:
 
 public slots:
     void BACKEND_SET_CONTENT();
+    void UI_NEW_NOTE_EDITOR(const int type);
 };
 
 #endif // DOCUMENTEDITOR_H

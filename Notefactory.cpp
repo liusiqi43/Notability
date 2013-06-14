@@ -44,6 +44,7 @@ Document *NoteFactory::buildDocumentCopy(const Document &note)
         Note * nCopy = &nm->getNoteClone((**it));
         d->addNote(nCopy);
     }
+    d->setTags(note.getTags());
     return d;
 }
 

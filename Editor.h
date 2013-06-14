@@ -35,6 +35,9 @@ class Editor : public QWidget
      * \brief buttonsWidget Widget uniforme qui contenir tous les buttons standards
      */
     QWidget * buttonsWidget;
+
+    QWidget * tagsWidget;
+
     Note * ressource;
     QPushButton * btnSave;
     QPushButton * btnClose;
@@ -61,6 +64,7 @@ class Editor : public QWidget
      */
     MainWindow * mainWindow;
     QHBoxLayout* titleLayout;
+    QHBoxLayout* tagsLayout;
 
     /*!
      * \brief BACKEND_SET_TITLE titleWidget est communes pour tous les editors. On va le traiter donc a ce niveau la.

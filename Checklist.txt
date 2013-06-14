@@ -1,3 +1,0 @@
-
-1.destructeur virtuelles dans les classes abstraites
-

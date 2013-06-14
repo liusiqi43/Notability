@@ -111,8 +111,8 @@ QT      += widgets \
            multimedia \
            multimediawidgets \
 
-CONFIG += mobility
-MOBILITY = multimedia
+#CONFIG += mobility
+#MOBILITY = multimedia
 
 FORMS += \
     mainwindow.ui \

@@ -46,6 +46,7 @@ Editor::Editor(Note *n, QWidget *parent) :
     titleEditWidget = new QLineEdit(ressource->getTitle());
 
     titleWidget = new QWidget();
+    tagsWidget = new QWidget();
     contentWidget = new QWidget();
     buttonsWidget = new QWidget();
 
@@ -53,6 +54,7 @@ Editor::Editor(Note *n, QWidget *parent) :
     titleLayout = new QHBoxLayout();
     contentLayout = new QVBoxLayout();
     buttonsLayout = new QHBoxLayout();
+    tagsLayout = new QHBoxLayout();
 
     QFrame* line = new QFrame();
     line->setFrameShape(QFrame::HLine);
@@ -67,6 +69,7 @@ Editor::Editor(Note *n, QWidget *parent) :
     titleLayout->addWidget(titleEditWidget);
 
     editorBaseLayout->addWidget(titleWidget);
+    editorBaseLayout->addWidget(tagsWidget);
     editorBaseLayout->addWidget(buttonsWidget);
     editorBaseLayout->addWidget(contentWidget);
     QSizePolicy policy(QSizePolicy::Preferred, QSizePolicy::Expanding, QSizePolicy::DefaultType);
@@ -77,8 +80,10 @@ Editor::Editor(Note *n, QWidget *parent) :
 
     this->setLayout(editorBaseLayout);
     titleWidget->setLayout(titleLayout);
+    tagsWidget->setLayout(tagsLayout);
     contentWidget->setLayout(contentLayout);
     buttonsWidget->setLayout(buttonsLayout);
+
 
     QWidget* spacer = new QWidget();
     spacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -95,6 +100,23 @@ Editor::Editor(Note *n, QWidget *parent) :
     QObject::connect(btnTag, SIGNAL(clicked()), this, SLOT(ADD_TAG_TO_NOTE()));
     QObject::connect(btnDelete, SIGNAL(clicked()), this, SLOT(REMOVE_NOTE_TO_TRASH()));
     QObject::connect(btnClose, SIGNAL(clicked()), this, SLOT(CLOSE_NOTE_EDITOR()));
+
+    QSet<Tag*> tags = ressource->getTags();
+
+    for (QSet<Tag*>::const_iterator it = tags.begin(); it!=tags.end(); ++it){
+        QLabel * label = new QLabel((*it)->getName());
+        label->setStyleSheet("color: #3E6D8E;"\
+                             "background-color: #E0EAF1;"\
+                             "border-bottom: 1px solid #b3cee1;"\
+                             "border-right: 1px solid #b3cee1;"\
+                             "padding: 3px 4px 3px 4px;"\
+                             "margin: 2px 2px 2px 0;"\
+                             "text-decoration: none;"\
+                             "font-size: 90%;"\
+                             "line-height: 2.4;"\
+                             "white-space: nowrap;");
+        tagsLayout->addWidget(label);
+    }
 }
 
 void Editor::ADD_TAG_TO_NOTE()
@@ -123,6 +145,27 @@ void Editor::retrieveDataFromTagDialog()
     MainWindow::getInstance()->updateSideBar();
     delete tagDialog;
     tagDialog = 0;
+
+    QSet<Tag*> tags = ressource->getTags();
+    QLayoutItem *child;
+    while((child=tagsLayout->takeAt(0))!=0){
+        delete child;
+    }
+
+    for (QSet<Tag*>::const_iterator it = tags.begin(); it!=tags.end(); ++it){
+        QLabel * label = new QLabel((*it)->getName());
+        label->setStyleSheet("color: #3E6D8E;"\
+                             "background-color: #E0EAF1;"\
+                             "border-bottom: 1px solid #b3cee1;"\
+                             "border-right: 1px solid #b3cee1;"\
+                             "padding: 3px 4px 3px 4px;"\
+                             "margin: 2px 2px 2px 0;"\
+                             "text-decoration: none;"\
+                             "font-size: 90%;"\
+                             "line-height: 2.4;"\
+                             "white-space: nowrap;");
+        tagsLayout->addWidget(label);
+    }
 }
 
 

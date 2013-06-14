@@ -20,7 +20,7 @@ ExportStrategy::ExportStrategy()
  * \param set l'ensemble a convertir.
  * \return
  */
-QString ExportStrategy::TagsToString(const QSet<Tag*>& set) const{
+QString ExportStrategy::TagsToString(const QSet<Tag*>& set){
     QString str;
     for(QSet<Tag*>::const_iterator it = set.begin(); it!=set.end(); ++it){
         str += (*it)->getName() + "|||";
